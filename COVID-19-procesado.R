@@ -102,6 +102,11 @@ file <- files[22] # "Actualizacion_52_COVID-19.pdf"
 tables[[22]] <- process_table3(files[22], table = 2)
 knitr::kable(tables[[22]])
 
+file <- files[23] # "Actualizacion_53_COVID-19.pdf"
+# tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
+
+tables[[23]] <- process_table(files[23], page = 1, table = 1)
+knitr::kable(tables[[23]])
 
 
 ## Fechas
