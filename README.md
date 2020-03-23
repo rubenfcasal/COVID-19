@@ -1,4 +1,7 @@
 
+Datos oficiales de COVID-19 por CCAA
+====================================
+
 <!-- 
 Readme.md is generated from Readme.Rmd. 
 Please edit that file 
@@ -12,11 +15,7 @@ Pendiente:
 
 - Añadir enlaces
 
-
 -->
-Datos oficiales de COVID-19 por CCAA
-====================================
-
 El objetivo principal de este repositorio es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene el listado "actualizado". Las tablas (con un procesado mínimo) están almacenadas en el archivo [COVID-19.RData](COVID-19.RData).
