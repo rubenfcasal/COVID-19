@@ -23,7 +23,7 @@ El objetivo principal de este repositorio es facilitar el acceso a los datos del
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene el listado "actualizado".
 Las tablas (con un procesado mínimo) están almacenadas en el archivo [COVID-19.RData](COVID-19.RData).
 
-***Nuevo**: El archivo `Actualizacion_53_COVID-19.pdf` (2020-03-23) contiene nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo a 22.03.20 a partir de 18.959 casos notificados con información de edad y sexo.
+***Nuevo***: El archivo `Actualizacion_53_COVID-19.pdf` (2020-03-23) contiene nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo a 22.03.20 a partir de 18.959 casos notificados que disponían de esa información.
 
 ## Fuentes de los datos
 
@@ -86,7 +86,7 @@ Work in progress... help needed!
 Si quieres puedes ayudar (antes se podría estudiar como se almacenan en otras herramientas similares: 
 [Covid-19 interactive map](http://r-posts.com/covid-19-interactive-map-using-r-with-shiny-leaflet-and-dplyr)).
 
-El archivo `Actualizacion_53_COVID-19.pdf` (2020-03-23) contiene nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo a 22.03.20 a partir de 18.959 casos notificados con información de edad y sexo.
+El archivo `Actualizacion_53_COVID-19.pdf` (2020-03-23) contiene nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo a 22.03.20 a partir de 18.959 casos notificados que disponían de esa información.
 
 
 ## Enlaces
