@@ -16,10 +16,11 @@ Pendiente:
 
 -->
 
-El objetivo principal de este repositorio es facilitar el acceso a los
-datos del COVID-19 en España a los que pueden estar interesados en
-analizarlos empleando R. Además se incluye una pequeña recopilación de
-enlaces a recursos que pueden ser de interés.
+El objetivo principal de [este
+repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el
+acceso a los datos del COVID-19 en España a los que pueden estar
+interesados en analizarlos empleando R. Además se incluye una pequeña
+recopilación de enlaces a recursos que pueden ser de interés.
 
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene el
 listado “actualizado”. Las tablas (con un procesado mínimo) están
