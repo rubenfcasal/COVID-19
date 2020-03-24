@@ -1,4 +1,5 @@
 ## Instalar paquetes
+## -----------------
 
 # Instalar Java Runtime Environment de 64 bits para Windows
 #   https://www.java.com/es/download/windows-64bit.jsp
@@ -12,7 +13,9 @@
 # https://docs.ropensci.org/pdftools
 # if(!require("pdftools")) install.packages("pdftools")
 
+
 ## Procesar
+## ----------------
 
 library("tabulizer")
 
@@ -110,6 +113,7 @@ knitr::kable(tables[[23]])
 
 
 ## Fechas
+## ----------------
 
 # file <- files[6]  # "Actualizacion_36_COVID-19.pdf" 2020-03-04
 # file <- files[22] # "Actualizacion_52_COVID-19.pdf" 2020-03-22
@@ -122,3 +126,60 @@ dates <- sapply(files, function(file) format(pdf_info(file)$created, format = "%
 names(tables) <- dates
 
 save(files, tables, file = "COVID-19.RData")
+
+
+## Actualizar
+## ----------------
+
+old.data <- new.env()
+load("COVID-19.RData", envir = old.data)
+# str(old.data$tables)
+
+files <- dir(pattern = '*.pdf')
+tables <- vector(mode = "list", length = length(files))
+
+iold <- match(files, old.data$files)
+tables <- old.data$tables[iold]
+
+inew <- which(is.na(iold))
+inew
+
+## ----------------
+library("tabulizer")
+
+process_table <- function(file, page = 2, table = 1) {
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  values <- gsub("\\.", "", tabla[-1, -1]) # Eliminar puntos
+  values <- gsub(',', '.', values) # Cambiar comas por puntos
+  values <- apply(values, 2, as.numeric)
+  values[is.na(values)] <- 0 # Reemplazar NAs por 0 
+  colnames(values) <- tabla[1, -1]
+  rownames(values) <- tabla[-1, 1]
+  return(values)
+}    
+
+inew[1]
+
+file <- files[inew[1]] # "Actualizacion_54_COVID-19.pdf"
+# tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
+
+tables[[inew[1]]] <- process_table(files[inew[1]], page = 1, table = 1)
+knitr::kable(tables[[inew[1]]])
+
+
+## ----------------
+library(pdftools)
+
+dates <- sapply(files[inew], function(file) format(pdf_info(file)$created, format = "%Y-%m-%d"))
+names(tables)[inew] <- dates
+
+save(files, tables, file = "COVID-19.RData")
+
+
+## ----------------
+# Generar listado de tablas automáticamente y mostrar
+
+# Si no se emplea RStudio:
+# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
+browseURL(url = rmarkdown::render(knitr::spin('COVID-19-tablas.R', knit = FALSE), encoding = "UTF-8"))
+
