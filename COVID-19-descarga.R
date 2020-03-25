@@ -8,8 +8,8 @@
 # ini <- last <- 45
 # files <- sprintf("Actualizacion_%i_COVID.pdf", ini:last)
 # ini <- 46
-# last <- 52
-ini <- last <- 53
+# last <- 54
+ini <- last <- 55
 files <- sprintf("Actualizacion_%i_COVID-19.pdf", ini:last)
 
 for (f in files)

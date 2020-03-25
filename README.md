@@ -32,6 +32,10 @@ hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo
 (20.471 casos notificados disponían de esa información en los datos
 consolidados a las 21:00 horas del 2020-03-23).
 
+21.872 casos notificados disponían de información de edad y 21.851 con
+información de edad y sexo en los datos consolidados a las 21:00 horas
+del 2020-03-24
+
 ## Fuentes de los datos
 
 En un primer momento, al buscar datos oficiales solo encontré esta web
@@ -116,10 +120,23 @@ Si quieres puedes ayudar (antes se podría estudiar como se almacenan en
 otras herramientas similares: [Covid-19 interactive
 map](http://r-posts.com/covid-19-interactive-map-using-r-with-shiny-leaflet-and-dplyr)).
 
-El archivo `Actualizacion_53_COVID-19.pdf` (2020-03-23) contiene nuevas
-tablas con la distribución de casos hospitalizados, ingresados en UCI y
-fallecidos por grupos de edad y sexo a 22.03.20 a partir de 18.959 casos
-notificados que disponían de esa información.
+El archivo
+[Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf)
+(2020-03-23) contiene nuevas tablas con la distribución de casos
+hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo
+a 22.03.20 a partir de 18.959 casos notificados que disponían de esa
+información.
+
+La [Actualizacion\_54\_COVID-19.pdf](Actualizacion_54_COVID-19.pdf)
+(2020-03-24) contiene tablas con la distribución de 20.471 casos
+notificados que disponían de esa información (en los datos consolidados
+a las 21:00 horas del 2020-03-23).
+
+La [Actualizacion\_55\_COVID-19.pdf](Actualizacion_55_COVID-19.pdf)
+(2020-03-25) contiene tablas con la distribución de 21.872 casos
+notificados disponían de información de edad y 21.851 con información de
+edad y sexo (en los datos consolidados a las 21:00 horas del
+2020-03-24).
 
 ## Enlaces
 
