@@ -23,18 +23,16 @@ interesados en analizarlos empleando R. Además se incluye una pequeña
 recopilación de enlaces a recursos que pueden ser de interés.
 
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene el
-listado “actualizado”. Las tablas (con un procesado mínimo) están
-almacenadas en el archivo [COVID-19.RData](COVID-19.RData).
+listado actualizado a fecha de **2020-03-26**. Las tablas (con un
+procesado mínimo) están almacenadas en el archivo
+[COVID-19.RData](COVID-19.RData).
 
 ***Nuevo***: Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los
 archivos contienen nuevas tablas con la distribución de casos
 hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo
-(20.471 casos notificados disponían de esa información en los datos
-consolidados a las 21:00 horas del 2020-03-23).
-
-21.872 casos notificados disponían de información de edad y 21.851 con
+(21.872 casos notificados disponían de información de edad y 21.851 con
 información de edad y sexo en los datos consolidados a las 21:00 horas
-del 2020-03-24
+del 2020-03-24).
 
 ## Fuentes de los datos
 
@@ -61,7 +59,8 @@ repositorio que contiene los datos:
 pude descargar el fichero `Actualizacion_44_COVID.pdf` que no encontré
 en la web oficial).
 
-Otros enlaces que pueden ser de interés:
+Otros enlaces que pueden ser de interés (ver Sección
+[Enlaces](#enlaces)):
 
   - [Situación de COVID-19 en España
     MSCBS/ISCIII](https://covid19.isciii.es)
@@ -91,7 +90,7 @@ emplear el paquete
     devtools::install_github( c("ropenscilabs/tabulizerjars", "ropenscilabs/tabulizer"), 
                               INSTALL_opts = "--no-multiarch" )
 
-## Extracción
+### Extracción
 
 Las tablas por CCAA comienzan en `Actualizacion_35_COVID-19.pdf`
 (2020-03-03; en la tabla 3, que no se detecta). Las tablas por CCAA
@@ -101,15 +100,20 @@ archivos.
 
 El fichero `COVID-19-procesado.R` contiene el código necesario para
 extraer las tablas de los pdfs, desde `Actualizacion_36_COVID-19.pdf`
-(2020-03-04) hasta `Actualizacion_54_COVID-19.pdf` (2020-03-24).
+(2020-03-04) hasta ¿hoy?.
 
-## Tablas
+***En preparación***: El fichero `COVID-19-procesado2.R` contiene el
+código en desarrollo para extraer las tablas por grupo de edad y sexo…
+hay que dar de comer a los peques y 2h de clase…
+
+### Tablas
 
 Las tablas (con un procesado mínimo) y el listado de ficheros están
 almacenadas en el archivo [COVID-19.RData](COVID-19.RData).
 
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene un
-listado.
+listado (generado automáticamente a partir de
+[COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)).
 
 El siguiente paso será combinar las tablas (y depurarlas si es
 necesario)…

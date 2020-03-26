@@ -12,31 +12,22 @@ output:
 
 ```{r spin, include=FALSE}
 # Este documento permite crear un informe empleando Markdown y `R`.
-# Markdown permite la creación de páginas web a partir de documentos de texto de forma muy sencilla 
-# (tiene unas reglas sintácticas muy simples) y rápida.
-#
+# Markdown permite la creación de páginas web (y muchos otros tipos de documentos) a partir de 
+# archivos de texto de forma muy sencilla (tiene unas reglas sintácticas muy simples) y rápida.
 # R-Markdown es recomendable para difundir análisis realizados con `R` en distintos formatos.
 # Para más detalles ver <http://rmarkdown.rstudio.com> o 
 # <https://rubenfcasal.github.io/bookdown_intro/rmarkdown.html>.
 #
-# Una forma rápida de crear este tipo de informes es emplear la funcion *spin*
-# del paquete *knitr* (ver p.e. <http://yihui.name/knitr/demo/stitch> o 
-# <https://rubenfcasal.github.io/bookdown_intro/rmarkdown.html#spin>).
-#
-# Este informe puede ser creado con el siguiente comando:
-# library(rmarkdown)
-# browseURL(url = render(knitr::spin('COVID-19-tablas.R', knit = FALSE)))
-# NOTA: La función `spin` con el parámetro `knit = FALSE` únicamente genera 
-# el correspondiente fichero .Rmd (sin generar el informe).
-#
-# En RStudio es suficiente con seleccionar 'Compile Report' del menú 'File'
-# (o pulsar el correspondiente botón de la barra de herramientas).
-
+# Este informe puede ser creado (y mostrado) con el siguiente comando:
+# browseURL(url = rmarkdown::render('COVID-19-tablas.Rmd'))
+# En RStudio es suficiente con pulsar el botón 'Knit' de la barra de herramientas.
 ```
+
 ```{r echo=TRUE}
 print(load("COVID-19.RData"))
 
 ```
+
 ```{r results = "asis"}
 dates <- names(tables)
 for (i in seq_along(files)) {
