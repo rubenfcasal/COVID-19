@@ -18,7 +18,7 @@
 ## ================
 ## Procesar
 ## ================
-# Si no se quieren procesar todos ir a "Actualizar"
+# Si no se quieren procesar todos ir a "Actualizar"; ver también "Datos ISCIII" en "COVID-19-descarga.R".
 
 library("tabulizer")
 
@@ -31,7 +31,8 @@ tables <- vector(mode = "list", length = length(files))
 
 # file <- files[5]  # "Actualizacion_35_COVID-19.pdf" # No encuentra tablas
 # ?locate_areas
- 
+# ?extract_text
+
 # file <- files[6]  # "Actualizacion_36_COVID-19.pdf"
 # file <- files[13] # "Actualizacion_43_COVID-19.pdf"
 
@@ -122,11 +123,34 @@ knitr::kable(tables[[23]])
 tables[[24]] <- process_table0(files[24], page = 1, table = 1)
 knitr::kable(tables[[24]])
 
+# file <- files[25] # "Actualizacion_55_COVID-19.pdf"
+# file <- files[27] # "Actualizacion_57_COVID-19.pdf"
+# tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
+
+process_table <- function(file, page = 1, table = 1, nrows.head = 5) { 
+# page = 1; table = 1; nrows.head = 5; ncol.labels = 1
+  ihead <- seq_len(nrows.head)
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  values <- gsub(',', '.', values) # Cambiar comas por puntos
+  values <- apply(values, 2, as.numeric)
+  values[is.na(values)] <- 0 # Reemplazar NAs por 0 
+  head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
+  colnames(values) <- head
+  rownames(values) <- tabla[-ihead, 1]
+  return(values)
+}    
+
+for (i in 25:length(files)) {
+  tables[[i]] <- process_table(files[i], page = 1)
+  cat("\nfile: ", files[i])
+  print(knitr::kable(tables[[i]]))
+}
+
 ## Fechas
 ## ----------------
 
 # file <- files[6]  # "Actualizacion_36_COVID-19.pdf" 2020-03-04
-# file <- files[22] # "Actualizacion_52_COVID-19.pdf" 2020-03-22
 # seq(as.Date("2020/3/4"), Sys.Date(), by = 1)
 # extract_text(file, pages = 1)
 
@@ -199,7 +223,7 @@ save(files, tables, file = "COVID-19.RData")
 
 # file <- files[24] # "Actualizacion_54_COVID-19.pdf"
 
-file <- files[25] # "Actualizacion_55_COVID-19.pdf"
+file <- files[26] # "Actualizacion_57_COVID-19.pdf"
 tabla <- extract_tables(file, page = 2, encoding = "UTF-8")[[1]]
 tabla <- gsub("\\.", "", tabla) # Eliminar puntos
 tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
