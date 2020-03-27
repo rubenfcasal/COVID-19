@@ -21,10 +21,10 @@ Pendiente:
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés. 
 
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene el listado actualizado a
-fecha de **2020-03-26**.
+fecha de **2020-03-27**.
 Las tablas (con un procesado mínimo) están almacenadas en el archivo [COVID-19.RData](COVID-19.RData).
 
-***Nuevo***: Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo (21.872 casos notificados disponían de información de edad y 21.851 con información de edad y sexo en los datos consolidados a las 21:00 horas del 2020-03-24).
+***Nuevo***: Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo (34.240 casos notificados disponían de esa información a las 21:00 horas del 2020-03-26).
 
 ## Fuentes de los datos
 
