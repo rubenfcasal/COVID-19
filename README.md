@@ -61,7 +61,7 @@ Las tablas por CCAA comienzan en `Actualizacion_35_COVID-19.pdf` (2020-03-03; en
 
 El fichero `COVID-19-procesado.R` contiene el código necesario para extraer las tablas de los pdfs, desde `Actualizacion_36_COVID-19.pdf` (2020-03-04) hasta ¿hoy?.
 
-***En preparación***: El fichero `COVID-19-procesado2.R` contiene el código en desarrollo para extraer las tablas por grupo de edad y sexo... hay que dar de comer a los peques y 2h de clase...
+***En preparación***: El fichero `COVID-19-procesado2.R` contiene el código en desarrollo para extraer las tablas por grupo de edad y sexo...
 
 ### Tablas
 
