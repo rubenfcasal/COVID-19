@@ -44,7 +44,7 @@ Por defecto se muestran las primeras filas, pulsar en el índice de páginas (in
 library(DT)
 
 datatable(edadsexo, filter = 'top', options = list(
-  pageLength = 11
+  pageLength = 11, autoWidth = TRUE
 ))
 ```
 

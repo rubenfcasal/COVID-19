@@ -243,8 +243,8 @@ tabla <- gsub("%", "", tabla)   # Eliminar %
 tabla[c(14, 30, 46), 9] <- "100 ." # Anadir espacio en última columna del total
 
 # dput(apply(tabla[1:3, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" ")))
-head <- c("Confirmados", "Hospitalizados", "Hospitalizados(% sexo)", 
-          "UCI", "UCI(% sexo)", "Fallecidos", "Fallecidos(% sexo)", "Letalidad(% edad)")
+head <- c("Casos", "Hospitalizados", "Hospital. (% sexo)", 
+          "UCI", "UCI (% sexo)", "Fallecidos", "Fallec. (% sexo)", "Letalidad (% edad)")
 
 rownms <- tabla[4:14, 1] 
 
@@ -289,8 +289,8 @@ process_table_edadsexo <- function(file, page = 2, table = 2) { # nrows.head = 7
     # dput(apply(tabla[1:7, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" ")))
     # c("Confirmados n", "Hospitalizados totales n %", "n", "Total UCI %", 
     # "n", "", "", "Fallecidos % Letalidad(%)")
-    head <- c("Confirmados", "Hospitalizados", "Hospitalizados (% sexo)", 
-              "UCI", "UCI (% sexo)", "Fallecidos", "Fallecidos (% sexo)", "Letalidad (% edad)")
+    head <- c("Casos", "Hospitalizados", "Hospital. (% sexo)", 
+          "UCI", "UCI (% sexo)", "Fallecidos", "Fallec. (% sexo)", "Letalidad (% edad)")
     rownms <- tabla[8:18, 1] 
     
     tabla <- gsub("%", "", tabla)   # Eliminar %
