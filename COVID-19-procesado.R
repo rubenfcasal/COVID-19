@@ -127,9 +127,9 @@ knitr::kable(tables[[24]])
 # file <- files[27] # "Actualizacion_57_COVID-19.pdf"
 # tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
 
-process_table <- function(file, page = 1, table = 1, nrows.head = 5) { 
-# page = 1; table = 1; nrows.head = 5; ncol.labels = 1
-  ihead <- seq_len(nrows.head)
+process_table <- function(file, page = 1, table = 1, nhead = 5) { 
+# page = 1; table = 1; nhead = 5; ncol.labels = 1
+  ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   values <- gsub(',', '.', values) # Cambiar comas por puntos
@@ -185,9 +185,9 @@ inew
 library("tabulizer")
 
 
-process_table <- function(file, page = 1, table = 1, nrows.head = 5) { 
-# page = 1; table = 1; nrows.head = 5; ncol.labels = 1
-  ihead <- seq_len(nrows.head)
+process_table <- function(file, page = 1, table = 1, nhead = 5) { 
+# page = 1; table = 1; nhead = 5; ncol.labels = 1
+  ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   values <- gsub(',', '.', values) # Cambiar comas por puntos
@@ -273,15 +273,11 @@ colnames(values) <- head
 rownames(values) <- rownms
 knitr::kable(values)
 
-# Actualizar
 # ------------
-library("tabulizer")
-files <- dir(pattern = '*.pdf')
-
 file <- files[27] # "Actualizacion_57_COVID-19.pdf"
 # ------------
 
-process_table_edadsexo <- function(file, page = 2, table = 2) { # nrows.head = 7
+process_table_edadsexo1 <- function(file, page = 2, table = 2) { # nhead = 7
     tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
     tabla <- gsub("\\.", "", tabla) # Eliminar puntos
     tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
@@ -326,11 +322,82 @@ process_table_edadsexo <- function(file, page = 2, table = 2) { # nrows.head = 7
     return(edadsexo)
 }
 
-edadsexo <- process_table_edadsexo(file)
+edadsexo <- process_table_edadsexo1(file)
+attr(edadsexo, "file") <- file
+attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
+# Pendiente añadir etiquetas variables
+
+
+
+# Actualizar
+# ------------
+library("tabulizer")
+files <- dir(pattern = '*.pdf')
+
+# ------------
+file <- files[28] # "Actualizacion_58_COVID-19.pdf"
+# ------------
+
+process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
+    tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+    tabla <- gsub("\\.", "", tabla) # Eliminar puntos
+    tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
+    # View(tabla)
+    # dput(apply(tabla[1:nhead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" ")))
+    # c("Confirmados n", "Hospitalizados totales n %", "n", "Total UCI %", 
+    # "n", "", "", "Fallecidos % Letalidad(%)")
+    head <- c("Casos", "Hospitalizados", "Hospital. (% sexo)", 
+          "UCI", "UCI (% sexo)", "Fallecidos", "Fallec. (% sexo)", "Letalidad (% edad)")
+    
+    rownms <- tabla[6:16, 1] 
+    
+    tabla <- gsub("%", "", tabla)   # Eliminar %
+    tabla[c(16, 34, 51), 8] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
+
+    # Totales
+    values <- tabla[6:16, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    # knitr::kable(values)
+    total <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Mujeres
+    values <- tabla[24:34, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    mujeres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Hombres
+    values <- tabla[41:51, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    hombres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    edadsexo <- dplyr::bind_rows(list(Total = total, Mujeres = mujeres, Hombres = hombres), .id = "sexo")
+    edadsexo$sexo <- factor(edadsexo$sexo, levels = c("Mujeres", "Hombres", "Total")) # Order matters...
+    edadsexo$edad <- as.factor(edadsexo$edad)
+    return(edadsexo)
+}
+
+edadsexo <- process_table_edadsexo2(file)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
 # Pendiente añadir etiquetas variables
 
 save(edadsexo, file = "edadsexo.RData")
 
+## ----------------
+# Generar listado de tablas automáticamente y mostrar
 
+# Si no se emplea RStudio:
+# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
+browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))

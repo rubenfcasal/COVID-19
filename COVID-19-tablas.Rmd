@@ -38,7 +38,7 @@ cat("\n\n Fecha:", date, "\n\n File: [", file, "](", file, ")")
 ```
 
 Nota: La siguiente tabla fué generada con la función `datatable()` del paquete [DT](https://rstudio.github.io/DT).
-Por defecto se muestran las primeras filas, pulsar en el índice de páginas (inferior) para cambiar. Se puede ordenar por una columna pulsando en las flechas al lado derecho del normbre. Se pueden buscar valores (cuadro de búsqueda, en la parte superior derecha) y filtrar los valores (pulsar en el cuadro de filtro debajo del nombre de cada variable).
+Por defecto se muestran las primeras filas, pulsar en el índice de páginas (inferior) para cambiar. Se puede ordenar por una columna pulsando en las flechas al lado derecho de su nombre. Se pueden buscar valores (cuadro de búsqueda, en la parte superior derecha) y filtrar los valores (pulsar en el cuadro de filtro debajo del nombre de cada variable).
 
 ```{r message=FALSE, warning=FALSE}
 library(DT)

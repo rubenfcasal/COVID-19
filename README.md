@@ -19,7 +19,7 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
-En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de **2020-03-27**. Las tablas (con un procesado mínimo) están almacenadas en los archivos:
+En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de **2020-03-28**. Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
 -   [edadsexo.RData](edadsexo.RData): Datos por edad y sexo (MSCBS)
 
@@ -32,7 +32,7 @@ Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/
 
 De todos modos continuaré con este repositorio centrándome en los datos por edad y sexo:
 
-Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La [Actualizacion\_57\_COVID-19.pdf](Actualizacion_57_COVID-19.pdf) (2020-03-27) contiene la distribución de 34.240 casos notificados con información de edad y sexo (en los datos consolidados a las 21:00 horas del 2020-03-26).
+Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La [Actualizacion\_58\_COVID-19.pdf](Actualizacion_58_COVID-19.pdf) (2020-03-28) contiene la distribución de 36.197 casos notificados con información de edad y sexo (en los datos consolidados a las 21:00 horas del 2020-03-27).
 
 ***Importante***: El siguiente paso será tratar de conseguir los datos por provincias (puedes colaborar a través de GitHub o enviando un correo a <rubenfcasal@gmail.com>).
 

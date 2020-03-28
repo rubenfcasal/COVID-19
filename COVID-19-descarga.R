@@ -30,6 +30,7 @@ download.file(paste0("https://covid19.isciii.es/resources/", f), f, mode="wb")
 # Importar
 # --------
 
+f <- "serie_historica_acumulados.csv"
 acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 4)))
 
 nota.texto <- acumulados[nrow(acumulados), 1]
