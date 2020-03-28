@@ -18,7 +18,7 @@
 ## ================
 ## Procesar
 ## ================
-# Si no se quieren procesar todos ir a "Actualizar"
+# Si no se quieren procesar todos ir a "Actualizar"; ver también "Datos ISCIII" en "COVID-19-descarga.R".
 
 library("tabulizer")
 
@@ -31,7 +31,8 @@ tables <- vector(mode = "list", length = length(files))
 
 # file <- files[5]  # "Actualizacion_35_COVID-19.pdf" # No encuentra tablas
 # ?locate_areas
- 
+# ?extract_text
+
 # file <- files[6]  # "Actualizacion_36_COVID-19.pdf"
 # file <- files[13] # "Actualizacion_43_COVID-19.pdf"
 
@@ -122,11 +123,34 @@ knitr::kable(tables[[23]])
 tables[[24]] <- process_table0(files[24], page = 1, table = 1)
 knitr::kable(tables[[24]])
 
+# file <- files[25] # "Actualizacion_55_COVID-19.pdf"
+# file <- files[27] # "Actualizacion_57_COVID-19.pdf"
+# tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
+
+process_table <- function(file, page = 1, table = 1, nrows.head = 5) { 
+# page = 1; table = 1; nrows.head = 5; ncol.labels = 1
+  ihead <- seq_len(nrows.head)
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  values <- gsub(',', '.', values) # Cambiar comas por puntos
+  values <- apply(values, 2, as.numeric)
+  values[is.na(values)] <- 0 # Reemplazar NAs por 0 
+  head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
+  colnames(values) <- head
+  rownames(values) <- tabla[-ihead, 1]
+  return(values)
+}    
+
+for (i in 25:length(files)) {
+  tables[[i]] <- process_table(files[i], page = 1)
+  cat("\nfile: ", files[i])
+  print(knitr::kable(tables[[i]]))
+}
+
 ## Fechas
 ## ----------------
 
 # file <- files[6]  # "Actualizacion_36_COVID-19.pdf" 2020-03-04
-# file <- files[22] # "Actualizacion_52_COVID-19.pdf" 2020-03-22
 # seq(as.Date("2020/3/4"), Sys.Date(), by = 1)
 # extract_text(file, pages = 1)
 
@@ -194,27 +218,39 @@ names(tables)[inew] <- dates
 save(files, tables, file = "COVID-19.RData")
 
 ## ----------------
+# Generar listado de tablas automáticamente y mostrar
+
+# Si no se emplea RStudio:
+# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
+browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
+
+
+## ----------------
 ## Tablas por sexo y grupo de edad
 ## ----------------
 
-# file <- files[24] # "Actualizacion_54_COVID-19.pdf"
+library("tabulizer")
+files <- dir(pattern = '*.pdf')
 
-file <- files[25] # "Actualizacion_55_COVID-19.pdf"
+# file <- files[24] # "Actualizacion_54_COVID-19.pdf"
+file <- files[26] # "Actualizacion_56_COVID-19.pdf"
+
 tabla <- extract_tables(file, page = 2, encoding = "UTF-8")[[1]]
 tabla <- gsub("\\.", "", tabla) # Eliminar puntos
-tabla <- gsub(",", ".", tabla) # Cambiar comas por puntos
-tabla <- gsub("%", "", tabla) # Eliminar %
+tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
+
+tabla <- gsub("%", "", tabla)   # Eliminar %
+tabla[c(14, 30, 46), 9] <- "100 ." # Anadir espacio en última columna del total
 
 # dput(apply(tabla[1:3, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" ")))
-head <- c("Confirmados", "Hospitalizados", "Hospitalizados(% total)", 
-          "UCI", "UCI(% total)", "Fallecidos", "Fallecidos(% total)", "Letalidad(% edad)")
+head <- c("Confirmados", "Hospitalizados", "Hospitalizados(% sexo)", 
+          "UCI", "UCI(% sexo)", "Fallecidos", "Fallecidos(% sexo)", "Letalidad(% edad)")
 
-rownms <- tabla[4:13, 1] # Eliminamos las filas de totales 
-# (PENDIENTE: anadir espacio en última columna? eliminar %?) 
-tabla[c(14, 30), 9]
+rownms <- tabla[4:14, 1] 
+
 
 # Totales
-values <- tabla[4:13, -1] # Eliminamos la fila de totales
+values <- tabla[4:14, -1] # Eliminamos la fila de totales
 values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
 values <- apply(values, 1, as.numeric)
 colnames(values) <- head
@@ -237,10 +273,64 @@ colnames(values) <- head
 rownames(values) <- rownms
 knitr::kable(values)
 
-## ----------------
-# Generar listado de tablas automáticamente y mostrar
+# Actualizar
+# ------------
+library("tabulizer")
+files <- dir(pattern = '*.pdf')
 
-# Si no se emplea RStudio:
-# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
-browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
+file <- files[27] # "Actualizacion_57_COVID-19.pdf"
+# ------------
+
+process_table_edadsexo <- function(file, page = 2, table = 2) { # nrows.head = 7
+    tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+    tabla <- gsub("\\.", "", tabla) # Eliminar puntos
+    tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
+    # View(tabla)
+    # dput(apply(tabla[1:7, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" ")))
+    # c("Confirmados n", "Hospitalizados totales n %", "n", "Total UCI %", 
+    # "n", "", "", "Fallecidos % Letalidad(%)")
+    head <- c("Confirmados", "Hospitalizados", "Hospitalizados (% sexo)", 
+              "UCI", "UCI (% sexo)", "Fallecidos", "Fallecidos (% sexo)", "Letalidad (% edad)")
+    rownms <- tabla[8:18, 1] 
+    
+    tabla <- gsub("%", "", tabla)   # Eliminar %
+    
+    # Totales
+    values <- tabla[8:18, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    # knitr::kable(values)
+    total <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Mujeres
+    values <- tabla[25:35, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    mujeres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Hombres
+    values <- tabla[41:51, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    hombres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    edadsexo <- dplyr::bind_rows(list(Total = total, Mujeres = mujeres, Hombres = hombres), .id = "sexo")
+    edadsexo$sexo <- factor(edadsexo$sexo, levels = c("Mujeres", "Hombres", "Total")) # Order matters...
+    edadsexo$edad <- as.factor(edadsexo$edad)
+    return(edadsexo)
+}
+
+edadsexo <- process_table_edadsexo(file)
+attr(edadsexo, "file") <- file
+attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
+# Pendiente añadir etiquetas variables
+
+save(edadsexo, file = "edadsexo.RData")
+
 

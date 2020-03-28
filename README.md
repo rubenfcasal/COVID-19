@@ -1,6 +1,6 @@
 
-Datos oficiales de COVID-19 por CCAA
-====================================
+Datos oficiales de COVID-19 en España
+=====================================
 
 <!-- 
 Readme.md is generated from Readme.Rmd. 
@@ -11,21 +11,28 @@ Pendiente:
 - Establecer fecha y último fichero pdf en cabecera YAML
   (actualizar texto con rmarkdown::metadata?).
   
-- Combinar tablas
-
 - Añadir enlaces
+  
+- Combinar tablas MSCBS
+
 
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
-El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene el listado actualizado a fecha de **2020-03-27**. Las tablas (con un procesado mínimo) están almacenadas en el archivo [COVID-19.RData](COVID-19.RData).
+En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de **2020-03-27**. Las tablas (con un procesado mínimo) están almacenadas en los archivos:
+
+-   [edadsexo.RData](edadsexo.RData): Datos por edad y sexo (MSCBS)
+
+-   [acumulados.RData](acumulados.RData): Evolución diaria de casos por CCAA (ISCIII)
+
+-   [COVID-19.RData](COVID-19.RData): Datos por CCAA (MSCBS)
 
 ***Nuevo (Importante)***: Desde el ***2020-03-26*** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
-Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv) y en fomato de R en [acumulados.RData](acumulados.RData)).
+Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar e importar estos datos a R).
 
-Por ese motivo, continuaré con este repositorio centrándome en los datos por edad y sexo:
+De todos modos continuaré con este repositorio centrándome en los datos por edad y sexo:
 
-Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo (34.240 casos notificados disponían de esa información a las 21:00 horas del 2020-03-26).
+Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La [Actualizacion\_57\_COVID-19.pdf](Actualizacion_57_COVID-19.pdf) (2020-03-27) contiene la distribución de 34.240 casos notificados con información de edad y sexo (en los datos consolidados a las 21:00 horas del 2020-03-26).
 
 ***Importante***: El siguiente paso será tratar de conseguir los datos por provincias (puedes colaborar a través de GitHub o enviando un correo a <rubenfcasal@gmail.com>).
 
@@ -61,36 +68,50 @@ Preparación de los datos
 
 Para extraer las tablas desde R se emplea el paquete [tabulizer](https://docs.ropensci.org/tabulizer), que depende del paquete [rJava](https://rforge.net/rJava). Otro paquete que puede ser de utilidad es [pdftools](https://docs.ropensci.org/pdftools), empleado actualmente para extraer las fechas.
 
-Estos dos últimos paquetes se pueden instalar desde CRAN, pero [rJava]() necesitaría tener instalado previamente el Java Runtime Environment correspondiente al equipo y a la versión de R (e.g [JRE de 64 bits para Windows](https://www.java.com/es/download/windows-64bit.jsp)).
+Estos dos últimos paquetes se pueden instalar desde CRAN, pero [rJava](https://cran.r-project.org/package=rJava) necesitaría tener instalado previamente el Java Runtime Environment correspondiente al equipo y a la versión de R (e.g [JRE de 64 bits para Windows](https://www.java.com/es/download/windows-64bit.jsp)).
 
 Para instalar [tabulizer](https://docs.ropensci.org/tabulizer) se puede emplear el paquete [devtools](https://devtools.r-lib.org):
 
     devtools::install_github( c("ropenscilabs/tabulizerjars", "ropenscilabs/tabulizer"), 
                               INSTALL_opts = "--no-multiarch" )
 
+Para instalar el resto de paquetes empleados (puede ser recomendable empezar por aquí) basta con ejecutar en la consola de R:
+
+    pkgs <- c('rJava', 'pdftools', 'devtools', 'dplyr', 'DT')
+    install.packages(setdiff(pkgs, installed.packages()[,"Package"]),
+                     dependencies = TRUE)
+
+    # Si aparecen errores (debidos a incompatibilidades con versiones anteriores de otros paquetes),
+    # probar a ejecutar en lugar de lo anterior:
+    # install.packages(pkgs, dependencies = TRUE) # Instala todos...
+
 ### Extracción
 
 Las tablas por CCAA comienzan en `Actualizacion_35_COVID-19.pdf` (2020-03-03; en la tabla 3, que no se detecta). Las tablas por CCAA completas comienzan en `Actualizacion_36_COVID-19.pdf` (2020-03-04), aunque posteriormente hay cambios en los formatos de las tablas y de los archivos.
 
-El fichero `COVID-19-procesado.R` contiene el código necesario para extraer las tablas de los pdfs, desde `Actualizacion_36_COVID-19.pdf` (2020-03-04) hasta ¿hoy?
+A partir de la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) están disponibles nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo (a partir de los casos notificados que disponían de esa información).
 
-***En preparación***: El fichero `COVID-19-procesado2.R` contiene el código en desarrollo para extraer las tablas por grupo de edad y sexo...
+El fichero `COVID-19-procesado.R` contiene el código necesario para extraer de los pdfs las tablas por grupo de edad y sexo (desde `Actualizacion_53_COVID-19.pdf`, 2020-03-23) y las tablas por CCAA (desde `Actualizacion_36_COVID-19.pdf`, 2020-03-04, hasta ¿hoy?).
 
 ### Tablas
 
-Las tablas (con un procesado mínimo) y el listado de ficheros están almacenadas en el archivo [COVID-19.RData](COVID-19.RData).
+Las tablas (con un procesado mínimo) están almacenadas en los archivos:
+
+-   [edadsexo.RData](edadsexo.RData): Datos por edad y sexo (MSCBS)
+
+-   [acumulados.RData](acumulados.RData): Evolución diaria de casos por CCAA (ISCIII)
+
+-   [COVID-19.RData](COVID-19.RData): Datos por CCAA (MSCBS)
 
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene un listado (generado automáticamente a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)).
 
-El siguiente paso será combinar las tablas (y depurarlas si es necesario)...
+Work in progress... ***help needed!***
 
-Work in progress... help needed!
+El siguiente paso será tratar de conseguir datos por provincias y empezar a ajustar modelos (ver Sección [Enlaces](#enlaces))...
+
+También puede ser de interés comparar los datos históricos del MSCBS con los del ISCIII (ver nota: "no se puede deducir que la diferencia entre un día y el anterior es el número de casos nuevos ya que esos casos pueden haber sido recuperados de fechas anteriores")...
 
 Si quieres puedes ayudar a través de GitHub o enviando un correo a <rubenfcasal@gmail.com>.
-
-El archivo [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) contiene nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo a 22.03.20 a partir de 18.959 casos notificados que disponían de esa información.
-
-La [Actualizacion\_57\_COVID-19.pdf](Actualizacion_57_COVID-19.pdf) (2020-03-27) contiene tablas con la distribución de 34.240 casos notificados con información de edad y sexo (en los datos consolidados a las 21:00 horas del 2020-03-26).
 
 Enlaces
 -------
@@ -113,7 +134,9 @@ Work in progress... help needed!
 
 -   <https://www.repidemicsconsortium.org>
 
--   [Model-based Geostatistics: Methods and Applications in Global Public Health (book)](https://sites.google.com/site/mbgglobalhealth/r-scripts)
+-   [Model-based Geostatistics: Methods and Applications in Global Public Health (book)](https://www.crcpress.com/Model-based-Geostatistics-for-Global-Public-Health-Methods-and-Applications/Diggle-Giorgi/p/book/9781138732353), [código R](https://sites.google.com/site/mbgglobalhealth/r-scripts)
+
+-   [Spatio-Temporal Statistics with R (book)](https://spacetimewithr.org), [código R](https://spacetimewithr.org/code) (por si alguien se anima con modelos Bayesianos...)
 
 -   [Epicalc\_Book](https://cran.r-project.org/doc/contrib/Epicalc_Book.pdf)
 
