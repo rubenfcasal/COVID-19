@@ -59,6 +59,7 @@ acumulados[is.na(acumulados)] <- 0
 # plot(acumulados[, -(1:2)])
 attr(acumulados, "note") <- nota.texto
 attr(acumulados, "url") <- "https://covid19.isciii.es/resources/serie_historica_acumulados.csv"
+# View(acumulados)
 save(acumulados, file = "acumulados.RData")
 
 

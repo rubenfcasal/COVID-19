@@ -228,6 +228,7 @@ browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
 ## ----------------
 ## Tablas por sexo y grupo de edad
 ## ----------------
+# Ver "Actualizar" más adelante...
 
 library("tabulizer")
 files <- dir(pattern = '*.pdf')
@@ -335,7 +336,8 @@ library("tabulizer")
 files <- dir(pattern = '*.pdf')
 
 # ------------
-file <- files[28] # "Actualizacion_58_COVID-19.pdf"
+# file <- files[28] # "Actualizacion_58_COVID-19.pdf"
+file <- files[29] # "Actualizacion_59_COVID-19.pdf"
 # ------------
 
 process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
@@ -392,7 +394,7 @@ edadsexo <- process_table_edadsexo2(file)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
 # Pendiente añadir etiquetas variables
-
+# View(edadsexo)
 save(edadsexo, file = "edadsexo.RData")
 
 ## ----------------
