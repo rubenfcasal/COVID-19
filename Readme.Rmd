@@ -151,15 +151,16 @@ Work in progress... help needed!
 
 * [COVID-19 epidemiology with R](https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r)
 
-### Epidemiología con R
+### Epidemiología (y áreas relacionadas) con R
 
 * https://www.repidemicsconsortium.org
 
-* [Model-based Geostatistics: Methods and Applications in Global Public Health (book)](https://www.crcpress.com/Model-based-Geostatistics-for-Global-Public-Health-Methods-and-Applications/Diggle-Giorgi/p/book/9781138732353),
+* [Model-based Geostatistics: Methods and Applications in Global Public Health (book)](https://www.crcpress.com/Model-based-Geostatistics-for-Global-Public-Health-Methods-and-Applications/Diggle-Giorgi/p/book/9781138732353) by P.J. Diggle and E. Giorgi (2019),
 [código R](https://sites.google.com/site/mbgglobalhealth/r-scripts)
 
-* [Spatio-Temporal Statistics with R (book)](https://spacetimewithr.org),
-[código R](https://spacetimewithr.org/code) (por si alguien se anima con modelos Bayesianos...)
+* [Spatio-Temporal Statistics with R (book)](https://spacetimewithr.org) by  C.K. Wikle, A. Zammit-Mangion and N. Cressie (2019), [código R](https://spacetimewithr.org/code) (por si alguien se anima con modelos Bayesianos...)
+
+* [Forecasting: Principles and Practice (book)](https://otexts.com/fpp2), 2ª ed. by R.J. Hyndman and G. Athanasopoulos (2018).
 
 * [Epicalc_Book](https://cran.r-project.org/doc/contrib/Epicalc_Book.pdf)
 
@@ -167,6 +168,12 @@ Work in progress... help needed!
 ### Paquetes de R
 
 Paquetes y otras herramientas... 
+
+* [coronavirus](https://github.com/RamiKrispin/coronavirus)
+
+* [nCov2019](https://github.com/GuangchuangYu/nCov2019)
+
+* [forecast](https://pkg.robjhyndman.com/forecast)
 
 Se puede realizar una búsqueda en <https://rseek.org>...
 
