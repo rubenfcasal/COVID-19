@@ -19,7 +19,7 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
-En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de **2020-03-29**. Las tablas (con un procesado mínimo) están almacenadas en los archivos:
+En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de **2020-03-30**. Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
 -   [edadsexo.RData](edadsexo.RData): Datos por edad y sexo (MSCBS)
 
@@ -32,11 +32,13 @@ Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/
 
 De todos modos continuaré con este repositorio centrándome en los datos por edad y sexo:
 
-Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La [Actualizacion\_59\_COVID-19.pdf](Actualizacion_59_COVID-19.pdf) (2020-03-29) contiene la distribución de 50.220 casos notificados con información de edad y sexo (en los datos consolidados a las 21:00 horas del 2020-03-28).
+Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La [Actualizacion\_60\_COVID-19.pdf](Actualizacion_60_COVID-19.pdf) (2020-03-30) contiene la distribución de 51.605 casos notificados con información de edad y sexo (en los datos consolidados a las 21:00 horas del 2020-03-29).
 
 ***Importante***: El siguiente paso será tratar de conseguir los datos por provincias (puedes colaborar a través de GitHub o enviando un correo a <rubenfcasal@gmail.com>).
 
 -   Galicia: <https://galiciancovid19.info>
+
+-   Castilla y León: <https://analisis.datosabiertos.jcyl.es/pages/coronavirus/descarga-de-datasets#situacin-actual>
 
 Fuentes de los datos
 --------------------
@@ -105,6 +107,9 @@ Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
 El fichero [COVID-19-tablas.html](COVID-19-tablas.html) contiene un listado (generado automáticamente a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)).
 
+Colabora
+--------
+
 Work in progress... ***help needed!***: Especialmente en cuanto al modelado (actualmente está sesgado al campo de la estadística espacio-temporal, debido a la in/experiencia personal...)
 
 El siguiente paso será tratar de conseguir datos por provincias y empezar a ajustar modelos (ver Sección [Enlaces](#enlaces))...
@@ -122,6 +127,14 @@ Work in progress... help needed!
 
 -   Aplicación Shiny con estos datos: <https://cafernandezlo.shinyapps.io/es_covid>
 
+-   Datos CCAA:
+
+    -   Galicia: <https://galiciancovid19.info>
+
+    -   Castilla y León: <https://analisis.datosabiertos.jcyl.es/pages/coronavirus/descarga-de-datasets#situacin-actual>
+
+<br>
+
 ### COVID-19 y R
 
 -   [Top 25 R resources on COVID-19 Coronavirus](https://www.statsandr.com/blog/top-r-resources-on-covid-19-coronavirus)
@@ -138,7 +151,7 @@ Work in progress... help needed!
 
 -   [Spatio-Temporal Statistics with R (book)](https://spacetimewithr.org) by C.K. Wikle, A. Zammit-Mangion and N. Cressie (2019), [código R](https://spacetimewithr.org/code) (por si alguien se anima con modelos Bayesianos...)
 
--   [Forecasting: Principles and Practice (book)](https://otexts.com/fpp2), 2ª ed. by R.J. Hyndman and G. Athanasopoulos (2018).
+-   [Forecasting: Principles and Practice (book)](https://otexts.com/fpp2), 2ª ed., by R.J. Hyndman and G. Athanasopoulos (2018).
 
 -   [Epicalc\_Book](https://cran.r-project.org/doc/contrib/Epicalc_Book.pdf)
 

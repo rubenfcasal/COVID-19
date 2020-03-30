@@ -192,7 +192,8 @@ process_table <- function(file, page = 1, table = 1, nhead = 5) {
   values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   values <- gsub(',', '.', values) # Cambiar comas por puntos
   values <- apply(values, 2, as.numeric)
-  values[is.na(values)] <- 0 # Reemplazar NAs por 0 
+  # values[is.na(values)] <- 0 # Reemplazar NAs por 0 
+  if (any(is.na(values))) warning("Hay datos faltantes...")
   head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
   colnames(values) <- head
   rownames(values) <- tabla[-ihead, 1]
@@ -337,7 +338,7 @@ files <- dir(pattern = '*.pdf')
 
 # ------------
 # file <- files[28] # "Actualizacion_58_COVID-19.pdf"
-file <- files[29] # "Actualizacion_59_COVID-19.pdf"
+file <- files[30] # "Actualizacion_60_COVID-19.pdf"
 # ------------
 
 process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
@@ -354,7 +355,9 @@ process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
     rownms <- tabla[6:16, 1] 
     
     tabla <- gsub("%", "", tabla)   # Eliminar %
-    tabla[c(16, 34, 51), 8] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
+    # View(tabla)
+    # tabla[c(16, 34, 51), 8] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
+    tabla[c(16, 34, 51), 7] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
 
     # Totales
     values <- tabla[6:16, -1] # Eliminamos la fila de totales
