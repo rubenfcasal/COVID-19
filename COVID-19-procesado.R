@@ -338,10 +338,11 @@ files <- dir(pattern = '*.pdf')
 
 # ------------
 # file <- files[28] # "Actualizacion_58_COVID-19.pdf"
-file <- files[30] # "Actualizacion_60_COVID-19.pdf"
+file <- files[31] # "Actualizacion_61_COVID-19.pdf"
 # ------------
 
 process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
+    # page = 2; table = 1
     tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
     tabla <- gsub("\\.", "", tabla) # Eliminar puntos
     tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
@@ -356,8 +357,7 @@ process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
     
     tabla <- gsub("%", "", tabla)   # Eliminar %
     # View(tabla)
-    # tabla[c(16, 34, 51), 8] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
-    tabla[c(16, 34, 51), 7] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
+    tabla[c(16, 34, 51), ncol(tabla)] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
 
     # Totales
     values <- tabla[6:16, -1] # Eliminamos la fila de totales
