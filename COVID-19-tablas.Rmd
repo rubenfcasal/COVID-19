@@ -34,10 +34,12 @@ load("edadsexo.RData")
 date <- attr(edadsexo, "date")
 file <- attr(edadsexo, "file")
 
-cat("\n\n Fecha:", date, "\n\n File: [", file, "](", file, ")")
+cat("\n\n Fecha informe:", date, "\n\n File: [", file, "](", file, ")")
 ```
 
-Nota: La siguiente tabla fué generada con la función `datatable()` del paquete [DT](https://rstudio.github.io/DT).
+La tabla contiene los datos consolidados a las 21:00 horas del día anterior a la fecha del informe. 
+
+NOTA: La siguiente tabla fué generada con la función `datatable()` del paquete [DT](https://rstudio.github.io/DT).
 Por defecto se muestran las primeras filas, pulsar en el índice de páginas (inferior) para cambiar. Se puede ordenar por una columna pulsando en las flechas al lado derecho de su nombre. Se pueden buscar valores (cuadro de búsqueda, en la parte superior derecha) y filtrar los valores (pulsar en el cuadro de filtro debajo del nombre de cada variable).
 
 ```{r message=FALSE, warning=FALSE}
@@ -63,7 +65,9 @@ datatable(acumulados, filter = 'top', options = list(
 
 
 
-## Tablas por fecha y CCAA (archivos MSCBS)
+## Tablas por fecha del informe y CCAA (archivos MSCBS)
+
+Las tablas contienen los datos consolidados a las 21:00 horas del día anterior a la fecha del informe. 
 
 ```{r class.source="fold-show", results = "asis"}
 load("COVID-19.RData")
