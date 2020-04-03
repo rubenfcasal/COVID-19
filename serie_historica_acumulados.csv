@@ -797,4 +797,23 @@ MC,01/04/2020,1084,389,68,42,45
 NC,01/04/2020,2682,1181,108,141,278
 PV,01/04/2020,7317,4087,344,412,2490
 RI,01/04/2020,2083,660,57,101,641
-NOTA: El objetivo de los datos que se publican en esta web es saber el número de casos acumulados a la fecha y que por tanto no se puede deducir que la diferencia entre un día y el anterior es el número de casos nuevos ya que esos casos pueden haber sido recuperados de fechas anteriores Cualquier inferencia que se haga sobre las diferencias de un día para otro deben hacerse con precaución y son únicamente la responsabilidad el autor,,,,,,
+AN,02/04/2020,7374,3673,338,376,258
+AR,02/04/2020,2889,1431,180,224,378
+AS,02/04/2020,1433,702,86,70,154
+IB,02/04/2020,1257,587,112,69,375
+CN,02/04/2020,1490,605,120,73,102
+CB,02/04/2020,1321,592,59,64,74
+CM,02/04/2020,8523,3168,355,916,579
+CL,02/04/2020,7875,2711,355,723,1759
+CT,02/04/2020,23460,17257,2053,2335,7849
+CE,02/04/2020,62,8,3,1,2
+VC,02/04/2020,6624,2064,386,511,592
+EX,02/04/2020,1893,415,64,200,164
+GA,02/04/2020,5219,1630,178,138,435
+MD,02/04/2020,34188,15050,1506,4483,13850
+ME,02/04/2020,70,34,3,2,4
+MC,02/04/2020,1145,405,72,46,90
+NC,02/04/2020,2836,1284,119,151,294
+PV,02/04/2020,7827,4283,363,444,2809
+RI,02/04/2020,2224,738,64,109,745
+NOTA: El objetivo de los datos que se publican en esta web es saber el número de casos acumulados a la fecha y que por tanto no se puede deducir que la diferencia entre un día y el anterior es el número de casos. nuevos ya que esos casos pueden haber sido recuperados de fechas anteriores. Cualquier inferencia que se haga sobre las diferencias de un día para otro deben hacerse con precaución y son únicamente la responsabilidad el autor. Los datos de estas comunidades son datos de prevalencia (personas ingresadas a fecha de hoy). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI  a lo largo del periodo de notificación(CL) (CM) (MD) (VC) y (MC).,,,,,,
