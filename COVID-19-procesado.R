@@ -178,6 +178,7 @@ tables <- old.data$tables[iold]
 
 inew <- which(is.na(iold))
 inew
+# inew <- length(files) - 1
 
 ## Procesar files[inew]
 ## --------------------
@@ -190,7 +191,8 @@ process_table <- function(file, page = 1, table = 1, nhead = 5) {
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
-  values <- gsub(',', '.', values) # Cambiar comas por puntos
+  values <- gsub(',', '.', values)       # Cambiar comas por puntos
+  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
   values <- apply(values, 2, as.numeric)
   # values[is.na(values)] <- 0 # Reemplazar NAs por 0 
   if (any(is.na(values))) warning("Hay datos faltantes...")
