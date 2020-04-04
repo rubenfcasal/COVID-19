@@ -26,6 +26,7 @@ output:
 
 Nota: El código puede ser de utilidad para entender como trabajar con estos datos, 
 pulsar en [Code] para mostrar (este informe fué generado a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)).
+Más detalles en la [web del repositorio](https://rubenfcasal.github.io/COVID-19).
 
 ## Tabla por edad y sexo
 
