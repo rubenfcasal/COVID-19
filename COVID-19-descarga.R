@@ -62,4 +62,25 @@ attr(acumulados, "url") <- "https://covid19.isciii.es/resources/serie_historica_
 # View(acumulados)
 save(acumulados, file = "acumulados.RData")
 
+# acumula2
+# --------
+library(dplyr)
 
+acumula2 <- acumulados
+# Renombrar variables
+names(acumula2) <- tolower(names(acumula2)) 
+names(acumula2)[2] <- "iso"
+names(acumula2)[4] <- "confirmados"
+# Nuevos
+acumula2 <- acumula2 %>% group_by(iso) %>% mutate(nuevos = confirmados - lag(confirmados)) %>% ungroup()
+acumula2$nuevos[is.na(acumula2$nuevos)] <- 0
+# Total España
+var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "nuevos")
+res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum, na.rm = TRUE) %>%
+            mutate(ccaa = "España", iso = "ES") 
+res <- bind_rows(acumula2, res)
+res$iso <- factor(res$iso, levels = c("ES", CCAA.ISO$COD_CCAA))
+res$ccaa <- factor(res$ccaa, levels = c("España", CCAA.ISO$DESC_CCAA))
+# Ordenar y guardar
+acumula2 <- res %>% arrange(fecha, iso)
+save(acumula2, file ="acumula2.RData")

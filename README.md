@@ -27,6 +27,8 @@ En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibl
 
 -   [COVID-19.RData](COVID-19.RData): Datos por CCAA (MSCBS)
 
+***Nuevo***: El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. Incluye una variable `nuevos` a partir del incremento en el número de casos acumulados (aunque realmente no es el número de casos nuevos; ver [nota](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#tabla_de_evoluci%C3%B3n_diaria_de_casos_por_ccaa_(datos_isciii))) y los totales para España (aunque a día de hoy, esperamos que se solucione pronto, los datos de hospitalización y UCI no son homogéneos entre CCAA; ver nota siguiente).
+
 ***Importante***: Desde el **2020-04-02** se informa de que **todos los datos de hospitalización y UCI** de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Murcia (MC), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que indica el encabezado y reportado por el resto). Por tanto, a día de hoy **no hay homogeneidad en esos datos entre CCAA**, manda...
 
 ***Importante***: Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
