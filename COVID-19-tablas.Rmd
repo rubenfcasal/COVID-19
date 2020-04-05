@@ -28,7 +28,7 @@ Nota: El código puede ser de utilidad para entender como trabajar con estos dat
 pulsar en [Code] para mostrar (este informe fué generado a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)).
 Más detalles en la [web del repositorio](https://rubenfcasal.github.io/COVID-19).
 
-## Tabla por edad y sexo
+## Tabla por edad y sexo {#edadsexo}
 
 ```{r class.source="fold-show", results = "asis"}
 load("edadsexo.RData")
@@ -51,7 +51,7 @@ datatable(edadsexo, filter = 'top', options = list(
 ))
 ```
 
-## Tabla de evolución diaria de casos por CCAA (datos ISCIII)
+## Tabla de evolución diaria de casos por CCAA (datos ISCIII) {#isciii}
 
 ```{r class.source="fold-show", results = "asis"}
 load("acumulados.RData")
@@ -68,7 +68,7 @@ datatable(acumulados, filter = 'top', options = list(
 
 
 
-## Tablas por fecha del informe y CCAA (archivos MSCBS)
+## Tablas por fecha del informe y CCAA (archivos MSCBS) {#mscbs}
 
 Las tablas contienen los datos consolidados a las 21:00 horas del día anterior a la fecha del informe. 
 
