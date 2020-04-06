@@ -162,9 +162,9 @@ names(tables) <- dates
 save(files, tables, file = "COVID-19.RData")
 
 
-## ================
+# ==========================================================================================
 ## Actualizar
-## ================
+# ==========================================================================================
 
 old.data <- new.env()
 load("COVID-19.RData", envir = old.data)
@@ -452,14 +452,15 @@ edadsexo <- process_table_edadsexo2(file)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
 
-
+# ==========================================================================================
 # Actualizar
-# ------------
+# ==========================================================================================
 library("tabulizer")
 files <- dir(pattern = '*.pdf')
 
 # ------------
-file <- files[36] # "Actualizacion_66_COVID-19.pdf"
+# file <- files[36] # "Actualizacion_66_COVID-19.pdf"
+file <- files[37] # "Actualizacion_67_COVID-19.pdf"
 # ------------
 
 process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
