@@ -19,7 +19,7 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
-En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de ***2020-04-06***. Las tablas (con un procesado mínimo) están almacenadas en los archivos:
+En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de ***2020-04-07***. Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
 -   [edadsexo.RData](edadsexo.RData): Datos por edad y sexo (MSCBS)
 
@@ -27,16 +27,16 @@ En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibl
 
 -   [COVID-19.RData](COVID-19.RData): Datos por CCAA (MSCBS)
 
-***Nuevo***: El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. Incluye una variable `nuevos` a partir del incremento en el número de casos acumulados (aunque realmente no es el número de casos nuevos; ver [nota](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii)) y los totales para España (aunque a día de hoy, esperamos que se solucione pronto, los datos de hospitalización y UCI no son homogéneos entre CCAA; ver nota siguiente).
+***Nuevo***: El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. Incluye una variable `nuevos` a partir del incremento en el número de casos acumulados (aunque realmente no es el número de casos nuevos; ver [nota](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii)) y los totales para España (aunque a día de hoy, esperamos que se solucione pronto, los datos de hospitalización y UCI no son homogéneos entre CCAA; ver nota siguiente).
 
 ***Importante***: Desde el **2020-04-02** se informa de que **todos los datos de hospitalización y UCI** de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Murcia (MC), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que indica el encabezado y reportado por el resto). Por tanto, a día de hoy **no hay homogeneidad en esos datos entre CCAA**, manda...
 
 ***Importante***: Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
-Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar e importar estos datos a R). La tabla correspondiente a la última actualización del 2020-04-06 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
+Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar e importar estos datos a R). La tabla correspondiente a la última actualización del 2020-04-07 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
 
 De todos modos continuaré con este repositorio centrándome en los datos por edad y sexo:
 
-Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-04-06 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
+Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-04-07 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
 
 ***Importante***: El siguiente paso será tratar de conseguir los datos por provincias (puedes colaborar a través de GitHub o enviando un correo a <rubenfcasal@gmail.com>).
 

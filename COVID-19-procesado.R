@@ -460,7 +460,7 @@ files <- dir(pattern = '*.pdf')
 
 # ------------
 # file <- files[36] # "Actualizacion_66_COVID-19.pdf"
-file <- files[37] # "Actualizacion_67_COVID-19.pdf"
+file <- files[38] # "Actualizacion_68_COVID-19.pdf"
 # ------------
 
 process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5

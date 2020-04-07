@@ -32,11 +32,14 @@ download.file(paste0("https://covid19.isciii.es/resources/", f), f, mode="wb")
 
 f <- "serie_historica_acumulados.csv"
 acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 5)))
-
 nota.texto <- acumulados[nrow(acumulados), 1]
 nota.texto
-acumulados <- acumulados[-nrow(acumulados), ]
 
+# Verificar variables y seleccionar
+var <- c("CCAA.Codigo.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+stopifnot(all(var %in% names(acumulados)))
+acumulados <- acumulados[-nrow(acumulados), var]
+# Preparar variables
 acumulados$Fecha <- as.Date(acumulados$Fecha, format = "%d/%m/%Y")
 names(acumulados)[1] <- "CCAA.ISO"
 # write.csv2(unique(acumulados$CCAA.ISO), file = "levels.csv")
@@ -78,7 +81,7 @@ acumula2$nuevos[is.na(acumula2$nuevos)] <- 0
 var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "nuevos")
 res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum, na.rm = TRUE) %>%
             mutate(ccaa = "España", iso = "ES") 
-res <- bind_rows(acumula2, res)
+res <- suppressWarnings(bind_rows(acumula2, res))
 res$iso <- factor(res$iso, levels = c("ES", CCAA.ISO$COD_CCAA))
 res$ccaa <- factor(res$ccaa, levels = c("España", CCAA.ISO$DESC_CCAA))
 # Ordenar y guardar
