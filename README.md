@@ -27,18 +27,27 @@ En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibl
 
 -   [COVID-19.RData](COVID-19.RData): Datos por CCAA (MSCBS)
 
+En la siguiente sección se detallan las fuentes de los datos.
+
 ***Nuevo***: El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. Incluye una variable `nuevos` a partir del incremento en el número de casos acumulados (aunque realmente no es el número de casos nuevos; ver [nota](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii)) y los totales para España (aunque a día de hoy, esperamos que se solucione pronto, los datos de hospitalización y UCI no son homogéneos entre CCAA; ver nota siguiente).
 
-***Importante***: Desde el **2020-04-02** se informa de que **todos los datos de hospitalización y UCI** de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Murcia (MC), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que indica el encabezado y reportado por el resto). Por tanto, a día de hoy **no hay homogeneidad en esos datos entre CCAA**, manda...
+***Importante***: Desde el **2020-04-02** se comienza a informar de que **todos los datos de hospitalización y UCI** de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC) y Madrid (MD), son datos de prevalencia (personas ingresadas en la correspondiente fecha). Al parecer también ocurre lo mismo con los datos UCI de Galicia (GA) (y no tengo claro lo que reporta Murcia (MC)). Por tanto, no reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación, al contrario de lo que indica el encabezado y es reportado (en principio) por el resto. Esto es muy grave, a día de hoy **no hay homogeneidad en esos datos entre CCAA**, MANDA CARALLO!!
 
-***Importante***: Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
-Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar e importar estos datos a R). La tabla correspondiente a la última actualización del 2020-04-07 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
+La cronología fué la siguiente (si alguién tiene más información al respecto, le agradecería que me lo comunicase):
 
-De todos modos continuaré con este repositorio centrándome en los datos por edad y sexo:
+-   [Actualizacion\_63\_COVID-19.pdf](Actualizacion_63_COVID-19.pdf) (2020-04-02): Se incluye la primera nota sobre los datos de hospitalizados ("Casos que han precisado hospitalización") de Castilla-La Mancha (CM),Comunidad Valenciana (VC) y Madrid (MD), y UCI ("Casos que han ingresado en UCI") de Madrid (MD). No se aporta ninguna información sobre los datos anteriormente publicados.
 
-Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-04-07 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
+-   [Actualizacion\_64\_COVID-19.pdf](Actualizacion_64_COVID-19.pdf) (2020-04-02): Vuelve a aparecer esa nota pero añadiendo, además de los anteriores, los datos de hospitalizados de Castilla y León (CL) y los de UCI de Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC) y Galicia (GA). Al mismo tiempo, al final del archivo que proporciona el ISCIII [serie\_historica\_acumulados.csv](serie_historica_acumulados.csv), se incluye: "Los datos de estas comunidades son datos de prevalencia (personas ingresadas a fecha de hoy) No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (CL-CM-MD-VC-MC)" . Sin embargo, al parecer también ocurre lo mismo con los datos de UCI de Galicia (GA). Murcia (MC) no se menciona en los informes del MSCBS.
 
-***Importante***: El siguiente paso será tratar de conseguir los datos por provincias (puedes colaborar a través de GitHub o enviando un correo a <rubenfcasal@gmail.com>).
+-   En los siguientes informes se mantiene la misma nota, pero a partir de la [Actualizacion\_66\_COVID-19.pdf](Actualizacion_66_COVID-19.pdf) (2020-04-05) deja de indicarse que CCAA son las que aportan datos de prevalencia en hospitalizados o UCI.
+
+Mi opinión personal es que, si esto no se soluciona pronto, creo que deberían asumir responsabilidades los responsables de los datos de las CCAA y del Ministerio...
+
+<br>
+
+***Siguientes pasos***:
+
+El primero podría ser tratar de conseguir los datos por áreas sanitarias o provincias. Esta es la información de la que dispongo:
 
 -   Galicia: <https://galiciancovid19.info>
 
@@ -46,10 +55,14 @@ Desde la `Actualizacion_53_COVID-19.pdf` (2020-03-23) los archivos contienen nue
 
 -   País Vasco: <https://opendata.euskadi.eus/catalogo/-/evolucion-del-coronavirus-covid-19-en-euskadi>
 
+También conseguir datos lo más detallados posibles (y fiables) de la evolución en otros lugares, e.g. Corea del Sur, Italia...
+
+Puedes colaborar a través de GitHub o enviando un correo a <rubenfcasal@gmail.com>
+
 Fuentes de los datos
 --------------------
 
-En un primer momento, al buscar datos oficiales solo encontré esta web del *Ministerio de Sanidad, Consumo y Bienestar Social*:
+En un primer momento, al buscar datos oficiales solo encontré esta web del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS):
 
 <https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm>
 
@@ -58,6 +71,13 @@ donde se puede descargar un pdf con la situación actual (actualizado a las 13:0
 Haciendo pruebas, vi que se podían descargar los documentos desde la actualización 31. El código y los documentos pdfs los podéis encontrar en este repositorio. El archivo `COVID-19-descarga.R` contiene el código necesario para descargar los pdfs.
 
 Posteriormente, gracias a [este comentario](https://hypatia.math.ethz.ch/pipermail/r-help-es/2020-March/013753.html) en la lista de correo de [R-Hispano](http://r-es.org), descubrí otro repositorio que contiene los datos: <https://github.com/datadista/datasets/tree/master/COVID%2019> (de donde pude descargar el fichero `Actualizacion_44_COVID.pdf` que no encontré en la web oficial).
+
+Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-04-07 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
+
+Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
+Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar e importar estos datos a R). La tabla correspondiente a la última actualización del 2020-04-07 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
+
+De todos modos continuaré manteniendo el historial de datos publicados del MSCBS y los últimos datos por edad y sexo.
 
 Otros enlaces que pueden ser de interés (ver Sección [Enlaces](#enlaces)):
 
@@ -97,7 +117,7 @@ Para instalar el resto de paquetes empleados (puede ser recomendable empezar por
 
 Las tablas por CCAA comienzan en `Actualizacion_35_COVID-19.pdf` (2020-03-03; en la tabla 3, que no se detecta). Las tablas por CCAA completas comienzan en `Actualizacion_36_COVID-19.pdf` (2020-03-04), aunque posteriormente hay cambios en los formatos de las tablas y de los archivos.
 
-A partir de la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) están disponibles nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo (a partir de los casos notificados que disponían de esa información).
+Como ya se comentó, a partir de la `Actualizacion_53_COVID-19.pdf` (2020-03-23) están disponibles nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo (a partir de los casos notificados que disponían de esa información). También hubo cambios en estas tablas en posteriores informes.
 
 El fichero `COVID-19-procesado.R` contiene el código necesario para extraer de los pdfs las tablas por grupo de edad y sexo (desde `Actualizacion_53_COVID-19.pdf`, 2020-03-23) y las tablas por CCAA (desde `Actualizacion_36_COVID-19.pdf`, 2020-03-04, hasta ¿hoy?).
 

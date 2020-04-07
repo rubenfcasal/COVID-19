@@ -58,7 +58,7 @@ load("acumulados.RData")
 cat("\n", attr(acumulados, "note"), "\n\n Web:", attr(acumulados, "url"))
 ```
 
-***NOTA***: Los datos de hospitalización y UCI de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Murcia (MC), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario que el resto).
+***NOTA***: Según una nota al final del archivo, los datos de hospitalización y UCI de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Murcia (MC), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que en principio reporta el resto). Sin embargo, al parecer también ocurre lo mismo con los datos de UCI de Galicia (GA) y en los informes del MSCBS no se indica de que ocurra eso con los de Murcia (MC). Confiemos en que se solucionen estos problemas lo antes posible...
 
 ```{r }
 datatable(acumulados, filter = 'top', options = list(
