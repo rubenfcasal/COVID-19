@@ -452,12 +452,6 @@ edadsexo <- process_table_edadsexo2(file)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
 
-# ==========================================================================================
-# Actualizar
-# ==========================================================================================
-library("tabulizer")
-files <- dir(pattern = '*.pdf')
-
 # ------------
 # file <- files[36] # "Actualizacion_66_COVID-19.pdf"
 file <- files[38] # "Actualizacion_68_COVID-19.pdf"
@@ -517,6 +511,95 @@ process_table_edadsexo2 <- function(file, page = 2, table = 1 ) { # nhead = 5
 
 
 edadsexo <- process_table_edadsexo2(file)
+attr(edadsexo, "file") <- file
+attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
+
+# ==========================================================================================
+# Actualizar
+# ==========================================================================================
+library("tabulizer")
+files <- dir(pattern = '*.pdf')
+
+file <- files[39] # "Actualizacion_69_COVID-19.pdf"
+
+process_table_edadsexo3 <- function(file, page = 2, table = 1 ) { # nhead = 5
+    # page = 2; table = 1
+    # str(extract_tables(file, page = page, encoding = "UTF-8"))
+    tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+    tabla <- gsub("\\.", "", tabla) # Eliminar puntos
+    tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
+    # View(tabla)
+    # dput(apply(tabla[1:nhead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" ")))
+    # c("Confirmados n", "Hospitalizados totales n %", "n", "Total UCI %", 
+    # "n", "", "", "Fallecidos % Letalidad(%)")
+    head <- c("Casos", "Hospitalizados", "Hospital. (% sexo)",
+              "UCI", "UCI (% sexo)", "Fallecidos", "Fallec. (% sexo)", "Letalidad (% edad)")
+    rownms <- c("0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69",
+                "70-79", "80-89", "90 y +", "Total")
+    tabla <- gsub("%", "", tabla)   # Eliminar %
+    
+    # Totales
+    values <- tabla[15:25, ]
+    # Eliminar " " inicial 
+    values[10] <-gsub("90 y \\+", "90y+", values[10])
+    # Anadir -1 en lugar de Letalidad del total
+    values[11] <- paste(values[11], -1)
+    # Trocear y combinar
+    values <- simplify2array(strsplit(values, " "))
+    # Tansformar valores
+    values <- values[-1, ]
+    values <- apply(values, 1, as.numeric)
+    # Calcular letalidad del total
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    # knitr::kable(values)
+    total <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Mujeres
+    values <- tabla[33:43, ]
+    # Eliminar " " inicial 
+    values[10] <-gsub("90 y \\+", "90y+", values[10])
+    # Anadir -1 en lugar de Letalidad del total
+    values[11] <- paste(values[11], -1)
+    # Trocear y combinar
+    values <- simplify2array(strsplit(values, " "))
+    # Tansformar valores
+    values <- values[-1, ]
+    values <- apply(values, 1, as.numeric)
+    # Calcular letalidad del total
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    # knitr::kable(values)
+    mujeres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Hombres
+    values <- tabla[51:61, ]
+    # Eliminar " " inicial 
+    values[10] <-gsub("90 y \\+", "90y+", values[10])
+    # Anadir -1 en lugar de Letalidad del total
+    values[11] <- paste(values[11], -1)
+    # Trocear y combinar
+    values <- simplify2array(strsplit(values, " "))
+    # Tansformar valores
+    values <- values[-1, ]
+    values <- apply(values, 1, as.numeric)
+    # Calcular letalidad del total
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    # knitr::kable(values)
+    hombres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    edadsexo <- dplyr::bind_rows(list(Total = total, Mujeres = mujeres, Hombres = hombres), .id = "sexo")
+    edadsexo$sexo <- factor(edadsexo$sexo, levels = c("Mujeres", "Hombres", "Total")) # Order matters...
+    edadsexo$edad <- as.factor(edadsexo$edad)
+    return(edadsexo)
+}
+
+
+edadsexo <- process_table_edadsexo3(file)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
 # Pendiente añadir etiquetas variables
