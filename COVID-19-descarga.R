@@ -32,23 +32,33 @@ download.file(paste0("https://covid19.isciii.es/resources/", f), f, mode="wb")
 
 f <- "serie_historica_acumulados.csv"
 acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 5)))
+# PENDIENTE: Combinar todas las notas a partir de nzchar(acumulados$FECHA)
 nota.texto <- acumulados[nrow(acumulados), 1]
 nota.texto
 
 # Verificar variables y seleccionar
-var <- c("CCAA.Codigo.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
-stopifnot(all(var %in% names(acumulados)))
-acumulados <- acumulados[-nrow(acumulados), var]
-# Preparar variables
-acumulados$Fecha <- as.Date(acumulados$Fecha, format = "%d/%m/%Y")
-names(acumulados)[1] <- "CCAA.ISO"
-# write.csv2(unique(acumulados$CCAA.ISO), file = "levels.csv")
-# https://www.iso.org/obp/ui/#iso:code:3166:ES
-CCAA.ISO <- read.csv2("CCAA.ISO.csv", colClasses = "character")
+# ---------------------------------
+# Variables actuales
+# dput(names(acumulados))
+var.isciii <- c("CCAA", "FECHA", "CASOS", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+if (any(names(acumulados) != var.isciii)) stop('Cambios en las variables')
+# Seleccionamos los casos que tienen algo en FECHA
+acumulados <- acumulados[nzchar(acumulados$FECHA), var.isciii]
+names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+
+# Verificar niveles factor
+# El 08/04/2020 se cambió el nivel de Melilla de 'ME' a 'ML' (se mantendrá el anterior en acumula2)
+CCAA.ISO <- read.csv2("CCAA.ISO2.csv", colClasses = "character")
+if (!all(unique(acumulados$CCAA.ISO) %in% CCAA.ISO$COD_CCAA)) stop('Cambios en CCAA.ISO')
 acumulados$CCAA.ISO <- factor(acumulados$CCAA.ISO, levels = CCAA.ISO$COD_CCAA)
 iccaa <- match(as.character(acumulados$CCAA.ISO), CCAA.ISO$COD_CCAA)
 acumulados <- tibble::add_column(acumulados, CCAA = CCAA.ISO$DESC_CCAA[iccaa], .before = 1)
 acumulados$CCAA <- factor(acumulados$CCAA, levels = CCAA.ISO$DESC_CCAA)
+
+# Preparar variables
+acumulados$Fecha <- as.Date(acumulados$Fecha, format = "%d/%m/%Y")
+# write.csv2(unique(acumulados$CCAA.ISO), file = "levels.csv")
+# https://www.iso.org/obp/ui/#iso:code:3166:ES
 
 str(acumulados)
 
@@ -83,6 +93,8 @@ res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum, na.rm = TRUE) %>%
             mutate(ccaa = "España", iso = "ES") 
 res <- suppressWarnings(bind_rows(acumula2, res))
 res$iso <- factor(res$iso, levels = c("ES", CCAA.ISO$COD_CCAA))
+# El 08/04/2020 se cambió el nivel de Melilla de 'ME' a 'ML' (se mantendrá el anterior 'ME' en acumula2)
+levels(res$iso) <- gsub("ML", "ME", levels(res$iso))
 res$ccaa <- factor(res$ccaa, levels = c("España", CCAA.ISO$DESC_CCAA))
 # Ordenar y guardar
 acumula2 <- res %>% arrange(fecha, iso)
