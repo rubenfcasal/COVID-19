@@ -13,7 +13,7 @@ iold <- match(files, old.data$files)
 tables <- old.data$tables[iold]
 
 inew <- which(is.na(iold))
-inew
+inew <- inew[1]
 # inew <- length(files)
 
 ## Procesar files[inew]
@@ -38,15 +38,20 @@ process_table <- function(file, page = 1, table = 1, nhead = 5) {
   return(values)
 }    
 
-inew[1]
+inew
 
-file <- files[inew[1]]
+file <- files[inew]
 file
 # tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
 
-tables[[inew[1]]] <- process_table(files[inew[1]])
-knitr::kable(tables[[inew[1]]])
+tables[[inew]] <- process_table(files[inew], nhead = 4)
+knitr::kable(tables[[inew]])
+# View(tables[[inew]])
 
+
+
+# El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
+tables[[inew]][nrow(tables[[inew]]), 3:4] <- colSums(tables[[inew]][-nrow(tables[[inew]]), 3:4], na.rm = TRUE)
 
 ## ----------------
 library(pdftools)

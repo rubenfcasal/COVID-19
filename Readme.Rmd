@@ -40,6 +40,9 @@ En la siguiente sección se detallan las fuentes de los datos.
 ***Importante***: El **2020-04-08** se cambiaron los nombres de las variables del archivo del ISCIII y se cambió el código ISO
 de Melilla de `"ME"` a `"ML"`. Sin embargo, por compatibilidad con versiones anteriores, el fichero [acumulados.RData](acumulados.RData) mantiene los nombres de variables anteriores (aunque con el cambio en el factor `CCAA.ISO`) y el fichero [acumula2.RData](acumula2.RData) mantiene por completo la estructura anterior (incluyendo los niveles del factor `iso`).
 
+En está fecha también se dejó de calcular el total de España de hospitalizados y UCI en la tabla del MSCBS,
+se recalculó para mantener la compatibilidad.
+
 ***MUY IMPORTANTE***: Desde el **2020-04-02** se comienza a informar de que **todos los datos de hospitalización y UCI** de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC) y Madrid (MD), son datos de prevalencia (personas ingresadas en la correspondiente fecha). Al parecer también ocurre lo mismo con los datos UCI de Galicia (GA) (y no tengo claro lo que reporta Murcia (MC)). 
 Por tanto, no reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación, 
 al contrario de lo que indica el encabezado y es reportado (en principio) por el resto. 
