@@ -24,6 +24,8 @@ for (f in files)
 ## Datos ISCIII
 ## ================
 
+# Descargar
+# --------
 f <- "serie_historica_acumulados.csv"
 download.file(paste0("https://covid19.isciii.es/resources/", f), f, mode="wb")
 
