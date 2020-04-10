@@ -8,8 +8,6 @@
 f <- "serie_historica_acumulados.csv"
 acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 5)))
 # PENDIENTE: Combinar todas las notas a partir de nzchar(acumulados$FECHA)
-nota.texto <- acumulados[nrow(acumulados), 1]
-nota.texto
 
 # Verificar variables y seleccionar
 # ---------------------------------
@@ -18,7 +16,11 @@ nota.texto
 var.isciii <- c("CCAA", "FECHA", "CASOS", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 if (any(names(acumulados) != var.isciii)) stop('Cambios en las variables')
 # Seleccionamos los casos que tienen algo en FECHA
-acumulados <- acumulados[nzchar(acumulados$FECHA), var.isciii]
+idatos <- nzchar(acumulados$FECHA)
+# Combinar todas las notas 
+nota.texto <- paste(acumulados[!idatos, 1], collapse = "\n")
+nota.texto
+acumulados <- acumulados[idatos, var.isciii]
 names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 
 # Verificar niveles factor
@@ -92,6 +94,7 @@ tables <- old.data$tables[iold]
 
 inew <- which(is.na(iold))
 inew <- inew[1]
+inew
 # inew <- length(files)
 
 ## Procesar files[inew]

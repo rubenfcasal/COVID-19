@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-04-09" 
+  fecha: "2020-04-10" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -99,8 +99,8 @@ La tabla correspondiente a la última actualización del `r params$fecha` puede 
 Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).  
 Archivo: [serie_historica_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) 
 (también disponible en este repositorio [aquí](serie_historica_acumulados.csv);
-el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar
-e importar estos datos a R).
+el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos
+y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R).
 La tabla correspondiente a la última actualización del `r params$fecha` puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
 
 De todos modos continuaré manteniendo el historial de datos publicados del MSCBS y los últimos datos por edad y sexo.
@@ -153,6 +153,7 @@ aunque posteriormente hay cambios en los formatos de las tablas y de los archivo
 Como ya se comentó, a partir de la `Actualizacion_53_COVID-19.pdf` (2020-03-23) están disponibles nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo (a partir de los casos notificados que disponían de esa información). También hubo cambios en estas tablas en posteriores informes.
 
 El fichero `COVID-19-procesado.R` contiene el código necesario para extraer de los pdfs las tablas por grupo de edad y sexo (desde `Actualizacion_53_COVID-19.pdf`, 2020-03-23) y las tablas por CCAA (desde `Actualizacion_36_COVID-19.pdf`, 2020-03-04, hasta ¿hoy?).
+El fichero [COVID-19-actualizar.R](COVID-19-actualizar.R) contiene el código para la última actualización.
 
 
 ### Tablas
