@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-04-10" 
+  fecha: "2020-04-11" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -37,6 +37,10 @@ En la siguiente sección se detallan las fuentes de los datos.
 
 ***Nuevo***: El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. Incluye una variable `nuevos` a partir del incremento en el número de casos acumulados (aunque realmente no es el número de casos nuevos; ver [nota](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii)) y los totales para España (aunque a día de hoy, esperamos que se solucione pronto, los datos de hospitalización y UCI no son homogéneos entre CCAA; ver comentario más adelante).
 
+* [Web Investigadores UDC (Aplicación Shiny)](https://covid19.citic.udc.es),
+  que contiene las prediccciones cooperativas (pestaña Informes).
+
+
 ***Importante***: El **2020-04-08** se cambiaron los nombres de las variables del archivo del ISCIII y se cambió el código ISO
 de Melilla de `"ME"` a `"ML"`. Sin embargo, por compatibilidad con versiones anteriores, el fichero [acumulados.RData](acumulados.RData) mantiene los nombres de variables anteriores (aunque con el cambio en el factor `CCAA.ISO`) y el fichero [acumula2.RData](acumula2.RData) mantiene por completo la estructura anterior (incluyendo los niveles del factor `iso`).
 
@@ -66,11 +70,14 @@ Mi opinión personal es que, si esto no se soluciona pronto, creo que deberían 
 El primero podría ser tratar de conseguir los datos por áreas sanitarias o provincias. 
 Esta es la información de la que dispongo:
 
-* Galicia: https://galiciancovid19.info
+* Galicia: <https://galiciancovid19.info>
 
-* Castilla y León: https://analisis.datosabiertos.jcyl.es/pages/coronavirus/descarga-de-datasets#situacin-actual
+* Castilla y León: <https://analisis.datosabiertos.jcyl.es/pages/coronavirus/descarga-de-datasets#situacin-actual>
 
-* País Vasco: https://opendata.euskadi.eus/catalogo/-/evolucion-del-coronavirus-covid-19-en-euskadi
+* País Vasco: <https://opendata.euskadi.eus/catalogo/-/evolucion-del-coronavirus-covid-19-en-euskadi>
+
+* Andalucía: <https://pakillo.github.io/COVID19-Andalucia/evolucion-coronavirus-andalucia.html>, <https://github.com/Pakillo/COVID19-Andalucia>
+
 
 También conseguir datos lo más detallados posibles (y fiables) de la evolución en otros lugares, e.g. Corea del Sur, Italia...  
 
@@ -186,15 +193,20 @@ Work in progress... help needed!
 
 * [Acción Matemática contra el Coronavirus](http://matematicas.uclm.es/cemat/covid19)
 
-* Aplicación Shiny con estos datos: https://covid19.citic.udc.es
+* [Web Investigadores UDC (Aplicación Shiny)](https://covid19.citic.udc.es),
+  que contiene las prediccciones cooperativas (pestaña Informes).
+
 
 * Datos CCAA:
 
-    * Galicia: https://galiciancovid19.info
+    * Galicia: <https://galiciancovid19.info>
     
-    * Castilla y León: https://analisis.datosabiertos.jcyl.es/pages/coronavirus/descarga-de-datasets#situacin-actual
+    * Castilla y León: <https://analisis.datosabiertos.jcyl.es/pages/coronavirus/descarga-de-datasets#situacin-actual>
     
-    * País Vasco: https://opendata.euskadi.eus/catalogo/-/evolucion-del-coronavirus-covid-19-en-euskadi
+    * País Vasco: <https://opendata.euskadi.eus/catalogo/-/evolucion-del-coronavirus-covid-19-en-euskadi>
+    
+    * Andalucía: <https://pakillo.github.io/COVID19-Andalucia/evolucion-coronavirus-andalucia.html>, <https://github.com/Pakillo/COVID19-Andalucia>
+    
     
 <br>
 
