@@ -7,7 +7,7 @@
 
 f <- "serie_historica_acumulados.csv"
 acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 5)))
-# PENDIENTE: Combinar todas las notas a partir de nzchar(acumulados$FECHA)
+# View(acumulados)
 
 # Verificar variables y seleccionar
 # ---------------------------------
@@ -16,11 +16,11 @@ acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer"
 var.isciii <- c("CCAA", "FECHA", "CASOS", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 if (any(names(acumulados) != var.isciii)) stop('Cambios en las variables')
 # Seleccionamos los casos que tienen algo en FECHA
-idatos <- nzchar(acumulados$FECHA)
+inotas <- which(!nzchar(acumulados$FECHA))[1]:nrow(acumulados)
 # Combinar todas las notas 
-nota.texto <- paste(acumulados[!idatos, 1], collapse = "\n")
+nota.texto <- paste(apply(acumulados[inotas, 1:2], 1, paste, collapse =""), collapse = "\n")
 nota.texto
-acumulados <- acumulados[idatos, var.isciii]
+acumulados <- acumulados[-inotas, var.isciii]
 names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 
 # Verificar niveles factor
@@ -119,7 +119,6 @@ process_table <- function(file, page = 1, table = 1, nhead = 5) {
   return(values)
 }    
 
-inew
 
 file <- files[inew]
 file
@@ -128,7 +127,6 @@ file
 tables[[inew]] <- process_table(files[inew], nhead = 4)
 knitr::kable(tables[[inew]])
 # View(tables[[inew]])
-
 
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI

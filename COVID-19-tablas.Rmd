@@ -78,6 +78,8 @@ Los casos confirmados no provienen de la suma de pacientes hospitalizados, curad
 
 Los datos de las CCAA están en continua revisión y ciertas oscilaciones diarias pueden deberse a procesos de depuración de datos y no a variaciones reales acontecidas de un día a otro.
 
+Por estos motivos en el informe del MSCBS no se calcula el total de España de hospitalizados y UCI, sin embargo en esta tabla se recalculó para mantener la compatibilidad (aunque solo es de utilidad como una "medida" de la evolución global, mientras no proporcionan los valores "reales").
+
 ```{r class.source="fold-show", results = "asis"}
 load("COVID-19.RData")
 # "files"  "tables"

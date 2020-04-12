@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-04-11" 
+  fecha: "2020-04-12" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -236,11 +236,15 @@ Work in progress... help needed!
 
 Paquetes y otras herramientas... 
 
-* [coronavirus](https://github.com/RamiKrispin/coronavirus)
+* [COVID19](https://github.com/emanuele-guidotti/COVID19), [CRAN](https://cran.r-project.org/package=COVID19): Coronavirus COVID-19 (2019-nCoV) Epidemic Datasets
 
-* [nCov2019](https://github.com/GuangchuangYu/nCov2019)
+* [cdccovidview](https://cinc.rud.is/web/packages/cdccovidview/): Weekly Surveillance Summary of U.S. COVID-19 Activity
 
-* [forecast](https://pkg.robjhyndman.com/forecast)
+* [coronavirus](https://github.com/RamiKrispin/coronavirus), [CRAN](https://cran.r-project.org/package=coronavirus) : The 2019 Novel Coronavirus COVID-19 (2019-nCoV) Dataset
+
+* [nCov2019](https://github.com/GuangchuangYu/nCov2019): An R package with real-time data, historical data and Shiny app
+
+* [forecast](https://pkg.robjhyndman.com/forecast): Forecasting Functions for Time Series and Linear Models
 
 Se puede realizar una búsqueda en <https://rseek.org>...
 
