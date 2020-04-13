@@ -19,6 +19,8 @@ if (any(names(acumulados) != var.isciii)) stop('Cambios en las variables')
 inotas <- which(!nzchar(acumulados$FECHA))[1]:nrow(acumulados)
 # Combinar todas las notas 
 nota.texto <- paste(apply(acumulados[inotas, 1:2], 1, paste, collapse =""), collapse = "\n")
+# Cambiar * por \*
+nota.texto <- gsub("\\*", "\\\\*", nota.texto)
 nota.texto
 acumulados <- acumulados[-inotas, var.isciii]
 names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")

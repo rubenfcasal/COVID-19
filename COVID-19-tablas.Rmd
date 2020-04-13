@@ -58,7 +58,10 @@ load("acumulados.RData")
 cat("\n", attr(acumulados, "note"), "\n\n Web:", attr(acumulados, "url"))
 ```
 
-***NOTA***: Según una nota al final del archivo, los datos de hospitalización y UCI de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Murcia (MC), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que en principio reporta el resto). Sin embargo, al parecer también ocurre lo mismo con los datos de UCI de Galicia (GA) y en los informes del MSCBS no se indica de que ocurra eso con los de Murcia (MC). Confiemos en que se solucionen estos problemas lo antes posible...
+***NOTA***: Según una nota al final del archivo, los datos de hospitalización y UCI de algunas comunidades son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que en principio reporta el resto). Sin embargo, aparentemente están tratando de solucionar estos problemas y cuando se produce un cambio en el valor reportado por una CA, tratan de corregir todos los valores anteriores (aunque actualmente no es el caso de Castilla-La Mancha (CM)).  
+
+Los datos de las CCAA están en continua revisión y puede haber cambios en valores anteriores (ya los hubo, debidos a procesos de depuración de datos y a la actualización de los valores reportados por algunas CCAA).
+
 
 ```{r }
 datatable(acumulados, filter = 'top', options = list(
@@ -72,13 +75,15 @@ datatable(acumulados, filter = 'top', options = list(
 
 Las tablas contienen los datos consolidados a las 21:00 horas del día anterior a la fecha del informe. 
 
-***NOTA***: Los datos de hospitalización y UCI de las comunidades de: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Murcia (MC), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario que el resto).
+***NOTA***: Los datos de hospitalización y UCI de algunas CCAA son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario que el resto). A lo largo del tiempo se ha informado sobre los valores reportados por: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Galicia (GA). Actualmente, únicamente Madrid (MD) reporta valores de prevalencia de hospitalizados, y en el caso de UCI, los valores de Madrid (MD), Castilla y León (CL) y  Galicia (GA) son de prevalencia. Por este motivo, **para valores históricos, es preferible recurrir a los datos acumulados del ISCIII**.
+
+Por estos motivos en el informe del MSCBS no se calcula el total de España de hospitalizados y UCI, sin embargo en esta tabla se recalculó para mantener la compatibilidad (aunque solo es de utilidad como una "medida" de la evolución global, mientras no proporcionan los valores "reales").
 
 Los casos confirmados no provienen de la suma de pacientes hospitalizados, curados y fallecidos, ya que no son excluyentes. Pacientes fallecidos y curados pueden haber precisado hospitalización y por tanto computar en ambos grupos. Los pacientes que han precisado UCI también computan en los pacientes que han requerido hospitalización.
 
 Los datos de las CCAA están en continua revisión y ciertas oscilaciones diarias pueden deberse a procesos de depuración de datos y no a variaciones reales acontecidas de un día a otro.
 
-Por estos motivos en el informe del MSCBS no se calcula el total de España de hospitalizados y UCI, sin embargo en esta tabla se recalculó para mantener la compatibilidad (aunque solo es de utilidad como una "medida" de la evolución global, mientras no proporcionan los valores "reales").
+
 
 ```{r class.source="fold-show", results = "asis"}
 load("COVID-19.RData")
