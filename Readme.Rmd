@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-04-13" 
+  fecha: "2020-04-14" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -47,10 +47,12 @@ de Melilla de `"ME"` a `"ML"`. Sin embargo, por compatibilidad con versiones ant
 En esta fecha también se dejó de calcular el total de España de hospitalizados y UCI en la tabla del MSCBS,
 se recalculó para mantener la compatibilidad.
 
-***MUY IMPORTANTE***: Desde el **2020-04-02** se ha informado sobre los valores de hospitalización y UCI reportados por: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Galicia (GA). Esto ha ido cambiando a lo largo del tiempo. Actualmente, únicamente Madrid (MD) reporta valores de prevalencia de hospitalizados, y en el caso de UCI, los valores de Madrid (MD), Castilla y León (CL) y  Galicia (GA) son de prevalencia. Aun así, a día de hoy **no hay homogeneidad en esos datos entre CCAA**, MANDA CARALLO!!
+***MUY IMPORTANTE***: Desde el **2020-04-02** se ha venido informando que los valores de hospitalización y UCI reportados por: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Galicia (GA), son datos de prevalencia (personas ingresadas en la correspondiente fecha) y no reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que en principio reporta el resto).  
+Esto ha ido cambiando a lo largo del tiempo. Actualmente, únicamente Madrid (MD) reporta valores de prevalencia de hospitalizados, y en el caso de UCI, los valores de Madrid (MD), Castilla y León (CL) y  Galicia (GA) son de prevalencia. Aun así, a día de hoy **no hay homogeneidad en esos datos entre CCAA**, MANDA CARALLO!!
 
 Por este motivo, **para valores históricos, es preferible recurrir a los datos acumulados del ISCIII**. Aparentemente están tratando de solucionar estos problemas y cuando se produce un cambio en el valor reportado por una CA, tratan de corregir todos los valores anteriores (aunque actualmente no es el caso de Castilla-La Mancha (CM)). Resumiendo, a día de hoy hay que tener cuidado con los valores de hospitalizados de Madrid (MD) y Castilla-La Mancha (CM),
-y con los valores de UCI de Madrid (MD), Castilla y León (CL) y  Galicia (GA)
+y con los valores de UCI de Madrid (MD), Castilla y León (CL) y  Galicia (GA).
+Sospechamos también que ha ocurrido lo mismo con otras CCAA, como Extremadura (EX), aunque no se ha informado.
 
 
 La cronología fue la siguiente (si alguien tiene más información al respecto, le agradecería que me lo comunicase):
