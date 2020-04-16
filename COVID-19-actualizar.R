@@ -102,11 +102,40 @@ inew
 ## Procesar files[inew]
 ## --------------------
 
+file <- files[inew]
+file
+# tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
+
+
 library("tabulizer")
+
+process_table_a <- function(file, page = 1, table = 1, nhead = 3) { 
+# page = 1; table = 1; nhead = 3; ncol.labels = 1
+  ihead <- seq_len(nhead)
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  values <- gsub(',', '.', values)       # Cambiar comas por puntos
+  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
+  values <- apply(values, 2, as.numeric)
+  # head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
+  head <- c("Casos", "Nuevos", "PCR", "Test rápidos", "IA (14 d.)")
+  colnames(values) <- head
+  # rnames <- tabla[-ihead, 1]
+  # rownames(values) <- rnames[nzchar(rnames)]
+  rnames <- c("Andalucía", "Aragón", "Asturias", "Baleares", "Canarias", 
+    "Cantabria", "Castilla La Mancha", "Castilla y León", "Cataluña", 
+    "Ceuta", "C. Valenciana", "Extremadura", "Galicia", "Madrid", 
+    "Melilla", "Murcia", "Navarra", "País Vasco", "La Rioja", "ESPAÑA")
+  rownames(values) <- rnames
+  return(values)
+}    
+
+table_a <- process_table_a(files[inew])
+# View(table_a)
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
-process_table <- function(file, page = 2, table = 1, nhead = 4) { 
+process_table_b <- function(file, page = 2, table = 1, nhead = 4) { 
 # page = 2; table = 1; nhead = 4; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
@@ -129,12 +158,10 @@ process_table <- function(file, page = 2, table = 1, nhead = 4) {
   return(values)
 }    
 
+table_b <- process_table_b(files[inew])
+# View(table_b)
 
-file <- files[inew]
-file
-# tabla <- extract_tables(file, page = 2, encoding = "UTF-8")[[1]]
-
-tables[[inew]] <- process_table(files[inew])
+tables[[inew]] <- cbind(table_a, table_b)
 knitr::kable(tables[[inew]])
 # View(tables[[inew]])
 
