@@ -104,23 +104,23 @@ inew
 
 library("tabulizer")
 
+# El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
-process_table <- function(file, page = 1, table = 1, nhead = 5) { 
-# page = 1; table = 1; nhead = 5; ncol.labels = 1
+process_table <- function(file, page = 2, table = 1, nhead = 4) { 
+# page = 2; table = 1; nhead = 4; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
-  values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
-  values <- gsub(',', '.', values)       # Cambiar comas por puntos
-  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
-  values <- apply(values, 2, as.numeric)
-  ina <- is.na(values[, 1])
-  values <- values[!ina, ]
-  # values[is.na(values)] <- 0 # Reemplazar NAs por 0 
-  if (any(is.na(values))) warning("Hay datos faltantes...")
-  head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
+  tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
+  # Trocear
+  tabla <- gsub("¥", " NA", tabla)
+  values <- apply(tabla[-nrow(tabla),], 1, function(x) unlist(strsplit(x, " ")))
+  values <- suppressWarnings(apply(values, 1, as.numeric))
+  values <- rbind(values, colSums(values))
+  head <- c("Casos que han precisado hospitalización", "Hosp. nuevos", 
+            "Casos que han ingresado en UCI", "UCI nuevos", 
+            "Fallecidos", "Fall. nuevos", "Curados", "Cur. Nuevos")
   colnames(values) <- head
-  # rnames <- tabla[-ihead, 1]
-  # rownames(values) <- rnames[nzchar(rnames)]
   rnames <- c("Andalucía", "Aragón", "Asturias", "Baleares", "Canarias", 
     "Cantabria", "Castilla La Mancha", "Castilla y León", "Cataluña", 
     "Ceuta", "C. Valenciana", "Extremadura", "Galicia", "Madrid", 
@@ -132,15 +132,13 @@ process_table <- function(file, page = 1, table = 1, nhead = 5) {
 
 file <- files[inew]
 file
-# tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
+# tabla <- extract_tables(file, page = 2, encoding = "UTF-8")[[1]]
 
-tables[[inew]] <- process_table(files[inew], nhead = 5)
+tables[[inew]] <- process_table(files[inew])
 knitr::kable(tables[[inew]])
 # View(tables[[inew]])
 
 
-# El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
-tables[[inew]][nrow(tables[[inew]]), 3:4] <- colSums(tables[[inew]][-nrow(tables[[inew]]), 3:4], na.rm = TRUE)
 
 ## ----------------
 library(pdftools)
@@ -215,7 +213,7 @@ process_table_edadsexo4 <- function(file, page = 2, table = 1 ) { # nhead = 5
 }
 
 
-edadsexo <- process_table_edadsexo4(file)
+edadsexo <- process_table_edadsexo4(file, page = 4)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
 # Pendiente añadir etiquetas variables

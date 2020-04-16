@@ -18,7 +18,10 @@
 ## ================
 ## Procesar
 ## ================
-# Si no se quieren procesar todos ir a "Actualizar"; ver también "Datos ISCIII" en "COVID-19-descarga.R".
+# NOTA: ESTE ARCHIVO ESTA SIENDO USADO UNICAMENTE
+# COMO HISTORICO DE LOS PROCESAMIENTOS REALIZADOS
+# VER COVID-19-actualizar.R PARA EL ULTIMO
+# PROCEDIMIENTO REALIZADO
 
 library("tabulizer")
 
@@ -127,7 +130,7 @@ knitr::kable(tables[[24]])
 # file <- files[38] # "Actualizacion_68_COVID-19.pdf"
 # tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
 
-process_table <- function(file, page = 1, table = 1, nhead = 5) { 
+process_table4 <- function(file, page = 1, table = 1, nhead = 5) { 
 # page = 1; table = 1; nhead = 5; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
@@ -152,6 +155,34 @@ for (i in 25:38) {
 ## ----------------
 
 
+
+
+process_table5 <- function(file, page = 1, table = 1, nhead = 5) { 
+# page = 2; table = 1; nhead = 4; ncol.labels = 1
+  ihead <- seq_len(nhead)
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  values <- gsub(',', '.', values)       # Cambiar comas por puntos
+  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
+  values <- apply(values, 2, as.numeric)
+  ina <- is.na(values[, 1])
+  values <- values[!ina, ]
+  # values[is.na(values)] <- 0 # Reemplazar NAs por 0 
+  if (any(is.na(values))) warning("Hay datos faltantes...")
+  head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
+  colnames(values) <- head
+  # rnames <- tabla[-ihead, 1]
+  # rownames(values) <- rnames[nzchar(rnames)]
+  rnames <- c("Andalucía", "Aragón", "Asturias", "Baleares", "Canarias", 
+    "Cantabria", "Castilla La Mancha", "Castilla y León", "Cataluña", 
+    "Ceuta", "C. Valenciana", "Extremadura", "Galicia", "Madrid", 
+    "Melilla", "Murcia", "Navarra", "País Vasco", "La Rioja", "ESPAÑA")
+  rownames(values) <- rnames
+  return(values)
+}    
+
+
+
 ## Fechas
 ## ----------------
 
@@ -166,76 +197,13 @@ save(files, tables, file = "COVID-19.RData")
 # ==========================================================================================
 ## Actualizar
 # ==========================================================================================
-
-old.data <- new.env()
-load("COVID-19.RData", envir = old.data)
-# str(old.data$tables)
-
-files <- dir(pattern = '*.pdf')
-tables <- vector(mode = "list", length = length(files))
-
-iold <- match(files, old.data$files)
-tables <- old.data$tables[iold]
-
-inew <- which(is.na(iold))
-inew <- inew[1]
-# inew <- length(files)
-
-## Procesar files[inew]
-## --------------------
-
-library("tabulizer")
-
-
-process_table <- function(file, page = 1, table = 1, nhead = 5) { 
-# page = 1; table = 1; nhead = 5; ncol.labels = 1
-  ihead <- seq_len(nhead)
-  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
-  values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
-  values <- gsub(',', '.', values)       # Cambiar comas por puntos
-  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
-  values <- apply(values, 2, as.numeric)
-  # values[is.na(values)] <- 0 # Reemplazar NAs por 0 
-  if (any(is.na(values))) warning("Hay datos faltantes...")
-  head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
-  colnames(values) <- head
-  rownames(values) <- tabla[-ihead, 1]
-  return(values)
-}    
-
-inew
-
-file <- files[inew]
-file
-# tabla <- extract_tables(file, page = 1, encoding = "UTF-8")[[1]]
-
-tables[[inew]] <- process_table(files[inew], nhead = 4)
-knitr::kable(tables[[inew]])
-# View(tables[[inew]])
-
-# El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
-tables[[inew]][nrow(tables[[inew]]), 3:4] <- colSums(tables[[inew]][-nrow(tables[[inew]]), 3:4], na.rm = TRUE)
-
-## ----------------
-library(pdftools)
-
-dates <- sapply(files[inew], function(file) format(pdf_info(file)$created, format = "%Y-%m-%d"))
-names(tables)[inew] <- dates
-
-save(files, tables, file = "COVID-19.RData")
-
-## ----------------
-# Generar listado de tablas automáticamente y mostrar
-
-# Si no se emplea RStudio:
-# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
-browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
+# VER COVID-19-actualizar.R 
 
 
 ## ----------------
 ## Tablas por sexo y grupo de edad
 ## ----------------
-# Ver "Actualizar" más adelante...
+
 
 library("tabulizer")
 files <- dir(pattern = '*.pdf')
@@ -609,13 +577,6 @@ attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-
 save(edadsexo, file = "edadsexo.RData")
 
 
-# ==========================================================================================
-# Actualizar
-# ==========================================================================================
-# files <- dir(pattern = '*.pdf')
-# inew <- length(files)
-# file <- files[inew]
-# file
 
 process_table_edadsexo4 <- function(file, page = 2, table = 1 ) { # nhead = 5
     # page = 2; table = 1
@@ -676,6 +637,12 @@ attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-
 # Pendiente añadir etiquetas variables
 # View(edadsexo)
 save(edadsexo, file = "edadsexo.RData")
+
+# ==========================================================================================
+# Actualizar
+# ==========================================================================================
+# VER COVID-19-actualizar.R 
+
 
 ## ----------------
 # Generar listado de tablas automáticamente y mostrar
