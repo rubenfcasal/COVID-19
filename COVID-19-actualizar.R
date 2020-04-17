@@ -26,6 +26,8 @@ acumulados <- acumulados[-inotas, var.isciii]
 names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 
 # Verificar niveles factor
+# write.csv2(unique(acumulados$CCAA.ISO), file = "levels.csv")
+# https://www.iso.org/obp/ui/#iso:code:3166:ES
 # El 08/04/2020 se cambió el nivel de Melilla de 'ME' a 'ML' (se mantendrá el anterior en acumula2)
 CCAA.ISO <- read.csv2("CCAA.ISO2.csv", colClasses = "character")
 if (!all(unique(acumulados$CCAA.ISO) %in% CCAA.ISO$COD_CCAA)) stop('Cambios en CCAA.ISO')
@@ -36,8 +38,7 @@ acumulados$CCAA <- factor(acumulados$CCAA, levels = CCAA.ISO$DESC_CCAA)
 
 # Preparar variables
 acumulados$Fecha <- as.Date(acumulados$Fecha, format = "%d/%m/%Y")
-# write.csv2(unique(acumulados$CCAA.ISO), file = "levels.csv")
-# https://www.iso.org/obp/ui/#iso:code:3166:ES
+range(acumulados$Fecha)
 
 str(acumulados)
 
@@ -52,6 +53,11 @@ acumulados[is.na(acumulados)] <- 0
 attr(acumulados, "note") <- nota.texto
 attr(acumulados, "url") <- "https://covid19.isciii.es/resources/serie_historica_acumulados.csv"
 # View(acumulados)
+# --------------------------------------
+# NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
+# está en revisión por dicha comunidad autónoma.Solo se muestra la de casos.
+acumulados[acumulados$CCAA.ISO == "CT", 5:8] <- NA
+# --------------------------------------
 save(acumulados, file = "acumulados.RData")
 
 # acumula2
@@ -130,13 +136,16 @@ process_table_a <- function(file, page = 1, table = 1, nhead = 3) {
   return(values)
 }    
 
-table_a <- process_table_a(files[inew])
+table_a <- process_table_a(files[inew], nhead = 1)
 # View(table_a)
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
+tabla <- extract_tables(file, page = page, method = "stream", encoding = "UTF-8")[[2]]
+
+
 process_table_b <- function(file, page = 2, table = 1, nhead = 4) { 
-# page = 2; table = 1; nhead = 4; ncol.labels = 1
+# page = 2; table = 1; nhead = 3; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
@@ -158,7 +167,38 @@ process_table_b <- function(file, page = 2, table = 1, nhead = 4) {
   return(values)
 }    
 
-table_b <- process_table_b(files[inew])
+process_table_b2 <- function(file, page = 2, table = 1, nhead = 3) { 
+# page = 2; table = 1; nhead = 3
+  ihead <- seq_len(nhead)
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
+  # Corregir notas
+  i2d <- which(tabla == "¥", arr.ind = TRUE)
+  i2d2 <- i2d
+  i2d2[, 1] <- i2d2[, 1] + 1
+  tabla[i2d2] <- paste(tabla[i2d2], "NA")
+  tabla <- tabla[-unique(i2d[, 1]), ]
+  # Arreglar a mano los que faltan
+  i2d2 <- matrix(c(2,2, 9,1, 9,2, 15,1), ncol = 2, byrow = TRUE)
+  tabla[i2d2] <- paste(tabla[i2d2], "NA")
+  # Trocear
+  values <- apply(tabla[-nrow(tabla),], 1, function(x) unlist(strsplit(x, " ")))
+  values <- suppressWarnings(apply(values, 1, as.numeric))
+  values <- rbind(values, colSums(values))
+  head <- c("Casos que han precisado hospitalización", "Hosp. nuevos", 
+            "Casos que han ingresado en UCI", "UCI nuevos", 
+            "Fallecidos", "Fall. nuevos", "Curados", "Cur. Nuevos")
+  colnames(values) <- head
+  rnames <- c("Andalucía", "Aragón", "Asturias", "Baleares", "Canarias", 
+    "Cantabria", "Castilla La Mancha", "Castilla y León", "Cataluña", 
+    "Ceuta", "C. Valenciana", "Extremadura", "Galicia", "Madrid", 
+    "Melilla", "Murcia", "Navarra", "País Vasco", "La Rioja", "ESPAÑA")
+  rownames(values) <- rnames
+  return(values)
+}    
+
+table_b <- process_table_b2(files[inew])
 # View(table_b)
 
 tables[[inew]] <- cbind(table_a, table_b)
@@ -188,7 +228,7 @@ save(files, tables, file = "COVID-19.RData")
 # file
 
 process_table_edadsexo4 <- function(file, page = 2, table = 1 ) { # nhead = 5
-    # page = 2; table = 1
+    # page = 3; table = 1
     tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
     tabla <- gsub("\\.", "", tabla) # Eliminar puntos
     tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
@@ -240,7 +280,7 @@ process_table_edadsexo4 <- function(file, page = 2, table = 1 ) { # nhead = 5
 }
 
 
-edadsexo <- process_table_edadsexo4(file, page = 4)
+edadsexo <- process_table_edadsexo4(file, page = 3)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
 # Pendiente añadir etiquetas variables
@@ -253,3 +293,6 @@ save(edadsexo, file = "edadsexo.RData")
 # Si no se emplea RStudio:
 # Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
 browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
+
+browseURL(url = rmarkdown::render("COVID-19-MSCBS.Rmd", encoding = "UTF-8"))
+

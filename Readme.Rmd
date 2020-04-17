@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-04-16" 
+  fecha: "2020-04-17" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -23,8 +23,7 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés. 
 
-En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a
-fecha de ***`r params$fecha`***.
+En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de ***`r params$fecha`***.
 Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
 * [edadsexo.RData](edadsexo.RData): Datos por edad y sexo (MSCBS)
@@ -33,6 +32,7 @@ Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
 * [COVID-19.RData](COVID-19.RData): Datos por CCAA (MSCBS)
 
+En [COVID-19-MSCBS.html](COVID-19-MSCBS.html) se muestran las tablas anteriores del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS) por fecha del informe.
 En la siguiente sección se detallan las fuentes de los datos.
 
 ***Nuevo***: El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. Incluye una variable `nuevos` a partir del incremento en el número de casos acumulados (aunque realmente no es el número de casos nuevos; ver [nota](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii)) y los totales para España (aunque a día de hoy, esperamos que se solucione pronto, los datos de hospitalización y UCI no son homogéneos entre CCAA; ver comentario más adelante).

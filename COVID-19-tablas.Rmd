@@ -71,29 +71,43 @@ datatable(acumulados, filter = 'top', options = list(
 
 
 
-## Tablas por fecha del informe y CCAA (archivos MSCBS) {#mscbs}
+## Tablas por CCAA (Informe MSCBS) {#mscbs}
 
-Las tablas contienen los datos consolidados a las 21:00 horas del día anterior a la fecha del informe. 
+La tabla contiene los datos consolidados a las 21:00 horas del día anterior a la fecha del informe. 
 
-***NOTA***: Los datos de hospitalización y UCI de algunas CCAA son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario que el resto). A lo largo del tiempo se ha informado sobre los valores reportados por: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Galicia (GA). Actualmente, únicamente Madrid (MD) reporta valores de prevalencia de hospitalizados, y en el caso de UCI, los valores de Madrid (MD), Castilla y León (CL) y  Galicia (GA) son de prevalencia. Por este motivo, **para valores históricos, es preferible recurrir a los datos acumulados del ISCIII**.
+```{r class.source="fold-show", results = "asis"}
+load("COVID-19.RData")
+# "files"  "tables"
+library(tibble)
+
+ilast <- length(tables)
+tabla <- as_tibble(tables[[ilast]], rownames = "CCAA")
+
+cat("\n\n Fecha informe:", names(tables)[ilast], 
+    "\n\n File: [", files[ilast], "](", files[ilast], ")")
+```
+
+### Tabla 1
+
+```{r }
+datatable(tabla[, 1:6], filter = 'top', options = list(
+  pageLength = 20, autoWidth = TRUE
+))
+```
+
+### Tabla 2
+
+```{r }
+datatable(tabla[, -(2:6)], filter = 'top', options = list(
+  pageLength = 20, autoWidth = TRUE
+))
+```
+
+***NOTA***: Los datos de hospitalización de Madrid (MD) y los de UCI de Madrid (MD), Castilla y León (CL) y  Galicia (GA), son datos de prevalencia (personas ingresadas en la correspondiente fecha). No reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario que el resto). 
 
 Por estos motivos en el informe del MSCBS no se calcula el total de España de hospitalizados y UCI, sin embargo en esta tabla se recalculó para mantener la compatibilidad (aunque solo es de utilidad como una "medida" de la evolución global, mientras no proporcionan los valores "reales").
 
 Los casos confirmados no provienen de la suma de pacientes hospitalizados, curados y fallecidos, ya que no son excluyentes. Pacientes fallecidos y curados pueden haber precisado hospitalización y por tanto computar en ambos grupos. Los pacientes que han precisado UCI también computan en los pacientes que han requerido hospitalización.
 
-Los datos de las CCAA están en continua revisión y ciertas oscilaciones diarias pueden deberse a procesos de depuración de datos y no a variaciones reales acontecidas de un día a otro.
-
-
-
-```{r class.source="fold-show", results = "asis"}
-load("COVID-19.RData")
-# "files"  "tables"
-
-dates <- names(tables)
-for (i in seq_along(files)) {
-  cat("\n\n### ", dates[i])
-  cat("\n\n File: [", files[i], "](", files[i], ")")
-  if (!is.null(tables[[i]])) print(knitr::kable(tables[[i]]))
-}
-```
-
+En [COVID-19-MSCBS.html](COVID-19-MSCBS.html) se muestran las tablas anteriores por fecha del informe.
+No obstante, teniendo en cuenta los comentarios anteriores, **para valores históricos es preferible recurrir a los datos acumulados del ISCIII**.
