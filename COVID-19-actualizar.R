@@ -72,9 +72,21 @@ names(acumula2)[4] <- "confirmados"
 # Nuevos
 acumula2 <- acumula2 %>% group_by(iso) %>% mutate(nuevos = confirmados - lag(confirmados)) %>% ungroup()
 acumula2$nuevos[is.na(acumula2$nuevos)] <- 0
-# Total España
 var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "nuevos")
-res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum, na.rm = TRUE) %>%
+
+# NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
+# está en revisión por dicha comunidad autónoma.Solo se muestra la de casos.
+# Se añaden los valores anteriores
+load("old.CT.RData")
+# Añadir a los valores anteriores, confirmados y nuevos
+new.CT <- acumula2 %>% filter(iso == "CT") %>% 
+  select(-all_of(var[2:5])) %>% 
+  left_join(select(old.CT, -ccaa, -iso), by = "fecha")
+acumula2 <- bind_rows(filter(acumula2, iso != "CT"), new.CT)
+
+# Total España
+# res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum, na.rm = TRUE) %>%
+res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum) %>%
             mutate(ccaa = "España", iso = "ES") 
 res <- suppressWarnings(bind_rows(acumula2, res))
 res$iso <- factor(res$iso, levels = c("ES", CCAA.ISO$COD_CCAA))
@@ -115,16 +127,29 @@ file
 
 library("tabulizer")
 
-process_table_a <- function(file, page = 1, table = 1, nhead = 3) { 
+  
+
+process_table_a2 <- function(file, page = 1, table = 1, nhead = 3) { 
 # page = 1; table = 1; nhead = 3; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
-  values <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
-  values <- gsub(',', '.', values)       # Cambiar comas por puntos
+  tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
+  i2d <- which(tabla[, 1:2] == "", arr.ind = TRUE)
+  tabla[i2d] <- "NA NA"
+  # Arreglar a mano los que faltan
+  i2d2 <- matrix(c(5,2, 13,2, 14,2, 15,2), ncol = 2, byrow = TRUE)
+  tabla[i2d2] <- paste(tabla[i2d2], "NA")  
+  i2d2 <- matrix(c(9,2), ncol = 2, byrow = TRUE)
+  tabla[i2d2] <- paste("NA", tabla[i2d2])  
+  values <- apply(tabla[, 1:2], 1, function(x) unlist(strsplit(x, " ")))
+  
   values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
-  values <- apply(values, 2, as.numeric)
+  values <- apply(values, 1, as.numeric)
+  values <- cbind(values, apply(tabla[, -(1:2)], 2, as.numeric))
   # head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
-  head <- c("Casos", "Nuevos", "PCR", "Test rápidos", "IA (14 d.)")
+  head <- c("Casos", "Nuevos", "Confirmados PCR", "Confirmados test rápidos", "IA (14 d.)",
+            "Positivos test rápidos", "Total positivos")
   colnames(values) <- head
   # rnames <- tabla[-ihead, 1]
   # rownames(values) <- rnames[nzchar(rnames)]
@@ -136,56 +161,30 @@ process_table_a <- function(file, page = 1, table = 1, nhead = 3) {
   return(values)
 }    
 
-table_a <- process_table_a(files[inew], nhead = 1)
+
+
+table_a <- process_table_a2(files[inew])
 # View(table_a)
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
-tabla <- extract_tables(file, page = page, method = "stream", encoding = "UTF-8")[[2]]
-
-
-process_table_b <- function(file, page = 2, table = 1, nhead = 4) { 
-# page = 2; table = 1; nhead = 3; ncol.labels = 1
-  ihead <- seq_len(nhead)
-  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
-  tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
-  tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
-  # Trocear
-  tabla <- gsub("¥", " NA", tabla)
-  values <- apply(tabla[-nrow(tabla),], 1, function(x) unlist(strsplit(x, " ")))
-  values <- suppressWarnings(apply(values, 1, as.numeric))
-  values <- rbind(values, colSums(values))
-  head <- c("Casos que han precisado hospitalización", "Hosp. nuevos", 
-            "Casos que han ingresado en UCI", "UCI nuevos", 
-            "Fallecidos", "Fall. nuevos", "Curados", "Cur. Nuevos")
-  colnames(values) <- head
-  rnames <- c("Andalucía", "Aragón", "Asturias", "Baleares", "Canarias", 
-    "Cantabria", "Castilla La Mancha", "Castilla y León", "Cataluña", 
-    "Ceuta", "C. Valenciana", "Extremadura", "Galicia", "Madrid", 
-    "Melilla", "Murcia", "Navarra", "País Vasco", "La Rioja", "ESPAÑA")
-  rownames(values) <- rnames
-  return(values)
-}    
-
-process_table_b2 <- function(file, page = 2, table = 1, nhead = 3) { 
+process_table_b3 <- function(file, page = 2, table = 1, nhead = 3) { 
 # page = 2; table = 1; nhead = 3
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
   # Corregir notas
-  i2d <- which(tabla == "¥", arr.ind = TRUE)
-  i2d2 <- i2d
-  i2d2[, 1] <- i2d2[, 1] + 1
-  tabla[i2d2] <- paste(tabla[i2d2], "NA")
-  tabla <- tabla[-unique(i2d[, 1]), ]
+  tabla <- gsub("¥", ' NA', tabla)
   # Arreglar a mano los que faltan
-  i2d2 <- matrix(c(2,2, 9,1, 9,2, 15,1), ncol = 2, byrow = TRUE)
+  i2d2 <- matrix(c(8,2), ncol = 2, byrow = TRUE)
   tabla[i2d2] <- paste(tabla[i2d2], "NA")
   # Trocear
-  values <- apply(tabla[-nrow(tabla),], 1, function(x) unlist(strsplit(x, " ")))
+  values <- apply(tabla[-nrow(tabla), 1:3], 1, function(x) unlist(strsplit(x, " ")))
   values <- suppressWarnings(apply(values, 1, as.numeric))
   values <- rbind(values, colSums(values))
+  values <- cbind(values, apply(tabla[, -(1:3)], 2, as.numeric))
+  
   head <- c("Casos que han precisado hospitalización", "Hosp. nuevos", 
             "Casos que han ingresado en UCI", "UCI nuevos", 
             "Fallecidos", "Fall. nuevos", "Curados", "Cur. Nuevos")
@@ -198,7 +197,7 @@ process_table_b2 <- function(file, page = 2, table = 1, nhead = 3) {
   return(values)
 }    
 
-table_b <- process_table_b2(files[inew])
+table_b <- process_table_b3(files[inew])
 # View(table_b)
 
 tables[[inew]] <- cbind(table_a, table_b)

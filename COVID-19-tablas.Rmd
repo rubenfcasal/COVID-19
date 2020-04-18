@@ -90,7 +90,7 @@ cat("\n\n Fecha informe:", names(tables)[ilast],
 ### Tabla 1
 
 ```{r }
-datatable(tabla[, 1:6], filter = 'top', options = list(
+datatable(tabla[, 1:8], filter = 'top', options = list(
   pageLength = 20, autoWidth = TRUE
 ))
 ```
@@ -98,7 +98,7 @@ datatable(tabla[, 1:6], filter = 'top', options = list(
 ### Tabla 2
 
 ```{r }
-datatable(tabla[, -(2:6)], filter = 'top', options = list(
+datatable(tabla[, -(2:8)], filter = 'top', options = list(
   pageLength = 20, autoWidth = TRUE
 ))
 ```
