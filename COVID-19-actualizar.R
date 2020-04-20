@@ -127,21 +127,20 @@ file
 
 library("tabulizer")
 
-  
-
-process_table_a3 <- function(file, page = 1, table = 1, nhead = 3) { 
-# page = 1; table = 1; nhead = 3; ncol.labels = 1
+process_table_a4 <- function(file, page = 1, table = 1, nhead = 5) { 
+# page = 1; table = 1; nhead = 5; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
   # Arreglar a mano
-  i2d2 <- matrix(c(5,2, 13,2, 15,2), ncol = 2, byrow = TRUE)
-  tabla[i2d2] <- paste(tabla[i2d2], "NA")  
+  tabla <- tabla[tabla[, 2] != "", 1:4]
+  tabla[20, 1] <- "200210 2881 191164 9046"
+  tabla[14, 1] <- "56963 694 54300 2663"
   values <- apply(tabla[, 1:2], 1, function(x) unlist(strsplit(x, " ")))
-  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
   values <- apply(values, 1, as.numeric)
-  values <- cbind(values, apply(tabla[, c(3, 5, 6)], 2, as.numeric))
+  
+  values <- cbind(values, apply(tabla[, 3:4], 2, as.numeric))
   # head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
   head <- c("Casos", "Nuevos", "Confirmados PCR", "Confirmados test anticuerpos", "IA (14 d.)",
             "Asintomáticos pos. test anticuerpos", "Total positivos")
@@ -157,13 +156,12 @@ process_table_a3 <- function(file, page = 1, table = 1, nhead = 3) {
 }    
 
 
-
-table_a <- process_table_a3(files[inew])
+table_a <- process_table_a4(files[inew])
 # View(table_a)
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
-process_table_b4 <- function(file, page = 2, table = 1, nhead = 3) { 
+process_table_b5 <- function(file, page = 2, table = 1, nhead = 3) { 
 # page = 2; table = 1; nhead = 3
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
@@ -175,11 +173,10 @@ process_table_b4 <- function(file, page = 2, table = 1, nhead = 3) {
   # i2d2 <- matrix(c(8,2), ncol = 2, byrow = TRUE)
   # tabla[i2d2] <- paste(tabla[i2d2], "NA")
   # Trocear
+  values <- apply(tabla[-nrow(tabla), ], 1, function(x) unlist(strsplit(x, " ")))
   values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
-  values <- apply(tabla[-nrow(tabla), 1:3], 1, function(x) unlist(strsplit(x, " ")))
   values <- apply(values, 1, as.numeric)
   values <- rbind(values, colSums(values))
-  values <- cbind(values, apply(tabla[, -(1:3)], 2, as.numeric))
   head <- c("Casos que han precisado hospitalización", "Hosp. nuevos", 
             "Casos que han ingresado en UCI", "UCI nuevos", 
             "Fallecidos", "Fall. nuevos", "Curados", "Cur. Nuevos")
@@ -192,7 +189,7 @@ process_table_b4 <- function(file, page = 2, table = 1, nhead = 3) {
   return(values)
 }    
 
-table_b <- process_table_b4(files[inew])
+table_b <- process_table_b5(files[inew])
 # View(table_b)
 
 tables[[inew]] <- cbind(table_a, table_b)
@@ -211,7 +208,6 @@ names(tables)[inew] <- dates
 save(files, tables, file = "COVID-19.RData")
 
 
-
 # ==========================================================================================
 # Actualizar Tablas por sexo y grupo de edad
 # ==========================================================================================
@@ -221,8 +217,8 @@ save(files, tables, file = "COVID-19.RData")
 # file <- files[inew]
 # file
 
-process_table_edadsexo4 <- function(file, page = 3, table = 1 ) { # nhead = 5
-    # page = 3; table = 1
+process_table_edadsexo4 <- function(file, page = 2, table = 1 ) { # nhead = 5
+    # page = 2; table = 1
     tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
     tabla <- gsub("\\.", "", tabla) # Eliminar puntos
     tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
@@ -237,7 +233,7 @@ process_table_edadsexo4 <- function(file, page = 3, table = 1 ) { # nhead = 5
     
     tabla <- gsub("%", "", tabla)   # Eliminar %
     # View(tabla)
-    tabla[c(16, 33, 50), ncol(tabla)] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
+    tabla[c(16, 34, 52), ncol(tabla)] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
 
     # Totales
     values <- tabla[6:16, -1] # Eliminamos la fila de totales
@@ -250,7 +246,7 @@ process_table_edadsexo4 <- function(file, page = 3, table = 1 ) { # nhead = 5
     total <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
 
     # Mujeres
-    values <- tabla[23:33, -1] # Eliminamos la fila de totales
+    values <- tabla[24:34, -1] # Eliminamos la fila de totales
     values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
     values <- apply(values, 1, as.numeric)
     values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
@@ -259,7 +255,7 @@ process_table_edadsexo4 <- function(file, page = 3, table = 1 ) { # nhead = 5
     mujeres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
 
     # Hombres
-    values <- tabla[40:50, -1] # Eliminamos la fila de totales
+    values <- tabla[42:52, -1] # Eliminamos la fila de totales
     values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
     values <- apply(values, 1, as.numeric)
     values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
