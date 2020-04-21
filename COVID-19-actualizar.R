@@ -127,20 +127,18 @@ file
 
 library("tabulizer")
 
-process_table_a4 <- function(file, page = 1, table = 1, nhead = 5) { 
+process_table_a5 <- function(file, page = 1, table = 1, nhead = 5) { 
 # page = 1; table = 1; nhead = 5; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
-  # Arreglar a mano
-  tabla <- tabla[tabla[, 2] != "", 1:4]
-  tabla[20, 1] <- "200210 2881 191164 9046"
-  tabla[14, 1] <- "56963 694 54300 2663"
-  values <- apply(tabla[, 1:2], 1, function(x) unlist(strsplit(x, " ")))
+  tabla <- tabla[tabla[, 1] != "", ]
+  
+  values <- apply(tabla[, 1, drop = FALSE], 1, function(x) unlist(strsplit(x, " ")))
   values <- apply(values, 1, as.numeric)
   
-  values <- cbind(values, apply(tabla[, 3:4], 2, as.numeric))
+  values <- cbind(values, apply(tabla[, 2:4], 2, as.numeric))
   # head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
   head <- c("Casos", "Nuevos", "Confirmados PCR", "Confirmados test anticuerpos", "IA (14 d.)",
             "Asintomáticos pos. test anticuerpos", "Total positivos")
@@ -156,23 +154,23 @@ process_table_a4 <- function(file, page = 1, table = 1, nhead = 5) {
 }    
 
 
-table_a <- process_table_a4(files[inew])
+table_a <- process_table_a5(files[inew])
 # View(table_a)
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
-process_table_b5 <- function(file, page = 2, table = 1, nhead = 3) { 
+process_table_b6 <- function(file, page = 2, table = 1, nhead = 3) { 
 # page = 2; table = 1; nhead = 3
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
   # Corregir notas
-  tabla <- gsub("¥", ' NA', tabla)
-  # # Arreglar a mano los que faltan
-  # i2d2 <- matrix(c(8,2), ncol = 2, byrow = TRUE)
-  # tabla[i2d2] <- paste(tabla[i2d2], "NA")
-  # Trocear
+  tabla <- gsub("¥", "", tabla)
+  # Arreglar a mano los que faltan
+  tabla[14, 1]  <- "7930 NA 1076"
+  tabla[10, 4]  <- "73 NA"
+  tabla[, 2]<- gsub("", "NA", tabla[, 2])
   values <- apply(tabla[-nrow(tabla), ], 1, function(x) unlist(strsplit(x, " ")))
   values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
   values <- apply(values, 1, as.numeric)
@@ -189,7 +187,7 @@ process_table_b5 <- function(file, page = 2, table = 1, nhead = 3) {
   return(values)
 }    
 
-table_b <- process_table_b5(files[inew])
+table_b <- process_table_b6(files[inew])
 # View(table_b)
 
 tables[[inew]] <- cbind(table_a, table_b)

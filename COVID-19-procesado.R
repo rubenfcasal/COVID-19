@@ -878,6 +878,59 @@ process_table_edadsexo4 <- function(file, page = 2, table = 1 ) { # nhead = 5
 }
 
 
+process_table_edadsexo5 <- function(file, page = 3, table = 1 ) { # nhead = 5
+    # page = 3; table = 1
+    tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+    tabla <- gsub("\\.", "", tabla) # Eliminar puntos
+    tabla <- gsub(",", ".", tabla)  # Cambiar comas por puntos
+    # View(tabla)
+    # dput(apply(tabla[1:nhead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" ")))
+    # c("Confirmados n", "Hospitalizados totales n %", "n", "Total UCI %", 
+    # "n", "", "", "Fallecidos % Letalidad(%)")
+    head <- c("Casos", "Hospitalizados", "Hospital. (% sexo)", 
+          "UCI", "UCI (% sexo)", "Fallecidos", "Fallec. (% sexo)", "Letalidad (% edad)")
+    
+    rownms <- tabla[6:16, 1] 
+    
+    tabla <- gsub("%", "", tabla)   # Eliminar %
+    # View(tabla)
+    tabla[c(16, 33, 50), ncol(tabla)] <- "100 -1" # Anadir -1 en lugar de Letalidad del total
+
+    # Totales
+    values <- tabla[6:16, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    # knitr::kable(values)
+    total <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Mujeres
+    values <- tabla[23:33, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    mujeres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    # Hombres
+    values <- tabla[40:50, -1] # Eliminamos la fila de totales
+    values <- apply(values, 1, function(x) unlist(strsplit(x, " ")))
+    values <- apply(values, 1, as.numeric)
+    values[11, 8] = round(100 * values[11, 6] / values[11, 1], 1)
+    colnames(values) <- head
+    rownames(values) <- rownms
+    hombres <- tibble::rownames_to_column(as.data.frame(values), var = "edad")
+
+    edadsexo <- dplyr::bind_rows(list(Total = total, Mujeres = mujeres, Hombres = hombres), .id = "sexo")
+    edadsexo$sexo <- factor(edadsexo$sexo, levels = c("Mujeres", "Hombres", "Total")) # Order matters...
+    edadsexo$edad <- as.factor(edadsexo$edad)
+    return(edadsexo)
+}
+
+
 edadsexo <- process_table_edadsexo4(file)
 attr(edadsexo, "file") <- file
 attr(edadsexo, "date") <- format(pdftools::pdf_info(file)$created, format = "%Y-%m-%d")
