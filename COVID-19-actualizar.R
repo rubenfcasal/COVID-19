@@ -56,7 +56,8 @@ attr(acumulados, "url") <- "https://covid19.isciii.es/resources/serie_historica_
 # --------------------------------------
 # NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
 # está en revisión por dicha comunidad autónoma.Solo se muestra la de casos.
-acumulados[acumulados$CCAA.ISO == "CT", 5:8] <- NA
+# acumulados[acumulados$CCAA.ISO == "CT", 5:8] <- NA
+# Se resteuró el 22/04/2020
 # --------------------------------------
 save(acumulados, file = "acumulados.RData")
 
@@ -74,15 +75,15 @@ acumula2 <- acumula2 %>% group_by(iso) %>% mutate(nuevos = confirmados - lag(con
 acumula2$nuevos[is.na(acumula2$nuevos)] <- 0
 var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "nuevos")
 
-# NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
-# está en revisión por dicha comunidad autónoma.Solo se muestra la de casos.
-# Se añaden los valores anteriores
-load("old.CT.RData")
-# Añadir a los valores anteriores, confirmados y nuevos
-new.CT <- acumula2 %>% filter(iso == "CT") %>% 
-  select(-all_of(var[2:5])) %>% 
-  left_join(select(old.CT, -ccaa, -iso), by = "fecha")
-acumula2 <- bind_rows(filter(acumula2, iso != "CT"), new.CT)
+# # NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
+# # está en revisión por dicha comunidad autónoma.Solo se muestra la de casos.
+# # Se añaden los valores anteriores
+# load("old.CT.RData")
+# # Añadir a los valores anteriores, confirmados y nuevos
+# new.CT <- acumula2 %>% filter(iso == "CT") %>% 
+#   select(-all_of(var[2:5])) %>% 
+#   left_join(select(old.CT, -ccaa, -iso), by = "fecha")
+# acumula2 <- bind_rows(filter(acumula2, iso != "CT"), new.CT)
 
 # Total España
 # res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum, na.rm = TRUE) %>%
@@ -96,7 +97,6 @@ res$ccaa <- factor(res$ccaa, levels = c("España", CCAA.ISO$DESC_CCAA))
 # Ordenar y guardar
 acumula2 <- res %>% arrange(fecha, iso)
 save(acumula2, file ="acumula2.RData")
-
 
 # ==========================================================================================
 ## Actualizar MSCBS por CCAA
@@ -127,18 +127,18 @@ file
 
 library("tabulizer")
 
-process_table_a5 <- function(file, page = 1, table = 1, nhead = 5) { 
+process_table_a6 <- function(file, page = 1, table = 1, nhead = 5) { 
 # page = 1; table = 1; nhead = 5; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
   tabla <- tabla[tabla[, 1] != "", ]
-  
-  values <- apply(tabla[, 1, drop = FALSE], 1, function(x) unlist(strsplit(x, " ")))
+  tabla[13, 2] <- "NA NA"
+  values <- apply(tabla[, 1:2, drop = FALSE], 1, function(x) unlist(strsplit(x, " ")))
+  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
   values <- apply(values, 1, as.numeric)
-  
-  values <- cbind(values, apply(tabla[, 2:4], 2, as.numeric))
+  values <- cbind(values, apply(tabla[, 3:5], 2, as.numeric))
   # head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
   head <- c("Casos", "Nuevos", "Confirmados PCR", "Confirmados test anticuerpos", "IA (14 d.)",
             "Asintomáticos pos. test anticuerpos", "Total positivos")
@@ -154,12 +154,12 @@ process_table_a5 <- function(file, page = 1, table = 1, nhead = 5) {
 }    
 
 
-table_a <- process_table_a5(files[inew])
+table_a <- process_table_a6(files[inew])
 # View(table_a)
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
-process_table_b6 <- function(file, page = 2, table = 1, nhead = 3) { 
+process_table_b7 <- function(file, page = 2, table = 1, nhead = 3) { 
 # page = 2; table = 1; nhead = 3
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
@@ -168,8 +168,7 @@ process_table_b6 <- function(file, page = 2, table = 1, nhead = 3) {
   # Corregir notas
   tabla <- gsub("¥", "", tabla)
   # Arreglar a mano los que faltan
-  tabla[14, 1]  <- "7930 NA 1076"
-  tabla[10, 4]  <- "73 NA"
+  tabla[14, 1]  <- "7464 NA 1024"
   tabla[, 2]<- gsub("", "NA", tabla[, 2])
   values <- apply(tabla[-nrow(tabla), ], 1, function(x) unlist(strsplit(x, " ")))
   values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
@@ -187,7 +186,7 @@ process_table_b6 <- function(file, page = 2, table = 1, nhead = 3) {
   return(values)
 }    
 
-table_b <- process_table_b6(files[inew])
+table_b <- process_table_b7(files[inew])
 # View(table_b)
 
 tables[[inew]] <- cbind(table_a, table_b)
