@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-04-22" 
+  fecha: "2020-04-23" 
 ---
 
 # Datos oficiales de COVID-19 en España

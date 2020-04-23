@@ -127,14 +127,13 @@ file
 
 library("tabulizer")
 
-process_table_a6 <- function(file, page = 1, table = 1, nhead = 5) { 
+process_table_a7 <- function(file, page = 1, table = 1, nhead = 5) { 
 # page = 1; table = 1; nhead = 5; ncol.labels = 1
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
   tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
   tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
   tabla <- tabla[tabla[, 1] != "", ]
-  tabla[13, 2] <- "NA NA"
   values <- apply(tabla[, 1:2, drop = FALSE], 1, function(x) unlist(strsplit(x, " ")))
   values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
   values <- apply(values, 1, as.numeric)
@@ -154,12 +153,12 @@ process_table_a6 <- function(file, page = 1, table = 1, nhead = 5) {
 }    
 
 
-table_a <- process_table_a6(files[inew])
+table_a <- process_table_a7(files[inew])
 # View(table_a)
 
 # El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
 
-process_table_b7 <- function(file, page = 2, table = 1, nhead = 3) { 
+process_table_b8 <- function(file, page = 2, table = 1, nhead = 3) { 
 # page = 2; table = 1; nhead = 3
   ihead <- seq_len(nhead)
   tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
@@ -168,7 +167,7 @@ process_table_b7 <- function(file, page = 2, table = 1, nhead = 3) {
   # Corregir notas
   tabla <- gsub("¥", "", tabla)
   # Arreglar a mano los que faltan
-  tabla[14, 1]  <- "7464 NA 1024"
+  tabla[14, 1]  <- "7077 NA 981"
   tabla[, 2]<- gsub("", "NA", tabla[, 2])
   values <- apply(tabla[-nrow(tabla), ], 1, function(x) unlist(strsplit(x, " ")))
   values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
@@ -186,7 +185,7 @@ process_table_b7 <- function(file, page = 2, table = 1, nhead = 3) {
   return(values)
 }    
 
-table_b <- process_table_b7(files[inew])
+table_b <- process_table_b8(files[inew])
 # View(table_b)
 
 tables[[inew]] <- cbind(table_a, table_b)
