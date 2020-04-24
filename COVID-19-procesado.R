@@ -429,6 +429,72 @@ knitr::kable(tables[[inew]])
 # View(tables[[inew]])
 
 
+process_table_a7 <- function(file, page = 1, table = 1, nhead = 5) { 
+# page = 1; table = 1; nhead = 5; ncol.labels = 1
+  ihead <- seq_len(nhead)
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
+  tabla <- tabla[tabla[, 1] != "", ]
+  values <- apply(tabla[, 1:2, drop = FALSE], 1, function(x) unlist(strsplit(x, " ")))
+  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
+  values <- apply(values, 1, as.numeric)
+  values <- cbind(values, apply(tabla[, 3:5], 2, as.numeric))
+  # head <- apply(tabla[ihead, -1], 2, function(x) paste(x[nchar(x)>0], collapse=" "))
+  head <- c("Casos", "Nuevos", "Confirmados PCR", "Confirmados test anticuerpos", "IA (14 d.)",
+            "Asintomáticos pos. test anticuerpos", "Total positivos")
+  colnames(values) <- head
+  # rnames <- tabla[-ihead, 1]
+  # rownames(values) <- rnames[nzchar(rnames)]
+  rnames <- c("Andalucía", "Aragón", "Asturias", "Baleares", "Canarias", 
+    "Cantabria", "Castilla La Mancha", "Castilla y León", "Cataluña", 
+    "Ceuta", "C. Valenciana", "Extremadura", "Galicia", "Madrid", 
+    "Melilla", "Murcia", "Navarra", "País Vasco", "La Rioja", "ESPAÑA")
+  rownames(values) <- rnames
+  return(values)
+}    
+
+
+table_a <- process_table_a7(files[inew])
+# View(table_a)
+
+# El 08/04/2020 se dejó de calcular el total de España de hospitalizados y UCI
+
+process_table_b8 <- function(file, page = 2, table = 1, nhead = 3) { 
+# page = 2; table = 1; nhead = 3
+  ihead <- seq_len(nhead)
+  tabla <- extract_tables(file, page = page, encoding = "UTF-8")[[table]]
+  tabla <- gsub("\\.", "", tabla[-ihead, -1]) # Eliminar puntos
+  tabla <- gsub(',', '.', tabla)       # Cambiar comas por puntos
+  # Corregir notas
+  tabla <- gsub("¥", "", tabla)
+  # Arreglar a mano los que faltan
+  tabla[14, 1]  <- "7077 NA 981"
+  tabla[, 2]<- gsub("", "NA", tabla[, 2])
+  values <- apply(tabla[-nrow(tabla), ], 1, function(x) unlist(strsplit(x, " ")))
+  values <- gsub("[^0-9.-]", "", values) # Eliminar caracteres no numéricos
+  values <- apply(values, 1, as.numeric)
+  values <- rbind(values, colSums(values))
+  head <- c("Casos que han precisado hospitalización", "Hosp. nuevos", 
+            "Casos que han ingresado en UCI", "UCI nuevos", 
+            "Fallecidos", "Fall. nuevos", "Curados", "Cur. Nuevos")
+  colnames(values) <- head
+  rnames <- c("Andalucía", "Aragón", "Asturias", "Baleares", "Canarias", 
+    "Cantabria", "Castilla La Mancha", "Castilla y León", "Cataluña", 
+    "Ceuta", "C. Valenciana", "Extremadura", "Galicia", "Madrid", 
+    "Melilla", "Murcia", "Navarra", "País Vasco", "La Rioja", "ESPAÑA")
+  rownames(values) <- rnames
+  return(values)
+}    
+
+table_b <- process_table_b8(files[inew])
+# View(table_b)
+
+tables[[inew]] <- cbind(table_a, table_b)
+knitr::kable(tables[[inew]])
+# View(tables[[inew]])
+
+
 
 ## Fechas
 ## ----------------

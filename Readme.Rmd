@@ -23,6 +23,13 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés. 
 
+***Importante***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario).
+La recomendación sería utilizar por ejemplo los datos en:
+https://github.com/datadista/datasets/tree/master/COVID%2019
+
+De todos modos, continuaré descargándo los informes en pdf y procesando los datos del ISCIII.
+
+
 En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas disponibles a fecha de ***`r params$fecha`***.
 Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
