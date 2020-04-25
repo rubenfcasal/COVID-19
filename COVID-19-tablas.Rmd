@@ -55,7 +55,7 @@ datatable(acumulados, filter = 'top', options = list(
 
 Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), desde el ***2020-04-23 no se actualizan*** estos datos en este repositorio.
 
-```{r class.source="fold-show", results = "asis"}
+```{r results = "asis"}
 load("edadsexo.RData")
 date <- attr(edadsexo, "date")
 file <- attr(edadsexo, "file")
@@ -79,7 +79,7 @@ Como no paran de cambiar el contenido y el formato de las tablas del informe del
 
 La tabla contiene los datos consolidados a las 21:00 horas del día anterior a la fecha del informe. 
 
-```{r class.source="fold-show", results = "asis"}
+```{r results = "asis"}
 load("COVID-19.RData")
 # "files"  "tables"
 library(tibble)

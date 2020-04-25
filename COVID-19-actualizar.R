@@ -6,14 +6,16 @@
 # --------
 
 f <- "serie_historica_acumulados.csv"
-acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 5)))
+acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 7)))
 # View(acumulados)
 
 # Verificar variables y seleccionar
 # ---------------------------------
 # Variables actuales
 # dput(names(acumulados))
-var.isciii <- c("CCAA", "FECHA", "CASOS", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+# var.isciii <- c("CCAA", "FECHA", "CASOS", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+# Cambio en las variables el 25/04/2020
+var.isciii <- c("CCAA", "FECHA", "CASOS", "PCR.", "TestAc.", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 if (any(names(acumulados) != var.isciii)) stop('Cambios en las variables')
 # Seleccionamos los casos que tienen algo en FECHA
 inotas <- which(!nzchar(acumulados$FECHA))[1]:nrow(acumulados)
@@ -23,7 +25,7 @@ nota.texto <- paste(apply(acumulados[inotas, 1:2], 1, paste, collapse =""), coll
 nota.texto <- gsub("\\*", "\\\\*", nota.texto)
 nota.texto
 acumulados <- acumulados[-inotas, var.isciii]
-names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "PCR", "TestAc", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 
 # Verificar niveles factor
 # write.csv2(unique(acumulados$CCAA.ISO), file = "levels.csv")
@@ -44,10 +46,12 @@ str(acumulados)
 
 # NA's
 # ----
-sapply(acumulados, function(x) sum(is.na(x)))
+# Debido al cambio del 25/04/2020 ya no se reemplazan los NAs por ceros
+# ----
+# sapply(acumulados, function(x) sum(is.na(x)))
 # which(is.na(acumulados$Fecha))
 # acumulados <- acumulados[!is.na(acumulados$Fecha), ]
-acumulados[is.na(acumulados)] <- 0
+# acumulados[is.na(acumulados)] <- 0
 
 # plot(acumulados[, -(1:2)])
 attr(acumulados, "note") <- nota.texto
@@ -57,7 +61,7 @@ attr(acumulados, "url") <- "https://covid19.isciii.es/resources/serie_historica_
 # NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
 # está en revisión por dicha comunidad autónoma.Solo se muestra la de casos.
 # acumulados[acumulados$CCAA.ISO == "CT", 5:8] <- NA
-# Se resteuró el 22/04/2020
+# Se restauró el 22/04/2020
 # --------------------------------------
 save(acumulados, file = "acumulados.RData")
 
@@ -70,9 +74,16 @@ acumula2 <- acumulados
 names(acumula2) <- tolower(names(acumula2)) 
 names(acumula2)[2] <- "iso"
 names(acumula2)[4] <- "confirmados"
+# ----
+# Debido al cambio del 25/04/2020 reemplazan los NAs en confirmados por "pcr"
+# ----
+acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
+
 # Nuevos
-acumula2 <- acumula2 %>% group_by(iso) %>% mutate(nuevos = confirmados - lag(confirmados)) %>% ungroup()
-acumula2$nuevos[is.na(acumula2$nuevos)] <- 0
+acumula2 <- acumula2 %>% select(-pcr, -testac) %>% group_by(iso) %>% 
+  mutate(nuevos = confirmados - lag(confirmados)) %>% ungroup()
+# acumula2$nuevos[is.na(acumula2$nuevos)] <- 0
+
 var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "nuevos")
 
 # # NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
@@ -97,6 +108,33 @@ res$ccaa <- factor(res$ccaa, levels = c("España", CCAA.ISO$DESC_CCAA))
 # Ordenar y guardar
 acumula2 <- res %>% arrange(fecha, iso)
 save(acumula2, file ="acumula2.RData")
+
+
+## ----------------
+# Generar listado de tablas automáticamente y mostrar
+# Si no se emplea RStudio:
+# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
+browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
+
+
+# hist_acumula2
+# -------------
+
+old.data <- new.env()
+load("acumula2_hist.RData", envir = old.data)
+
+# Actualizar
+fecha.last <- max(acumula2$fecha)
+acumula2 <- bind_rows(old.data$acumula2, filter(acumula2, fecha == fecha.last))
+# View(acumula2)
+save(acumula2, file ="acumula2_hist.RData")
+
+# ==========================================================================================
+# ==========================================================================================
+## A PARTIR DE AQUI SIN ACTUALIZAR DESDE 2020-04-23
+# ==========================================================================================
+# ==========================================================================================
+
 
 # ==========================================================================================
 ## Actualizar MSCBS por CCAA
