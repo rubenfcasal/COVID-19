@@ -109,6 +109,8 @@ res$ccaa <- factor(res$ccaa, levels = c("España", CCAA.ISO$DESC_CCAA))
 acumula2 <- res %>% arrange(fecha, iso)
 save(acumula2, file ="acumula2.RData")
 
+# DT::datatable(acumula2, filter = 'top', options = list(pageLength = 19, autoWidth = TRUE))
+
 
 ## ----------------
 # Generar listado de tablas automáticamente y mostrar
@@ -128,6 +130,8 @@ fecha.last <- max(acumula2$fecha)
 acumula2 <- bind_rows(old.data$acumula2, filter(acumula2, fecha == fecha.last))
 # View(acumula2)
 save(acumula2, file ="acumula2_hist.RData")
+
+# DT::datatable(acumula2, filter = 'top', options = list(pageLength = 19, autoWidth = TRUE))
 
 # ==========================================================================================
 # ==========================================================================================

@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-04-25" 
+  fecha: "2020-04-26" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -64,6 +64,8 @@ de Melilla de `"ME"` a `"ML"`. Sin embargo, por compatibilidad con versiones ant
 
 
 ***NOTAS datos ISCIII y MSCBS***:
+
+Desde el **2020-04-25** se incluyen en los datos del ISCIII dos nuevas variables `PCR+` y `TestAC+` con el número de resultados positivos en pruebas PCR y en test de anticuerpos (se supone que con síntomas) y se reporta `NA` en algunos valores de la variable `Casos` a partir del 2020-04-15 (no sé muy bien con qué criterio, al principio en varias CCAA y al final solo en Galicia que no distingue entre PCR+ y Test+). Yo creo que esto lo hacen para no aburrirnos y que lo pasemos bien intentando trabajar con estos datos, que considerados son! (es la única explicación razonable que encuentro, el problema es que a muchos no nos divierten este tipo de cosas...).
 
 Desde el **2020-04-02** se ha venido informando que los valores de hospitalización y UCI reportados por: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Galicia (GA), son datos de prevalencia (personas ingresadas en la correspondiente fecha) y no reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que en principio reporta el resto).  
 Esto ha ido cambiando a lo largo del tiempo. Actualmente, únicamente Madrid (MD) reporta valores de prevalencia de hospitalizados, y en el caso de UCI, los valores de Madrid (MD), Castilla y León (CL) y  Galicia (GA) son de prevalencia. Aun así, a día de hoy **no hay homogeneidad en esos datos entre CCAA**, MANDA CARALLO!!
