@@ -36,6 +36,8 @@ cat("\n", attr(acumulados, "note"), "\n\n Web:", attr(acumulados, "url"))
 ```
 
 ***NOTA***: Los datos de las CCAA están en continua revisión y puede haber cambios en valores anteriores (ya los hubo, debidos a procesos de depuración de datos y a la actualización de los valores reportados por algunas CCAA).
+Sospechamos también que los datos de UCI de Andalucía, Extremadura y Baleares son de prevalencia, aunque no se ha informado. 
+También que hay errores en los datos de recuperados de Galicia del 17 y 18 abril (reportan sendos ceros cuando en el informe del MSCBS habían reportado 1507 y 1536 respectivamente). Seguramente hay más errores...
 
 
 NOTA: La siguiente tabla fué generada con la función `datatable()` del paquete [DT](https://rstudio.github.io/DT).

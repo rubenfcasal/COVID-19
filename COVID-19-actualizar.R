@@ -2,6 +2,12 @@
 ## Actualizar datos ISCIII
 ## =======================
 
+# Descargar
+# --------
+f <- "serie_historica_acumulados.csv"
+download.file(paste0("https://covid19.isciii.es/resources/", f), f, mode="wb")
+
+
 # Importar
 # --------
 
@@ -42,7 +48,7 @@ acumulados$CCAA <- factor(acumulados$CCAA, levels = CCAA.ISO$DESC_CCAA)
 acumulados$Fecha <- as.Date(acumulados$Fecha, format = "%d/%m/%Y")
 range(acumulados$Fecha)
 
-str(acumulados)
+# str(acumulados)
 
 # NA's
 # ----
@@ -75,9 +81,10 @@ names(acumula2) <- tolower(names(acumula2))
 names(acumula2)[2] <- "iso"
 names(acumula2)[4] <- "confirmados"
 # ----
-# Debido al cambio del 25/04/2020 reemplazan los NAs en confirmados por "pcr"
+# Debido al cambio del 25/04/2020 se reemplazan los NAs en confirmados por "pcr+ testac"
 # ----
-acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
+# acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
+acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr + testac, confirmados))
 
 # Nuevos
 acumula2 <- acumula2 %>% select(-pcr, -testac) %>% group_by(iso) %>% 
@@ -119,19 +126,7 @@ save(acumula2, file ="acumula2.RData")
 browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
 
 
-# hist_acumula2
-# -------------
-
-old.data <- new.env()
-load("acumula2_hist.RData", envir = old.data)
-
-# Actualizar
-fecha.last <- max(acumula2$fecha)
-acumula2 <- bind_rows(old.data$acumula2, filter(acumula2, fecha == fecha.last))
-# View(acumula2)
-save(acumula2, file ="acumula2_hist.RData")
-
-# DT::datatable(acumula2, filter = 'top', options = list(pageLength = 19, autoWidth = TRUE))
+# PENDIENTE: "acumula2_hist.RData"
 
 # ==========================================================================================
 # ==========================================================================================
