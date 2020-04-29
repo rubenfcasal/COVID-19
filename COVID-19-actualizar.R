@@ -126,6 +126,20 @@ save(acumula2, file ="acumula2.RData")
 browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
 
 
+# acumula22
+# ---------
+library(tidyr)
+respuestas <- c("confirmados", "hospitalizados", "uci", 
+          "fallecidos", "nuevos")
+acumula22 <- acumula2 %>% select(-ccaa, -recuperados) %>%
+    pivot_longer(all_of(respuestas), names_to = "respuesta", values_to = "observado",
+                 names_ptypes = list(respuesta = factor(levels = respuestas)))
+
+# Troceamos por CCAA y respuesta
+acumula22 <- split(acumula22, acumula22$iso)
+acumula22 <- lapply(acumula22, function(d) split(d, d$respuesta))
+save(acumula22, file ="acumula22.RData")
+
 # PENDIENTE: "acumula2_hist.RData"
 
 # ==========================================================================================
