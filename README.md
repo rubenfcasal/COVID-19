@@ -19,7 +19,7 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
-***Nuevo***: Aparentemente el **2020-04-29** hay un cambio notable en el archivo del ISCIII en los valores reportados por Galicia de UCI, fallecidos y recuperados, también disminuye el valor en hospitalizados...
+***Nuevo***: A partir del **2020-04-29** hay un cambio notable en el archivo del ISCIII en los valores reportados por Galicia de UCI, fallecidos y recuperados (que ahora son acumulados en lugar de prevalencia; ver notas sobre los datos más adelante), también disminuye el valor en hospitalizados...
 
 ***Importante***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario). La recomendación sería utilizar en su lugar por ejemplo los datos en: <https://github.com/datadista/datasets/tree/master/COVID%2019>, o los datos del ISCIII que continuaré procesando (pese a los comentarios descritos más adelante en las notas...). De todos modos continuaré descargándo los informes en pdf.
 
@@ -28,7 +28,7 @@ Tablas
 
 Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
--   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-04-29***): Evolución diaria de casos por CCAA (ISCIII)
+-   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-04-30***): Evolución diaria de casos por CCAA (ISCIII)
 
 -   [edadsexo.RData](edadsexo.RData) (Fecha actualización: 2020-04-23): Datos por edad y sexo (MSCBS)
 
@@ -102,10 +102,10 @@ Haciendo pruebas, vi que se podían descargar los documentos desde la actualizac
 
 Posteriormente, gracias a [este comentario](https://hypatia.math.ethz.ch/pipermail/r-help-es/2020-March/013753.html) en la lista de correo de [R-Hispano](http://r-es.org), descubrí otro repositorio que contiene los datos: <https://github.com/datadista/datasets/tree/master/COVID%2019> (de donde pude descargar el fichero `Actualizacion_44_COVID.pdf` que no encontré en la web oficial).
 
-Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-04-29 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
+Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-04-30 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
 
 Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
-Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-04-29 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
+Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-04-30 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
 
 De todos modos continuaré manteniendo el historial de datos publicados del MSCBS y los últimos datos por edad y sexo.
 
