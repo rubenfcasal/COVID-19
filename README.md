@@ -19,7 +19,7 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
-***Nuevo***: A partir del **2020-04-29** hay un cambio notable en el archivo del ISCIII en los valores reportados por Galicia de UCI, fallecidos y recuperados (que ahora son acumulados en lugar de prevalencia; ver notas sobre los datos más adelante), también disminuye el valor en hospitalizados...
+***Nuevo***: A partir del **2020-04-29** hay un cambio notable en el archivo del ISCIII en los valores reportados por Galicia de UCI (que ahora son acumulados en lugar de prevalencia), fallecidos y recuperados (ver notas sobre los datos más adelante), también disminuye el valor en hospitalizados...
 
 ***Importante***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario). La recomendación sería utilizar en su lugar por ejemplo los datos en: <https://github.com/datadista/datasets/tree/master/COVID%2019>, o los datos del ISCIII que continuaré procesando (pese a los comentarios descritos más adelante en las notas...). De todos modos continuaré descargándo los informes en pdf.
 
@@ -28,7 +28,7 @@ Tablas
 
 Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
--   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-04-30***): Evolución diaria de casos por CCAA (ISCIII)
+-   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-05-01***): Evolución diaria de casos por CCAA (ISCIII)
 
 -   [edadsexo.RData](edadsexo.RData) (Fecha actualización: 2020-04-23): Datos por edad y sexo (MSCBS)
 
@@ -38,11 +38,11 @@ En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas actuales.
 
 El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. <!-- (para la evaluación de los predictores se emplea [acumula2_hist.RData](acumula2_hist.RData), que contiene los valores reportados inicialmente, sin "actualizaciones retrospectivas").  -->
 
--   [Web Investigadores UDC (Aplicación Shiny)](https://covid19.citic.udc.es), que contiene las predicciones cooperativas (pestaña Informes).
+-   [Web Investigadores UDC (Aplicación Shiny)](https://covid19.citic.udc.es), que contiene las predicciones cooperativas (pestaña Predicción cooperativa: Resultados).
 
 ***NOTAS acumula2.RData***:
 
--   El 2020-04-25 se incluyen dos nuevas variables `PCR+` y `TestAC+` con el número de resultados positivos en pruebas PCR y en test de anticuerpos (se supone que con síntomas) y se reporta `NA` en algunos valores de la variable `Casos` (renombrada como `confirmados` en este archivo) a partir del 2020-04-15. Aunque en versiones anteriores se suponía que se consideraban confirmados solo los positivos por PCR, aparentemente no es el caso, por lo se sustituyeron estos valores por la suma de `PCR+` y `TestAC+` (Galicia ya reporta como casos `PCR+` y `TestAC+`).
+-   El 2020-04-25 se incluyen dos nuevas variables `PCR+` y `TestAC+` con el número de resultados positivos en pruebas PCR y en test de anticuerpos (se supone que con síntomas) y se reporta `NA` en algunos valores de la variable `Casos` (renombrada como `confirmados` en este archivo) a partir del 2020-04-15. Aunque en versiones anteriores se suponía que se consideraban confirmados solo los positivos por PCR, aparentemente no es el caso, por lo se sustituyeron estos valores por la suma de `PCR+` y `TestAC+` (desde el 2020-04-28 Galicia ya reporta estas dos variables).
 
 -   El 2020-04-22 se recupera la serie histórica de Cataluña (CT) de hospitalizados, uci, fallecidos y recuperados (que se había eliminado desde el 2020-04-17 porque al parecer estaba en revisión por dicha comunidad autónoma), y se observan cambios en todas las variables respecto a los valores reportados anteriormente.
 
@@ -52,12 +52,12 @@ El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los da
 
 ***NOTAS datos ISCIII y MSCBS***:
 
-Desde el **2020-04-25** se incluyen en los datos del ISCIII dos nuevas variables `PCR+` y `TestAC+` con el número de resultados positivos en pruebas PCR y en test de anticuerpos (se supone que con síntomas) y se reporta `NA` en algunos valores de la variable `Casos` a partir del 2020-04-15 (no sé muy bien con qué criterio, al principio en varias CCAA y al final solo en Galicia que no distingue entre PCR+ y Test+). Yo creo que esto lo hacen para no aburrirnos y que lo pasemos bien intentando trabajar con estos datos, que considerados son! (es la única explicación razonable que encuentro, el problema es que a muchos no nos divierten este tipo de cosas...).
+Desde el **2020-04-25** se incluyen en los datos del ISCIII dos nuevas variables `PCR+` y `TestAC+` con el número de resultados positivos en pruebas PCR y en test de anticuerpos (se supone que con síntomas) y se reporta `NA` en algunos valores de la variable `Casos` a partir del 2020-04-15 (no sé muy bien con qué criterio, al principio en varias CCAA y al final solo en Galicia, que no distinguía entre PCR+ y Test+). Desde el 2020-04-28 Galicia ya reporta estas dos variables y la variable `Casos` pasa a ser `NA`.
 
 Desde el **2020-04-02** se ha venido informando que los valores de hospitalización y UCI reportados por: Castilla-La Mancha (CM), Castilla y León (CL), Comunidad Valenciana (VC), Madrid (MD) y Galicia (GA), son datos de prevalencia (personas ingresadas en la correspondiente fecha) y no reflejan el total de personas que han sido hospitalizadas o ingresadas en UCI a lo largo del periodo de notificación (al contrario de lo que en principio reporta el resto).
-Esto ha ido cambiando a lo largo del tiempo. Actualmente se informa de que únicamente Galicia (GA) reporta valores de prevalencia en UCI (sin embargo sospechamos que ocurre lo mismo con otras CCAA). Conclusión, a día de hoy **no hay homogeneidad en los datos entre CCAA**, MANDA CARALLO!!
+Esto ha ido cambiando a lo largo del tiempo. Desde el 2020-04-28 Galicia ya reporta valores acumulados de UCI (sin embargo sospechamos que ocurre lo mismo con otras CCAA aunque no hasido reportado). Conclusión, por fin parece que empieza a haber **homogeneidad en los datos entre CCAA**. No me lo puedo creer!! (realmente en UCI no me lo creo), que rapidez!!
 
-Por este motivo, **para valores históricos, es preferible recurrir a los datos acumulados del ISCIII**. Aparentemente están tratando de solucionar estos problemas y cuando se produce un cambio en el valor reportado por una CA, tratan de corregir todos los valores anteriores (aunque actualmente no es el caso de Castilla-La Mancha (CM)). Resumiendo, a día de hoy hay que tener cuidado con los valores de hospitalizados de Madrid (MD) y Castilla-La Mancha (CM), y con los valores de UCI de Madrid (MD), Castilla y León (CL) y Galicia (GA). Sospechamos también que ha ocurrido lo mismo con otras CCAA, como Andalucía, Extremadura y Baleares que aparentan casos de prevalencia, aunque no se ha informado.También que hay errores en los datos de recuperados de Galicia del 17 y 18 abril (reportan sendos ceros cuando en el informe del MSCBS habían reportado 1507 y 1536 respectivamente). Seguramente hay más errores, ya que los encargados de los datos (y sus superiores) de las CCAA y del MSCBS/ISCIII son **aparentemente** unos cracks! (i.e. sobresalen, hacen las cosas bien hechas, ...).
+Por este motivo, **para valores históricos, es preferible recurrir a los datos acumulados del ISCIII**. Aparentemente están tratando de solucionar estos problemas y cuando se produce un cambio en el valor reportado por una CA, tratan de corregir todos los valores anteriores. Aunque actualmente no es el caso de muchas CCAA como: Castilla-La Mancha (CM), Castilla y León (CL), Madrid (MD) y Galicia (GA). Sospechamos también que ha ocurrido lo mismo con otras CCAA, como Andalucía, Extremadura y Baleares que aparentan casos de prevalencia, aunque no se ha informado.También que hay errores en los datos de recuperados de Galicia del 17 y 18 abril (reportan sendos ceros cuando en el informe del MSCBS habían reportado 1507 y 1536 respectivamente). Seguramente hay más errores, ya que los encargados de los datos (y sus superiores) de las CCAA y del MSCBS/ISCIII son **aparentemente** unos cracks! (i.e. sobresalen, hacen las cosas bien hechas, ...).
 
 El 2020-04-08 se cambiaron los nombres de las variables del archivo del ISCIII y se cambió el código ISO de Melilla de `"ME"` a `"ML"`. Sin embargo, por compatibilidad con versiones anteriores, el fichero [acumulados.RData](acumulados.RData) mantiene los nombres de variables anteriores (aunque con el cambio en el factor `CCAA.ISO`). En esta fecha también se dejó de calcular el total de España de hospitalizados y UCI en la tabla del MSCBS, se recalculó para mantener la compatibilidad.
 
@@ -71,7 +71,7 @@ Parte de la cronología fue la siguiente (si alguien tiene más información al 
 
 -   Posteriormente sigue habiendo cambios (los anotaré cuando tenga tiempo). Actualmente, únicamente Madrid (MD) reporta valores de prevalencia de hospitalizados, y en el caso de UCI, los valores de Madrid (MD), Castilla y León (CL) y Galicia (GA) son de prevalencia. Lo que impide disponer de los totales para España.
 
-Mi opinión personal es que esto debería estar solucionado hace días y que (a su debido tiempo) deberían asumir responsabilidades los encargados de los datos de las CCAA y del Ministerio..., parece ser que simplemente cambian de criterio algunas CCAA por su cuenta, por tanto la responsabilidad sería de sus superiores..., como mínimo habría que aprender de lo que está pasando de cara a mejorar en el futuro...
+Mi opinión personal es que este tipo de problemas, relacionados con unos datos tan básicos, deberían haberlos solucionado hace mucho tiempo y que (a su debido tiempo) deberían asumir responsabilidades los encargados de los datos de las CCAA y del Ministerio..., parece ser que simplemente cambiaron de criterio algunas CCAA por su cuenta?, por tanto la responsabilidad sería de sus superiores..., no son capaces de entenderse para poner unos datos en común? como mínimo habría que aprender de lo que está pasando de cara a mejorar en el futuro...
 
 ***Siguientes pasos***:
 
@@ -102,10 +102,10 @@ Haciendo pruebas, vi que se podían descargar los documentos desde la actualizac
 
 Posteriormente, gracias a [este comentario](https://hypatia.math.ethz.ch/pipermail/r-help-es/2020-March/013753.html) en la lista de correo de [R-Hispano](http://r-es.org), descubrí otro repositorio que contiene los datos: <https://github.com/datadista/datasets/tree/master/COVID%2019> (de donde pude descargar el fichero `Actualizacion_44_COVID.pdf` que no encontré en la web oficial).
 
-Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-04-30 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
+Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-05-01 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
 
 Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
-Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-04-30 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
+Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-05-01 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
 
 De todos modos continuaré manteniendo el historial de datos publicados del MSCBS y los últimos datos por edad y sexo.
 
