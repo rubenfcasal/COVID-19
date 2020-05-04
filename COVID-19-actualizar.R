@@ -85,6 +85,11 @@ names(acumula2)[4] <- "confirmados"
 # ----
 # acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
 acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr + testac, confirmados))
+# ----
+# El 03/05/2020 se eliminó de la serie de Analucía "Casos" y "testac" anteriores al 2020-04-14
+# Se establecen como "pcr" para que no aparezcan NAs (tampoco en nuevos y en España)
+# ----
+acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
 
 # Nuevos
 acumula2 <- acumula2 %>% select(-pcr, -testac) %>% group_by(iso) %>% 
