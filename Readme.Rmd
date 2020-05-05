@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-05-04" 
+  fecha: "2020-05-05" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -76,8 +76,7 @@ Esto ha ido cambiando a lo largo del tiempo. Desde el 2020-04-28 Galicia ya repo
 Por este motivo, **para valores históricos, es preferible recurrir a los datos acumulados del ISCIII**. Aparentemente están tratando de solucionar estos problemas y cuando se produce un cambio en el valor reportado por una CA, tratan de corregir todos los valores anteriores. 
 Aunque actualmente no es el caso de muchas CCAA como: Castilla-La Mancha (CM), Castilla y León (CL), Madrid (MD) y Galicia (GA).
 Sospechamos también que ha ocurrido lo mismo con otras CCAA, como Andalucía, Extremadura y Baleares que aparentan reportar o haber reportado casos de prevalencia, aunque no se ha informado.
-También creemos que hay errores en los datos de recuperados de Galicia del 17 y 18 abril (reportan sendos ceros cuando en el informe del MSCBS habían reportado 1507 y 1536 respectivamente). 
-Seguramente hay más errores, ya que los encargados de los datos (y sus superiores) de las CCAA y del MSCBS/ISCIII son **aparentemente** unos cracks! (i.e. sobresalen, hacen las cosas bien hechas, ...).
+Seguramente hay más errores...
 
 El 2020-04-08 se cambiaron los nombres de las variables del archivo del ISCIII y se cambió el código ISO de Melilla de `"ME"` a `"ML"`. 
 Sin embargo, por compatibilidad con versiones anteriores, el fichero [acumulados.RData](acumulados.RData) mantiene los nombres de variables anteriores (aunque con el cambio en el factor `CCAA.ISO`).
