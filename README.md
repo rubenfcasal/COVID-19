@@ -42,8 +42,9 @@ El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los da
 
 ***NOTAS acumula2.RData***:
 
--   El 2020-05-08 se vuelven a reportar valores en la variable casos del archivo del ISCIII, que coinciden con los valores de `PCR+`. Sin embargo, por lo menos de momento, se sustituye esta variable por la suma de `PCR+` y `TestAC+` para mantener los valores reportandos anteriormente.
-
+<!-- * El 2020-05-08 se vuelven a reportar valores en la variable casos del archivo del ISCIII, que coinciden con los valores de `PCR+`. Sin embargo, por lo menos de momento, se sustituye esta variable por la suma de `PCR+` y `TestAC+` para mantener los valores reportandos anteriormente.
+El 2020-05-09 se vuelven a eliminar
+-->
 -   El 2020-04-25 se incluyen dos nuevas variables `PCR+` y `TestAC+` con el número de resultados positivos en pruebas PCR y en test de anticuerpos (se supone que con síntomas) y se reporta `NA` en algunos valores de la variable `Casos` (renombrada como `confirmados` en este archivo) a partir del 2020-04-15. Aunque en versiones anteriores se suponía que se consideraban confirmados solo los positivos por PCR, aparentemente no es el caso, por lo se sustituyeron estos valores por la suma de `PCR+` y `TestAC+` (desde el 2020-04-28 Galicia ya reporta estas dos variables).
 
 -   El 2020-04-22 se recupera la serie histórica de Cataluña (CT) de hospitalizados, uci, fallecidos y recuperados (que se había eliminado desde el 2020-04-17 porque al parecer estaba en revisión por dicha comunidad autónoma), y se observan cambios en todas las variables respecto a los valores reportados anteriormente.

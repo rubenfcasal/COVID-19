@@ -96,7 +96,7 @@ names(acumula2)[2] <- "iso"
 names(acumula2)[4] <- "confirmados"
 # ----
 # El 08/05/2020 vuelven a reportar valores en la variable casos,
-# Se reemplaza por "pcr+ testac" para mantener compatibilidad
+# y el 09/05/2020 los vuelven a eliminar
 # ----
 acumula2$confirmados <- with(acumula2, pcr + testac)
 # # Debido al cambio del 25/04/2020 se reemplazan los NAs en confirmados por "pcr+ testac"
@@ -104,7 +104,7 @@ acumula2$confirmados <- with(acumula2, pcr + testac)
 # acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr + testac, confirmados))
 # # El 03/05/2020 se eliminó de la serie de Andalucía "Casos" y "testac" anteriores al 2020-04-14
 # # Se establecen como "pcr" para que no aparezcan NAs (tampoco en nuevos y en España)
-# acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
+acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
 
 # Nuevos
 acumula2 <- acumula2 %>% select(-pcr, -testac) %>% group_by(iso) %>% 
