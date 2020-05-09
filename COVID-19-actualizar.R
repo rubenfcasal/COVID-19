@@ -4,14 +4,20 @@
 
 # Descargar
 # --------
-f <- "serie_historica_acumulados.csv"
-download.file(paste0("https://covid19.isciii.es/resources/", f), f, mode="wb")
+# f <- "serie_historica_acumulados.csv"
+# download.file(paste0("https://covid19.isciii.es/resources/", f), f, mode="wb")
+# Cambio en la dirección web y en el nombre del archivo el 08/05/2020
+f <- "agregados.csv"
+download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mode="wb")
+
 
 
 # Importar
 # --------
 
-f <- "serie_historica_acumulados.csv"
+# f <- "serie_historica_acumulados.csv"
+# Cambio en el nombre del archivo el 08/05/2020
+f <- "agregados.csv"
 acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 7)))
 # View(acumulados)
 
@@ -61,7 +67,7 @@ range(acumulados$Fecha)
 
 # plot(acumulados[, -(1:2)])
 attr(acumulados, "note") <- nota.texto
-attr(acumulados, "url") <- "https://covid19.isciii.es/resources/serie_historica_acumulados.csv"
+attr(acumulados, "url") <- "https://cnecovid.isciii.es/covid19/resources/agregados.csv"
 # View(acumulados)
 # --------------------------------------
 # NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
@@ -70,6 +76,14 @@ attr(acumulados, "url") <- "https://covid19.isciii.es/resources/serie_historica_
 # Se restauró el 22/04/2020
 # --------------------------------------
 save(acumulados, file = "acumulados.RData")
+
+
+## ----------------
+# Generar listado de tablas automáticamente y mostrar
+# Si no se emplea RStudio:
+# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
+browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
+
 
 # acumula2
 # --------
@@ -81,15 +95,16 @@ names(acumula2) <- tolower(names(acumula2))
 names(acumula2)[2] <- "iso"
 names(acumula2)[4] <- "confirmados"
 # ----
-# Debido al cambio del 25/04/2020 se reemplazan los NAs en confirmados por "pcr+ testac"
+# El 08/05/2020 vuelven a reportar valores en la variable casos,
+# Se reemplaza por "pcr+ testac" para mantener compatibilidad
 # ----
+acumula2$confirmados <- with(acumula2, pcr + testac)
+# # Debido al cambio del 25/04/2020 se reemplazan los NAs en confirmados por "pcr+ testac"
+# # acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
+# acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr + testac, confirmados))
+# # El 03/05/2020 se eliminó de la serie de Andalucía "Casos" y "testac" anteriores al 2020-04-14
+# # Se establecen como "pcr" para que no aparezcan NAs (tampoco en nuevos y en España)
 # acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
-acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr + testac, confirmados))
-# ----
-# El 03/05/2020 se eliminó de la serie de Analucía "Casos" y "testac" anteriores al 2020-04-14
-# Se establecen como "pcr" para que no aparezcan NAs (tampoco en nuevos y en España)
-# ----
-acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
 
 # Nuevos
 acumula2 <- acumula2 %>% select(-pcr, -testac) %>% group_by(iso) %>% 
@@ -122,14 +137,6 @@ acumula2 <- res %>% arrange(fecha, iso)
 save(acumula2, file ="acumula2.RData")
 
 # DT::datatable(acumula2, filter = 'top', options = list(pageLength = 19, autoWidth = TRUE))
-
-
-## ----------------
-# Generar listado de tablas automáticamente y mostrar
-# Si no se emplea RStudio:
-# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
-browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
-
 
 # acumula22
 # ---------

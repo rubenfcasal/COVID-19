@@ -19,6 +19,8 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
+***Nuevo***: El 2020-05-08 se actualizó la web del ISCIII: <https://cnecovid.isciii.es>, ahora tienen una aplicación Shiny <https://cnecovid.isciii.es/covid19> y los datos pueden descargarse de la pestaña *Documentación y Datos*: <https://cnecovid.isciii.es/covid19/resources/agregados.csv> (le cambiaron el nombre). Aunque en este repositorio se mantendrá el nombre anterior.
+
 ***Importante***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario). La recomendación sería utilizar en su lugar por ejemplo los datos en: <https://github.com/datadista/datasets/tree/master/COVID%2019>, o los datos del ISCIII que continuaré procesando (pese a los comentarios descritos más adelante en las notas...). De todos modos continuaré descargándo los informes en pdf.
 
 Tablas
@@ -26,7 +28,7 @@ Tablas
 
 Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
--   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-05-08***): Evolución diaria de casos por CCAA (ISCIII)
+-   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-05-09***): Evolución diaria de casos por CCAA (ISCIII)
 
 -   [edadsexo.RData](edadsexo.RData) (Fecha actualización: 2020-04-23): Datos por edad y sexo (MSCBS)
 
@@ -39,6 +41,8 @@ El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los da
 -   [Web Investigadores UDC (Aplicación Shiny)](https://covid19.citic.udc.es), que contiene las predicciones cooperativas (pestaña Predicción cooperativa: Resultados).
 
 ***NOTAS acumula2.RData***:
+
+-   El 2020-05-08 se vuelven a reportar valores en la variable casos del archivo del ISCIII, que coinciden con los valores de `PCR+`. Sin embargo, por lo menos de momento, se sustituye esta variable por la suma de `PCR+` y `TestAC+` para mantener los valores reportandos anteriormente.
 
 -   El 2020-04-25 se incluyen dos nuevas variables `PCR+` y `TestAC+` con el número de resultados positivos en pruebas PCR y en test de anticuerpos (se supone que con síntomas) y se reporta `NA` en algunos valores de la variable `Casos` (renombrada como `confirmados` en este archivo) a partir del 2020-04-15. Aunque en versiones anteriores se suponía que se consideraban confirmados solo los positivos por PCR, aparentemente no es el caso, por lo se sustituyeron estos valores por la suma de `PCR+` y `TestAC+` (desde el 2020-04-28 Galicia ya reporta estas dos variables).
 
@@ -106,20 +110,20 @@ Haciendo pruebas, vi que se podían descargar los documentos desde la actualizac
 
 Posteriormente, gracias a [este comentario](https://hypatia.math.ethz.ch/pipermail/r-help-es/2020-March/013753.html) en la lista de correo de [R-Hispano](http://r-es.org), descubrí otro repositorio que contiene los datos: <https://github.com/datadista/datasets/tree/master/COVID%2019> (de donde pude descargar el fichero `Actualizacion_44_COVID.pdf` que no encontré en la web oficial).
 
-Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-05-08 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
+Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-05-09 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
 
-Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://covid19.isciii.es) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
-Archivo: [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv) (también disponible en este repositorio [aquí](serie_historica_acumulados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-05-08 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
+Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://cnecovid.isciii.es/covid19) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
+Archivo: [agregados.csv](https://cnecovid.isciii.es/covid19/resources/agregados.csv) (también disponible en este repositorio [aquí](agregados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-05-09 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
 
 De todos modos continuaré manteniendo el historial de datos publicados del MSCBS y los últimos datos por edad y sexo.
 
 Otros enlaces que pueden ser de interés (ver Sección [Enlaces](#enlaces)):
 
--   [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es)
+-   [Instituto de Salud Carlos III (ISCIII)](https://cnecovid.isciii.es)
 
-    -   [Situación de COVID-19 en España](https://covid19.isciii.es)
+    -   [Situación de COVID-19 en España](https://cnecovid.isciii.es/covid19)
 
-    -   [serie\_historica\_acumulados.csv](https://covid19.isciii.es/resources/serie_historica_acumulados.csv)
+    -   [agregados.csv](https://cnecovid.isciii.es/covid19/resources/agregados.csv)
 
     -   [Informes COVID-19 del Centro Nacional de Epidemiología](https://www.isciii.es/QueHacemos/Servicios/VigilanciaSaludPublicaRENAVE/EnfermedadesTransmisibles/Paginas/InformesCOVID-19.aspx)
 
