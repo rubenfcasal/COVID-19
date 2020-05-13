@@ -28,7 +28,7 @@ Tablas
 
 Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
--   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-05-12***): Evolución diaria de casos por CCAA (ISCIII)
+-   [acumulados.RData](acumulados.RData) (Fecha actualización: ***2020-05-13***): Evolución diaria de casos por CCAA (ISCIII)
 
 -   [edadsexo.RData](edadsexo.RData) (Fecha actualización: 2020-04-23): Datos por edad y sexo (MSCBS)
 
@@ -36,9 +36,11 @@ Las tablas (con un procesado mínimo) están almacenadas en los archivos:
 
 En [COVID-19-tablas.html](COVID-19-tablas.html) se muestran las tablas actuales. En [COVID-19-MSCBS.html](COVID-19-MSCBS.html) se muestran las tablas anteriores del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS) por fecha del informe. Más adelante se incluyen ***notas importantes*** sobre estos datos y se detallan las fuentes empleadas.
 
-El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo. <!-- (para la evaluación de los predictores se emplea [acumula2_hist.RData](acumula2_hist.RData), que contiene los valores reportados inicialmente, sin "actualizaciones retrospectivas").  -->
+El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo.
 
 -   [Web Investigadores UDC (Aplicación Shiny)](https://covid19.citic.udc.es), que contiene las predicciones cooperativas (pestaña Predicción cooperativa: Resultados).
+
+***Nuevo***: El 2020-05-13 se añadió el directorio *acumula2\_hist* que contiene el código necesario para generar el histórico de valores reportados del ISCIII: [acumula2\_hist.RData](acumula2_hist/acumula2_hist.RData), empleado para la evaluación de los predictores. También se genera un informe, [Informe\_acumula2\_hist.html](acumula2_hist/Informe_acumula2_hist.html), donde se incluyen más detalles (puede servir también para ver algunos de los problemas de los datos reportados por las distintas CCAA en el pasado, pocas se salvan...).
 
 ***NOTAS acumula2.RData***:
 
@@ -111,10 +113,10 @@ Haciendo pruebas, vi que se podían descargar los documentos desde la actualizac
 
 Posteriormente, gracias a [este comentario](https://hypatia.math.ethz.ch/pipermail/r-help-es/2020-March/013753.html) en la lista de correo de [R-Hispano](http://r-es.org), descubrí otro repositorio que contiene los datos: <https://github.com/datadista/datasets/tree/master/COVID%2019> (de donde pude descargar el fichero `Actualizacion_44_COVID.pdf` que no encontré en la web oficial).
 
-Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-05-12 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
+Desde la [Actualizacion\_53\_COVID-19.pdf](Actualizacion_53_COVID-19.pdf) (2020-03-23) los archivos contienen nuevas tablas con la distribución de casos hospitalizados, ingresados en UCI y fallecidos por grupos de edad y sexo. La tabla correspondiente a la última actualización del 2020-05-13 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#edadsexo).
 
 Desde el **2020-03-26** se pueden descargar los datos oficiales acumulados en la página web [Situación de COVID-19 en España](https://cnecovid.isciii.es/covid19) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es).
-Archivo: [agregados.csv](https://cnecovid.isciii.es/covid19/resources/agregados.csv) (también disponible en este repositorio [aquí](agregados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-05-12 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
+Archivo: [agregados.csv](https://cnecovid.isciii.es/covid19/resources/agregados.csv) (también disponible en este repositorio [aquí](agregados.csv); el archivo [COVID-19-descarga.R](COVID-19-descarga.R) contiene el código necesario para descargar estos datos y [COVID-19-actualizar.R](COVID-19-actualizar.R) para importarlos a R). La tabla correspondiente a la última actualización del 2020-05-13 puede consultarse en el listado de tablas [aquí](https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html#isciii).
 
 De todos modos continuaré manteniendo el historial de datos publicados del MSCBS y los últimos datos por edad y sexo.
 

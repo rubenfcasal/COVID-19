@@ -1,0 +1,129 @@
+---
+title: "Datos ISCIII COVID-19 por CCAA"
+author: "Evolución de los valores reportados"
+params: 
+  fecha: "`r Sys.Date() - 1`" 
+date: "Hasta `r params$fecha`"
+
+output:
+  html_document:
+     code_folding: hide
+     toc: true
+     toc_float: true
+     fig_width: 12
+     fig_height: 6  
+     out_width: "100%"    
+---
+
+
+```{r echo=FALSE, message=FALSE}
+# library(car)
+library(dplyr, warn.conflicts = FALSE)
+library(tidyr)
+library(DT)
+load("../acumula22.RData")
+acumula22.last <- acumula22
+load("acumula2_hist.RData")
+load("acumula22_hist.RData")
+iso <- names(acumula22)
+# respuestas <- names(acumula22[[1]])
+respuestas <- c("confirmados", "nuevos", "hospitalizados", "uci", "fallecidos")
+# symmetric absolute percentage increment
+sapinc <- function(old, new) 200*abs(old - new)/pmax(abs(old) + abs(new), 2)
+# CCAA
+iso.ccaa <- read.csv2("iso.ccaa.csv", colClasses = "character")
+iso <- iso.ccaa$iso
+ccaa <- iso.ccaa$ccaa
+names(ccaa) <- iso
+```
+
+
+Se constuye *acumula2_hist.RData* de forma incremental, añadiendo los nuevos valores reportados 
+a los anteriores.
+Si en los valores correspondientes a la última fecha del histórico 
+hay un cambio en porcentaje superior a `tol = 1` en la "diferencia absoluta porcentual" 
+`100*abs(old - new)/pmax(old, 1) > tol`, se considera que hubo un cambio (change = 1). 
+Se asigna `NA` a los valores que se añaden y se guarda el cambio en `changes`.
+En el caso de la variable `nuevos` se considera que hay un cambio solo si se
+detectó uno en `confirmados`.
+
+A partir del 2020-04-01 (inicio de las predicciones cooperativas), 
+se emplea el "symmetric absolute percentage increment":
+`sapinc <- function(old, new) 200*abs(old - new)/pmax(abs(old) + abs(new), 20)`,
+para medir cambios respecto al día anterior (change = 2), si `sapinc > 15`.
+Se considera que hubo un cambio en `España` solo si se detecto en alguna CCAA.
+Adicionalmente se estableció como cambio tipo 2, previamente se le había asignado `NA`, 
+en `confirmados` y `nuevos` el 2020-04-24 y 2020-04-25, por cambios
+en los valores reportados como casos en los datos del ISCIII.
+
+De esta forma, en el cálculo de errores se ignorarán las predicciones a los horizontes 
+donde se detectó un cambio. 
+También se genera el archivo *filter_pred.RData* que permite filtrar las predicciones pasadas 
+a horizontes futuros.
+
+
+# Global 
+
+Datos históricos
+
+```{r }
+# datatable(acumula2 %>% arrange(fecha, iso, respuesta) %>% select(-change) %>%
+#             pivot_wider(names_from = respuesta, values_from = observado), 
+datatable(acumula2 %>% arrange(respuesta, fecha, iso), 
+          filter = 'top', options = list(pageLength = 20, autoWidth = TRUE))
+```
+
+
+# Cambios detectados 
+
+
+```{r }
+datatable(changes, filter = 'top', options = list(autoWidth = TRUE)) %>%
+  formatRound("pchange", mark = "")
+```
+
+
+En estos puntos se considera que hubo un cambio en la serie y se elimina
+el correspondiente valor en el histórico (el siguiente si se trata de un cambio tipo 1). 
+En los gráficos secuenciales siguientes
+se muestra el valor `nuevo` como un punto rojo, 
+o el valor reportado en azul, dependiendo del tipo de cambio.
+
+
+```{r results = "asis"}
+for (r in respuestas) {  # r = "confirmados"
+  cat("\n\n# ", r, "\n\n") 
+  
+  for (ca in iso) { # ca <- "ES"
+    cat("\n\n## ",  ccaa[ca], "\n\n")
+  
+    datos <- acumula22[[ca]][[r]] %>% mutate(sapinc = sapinc(lag(observado), observado))
+    
+    # res <- with(datos, car::Boxplot(~ sapinc, id = list(labels=format(fecha[!is.na(sapinc)]))))
+   
+    cat("\n\n Gráfico secuencial: \n\n") 
+
+    plot(observado ~ fecha, type = "l", main = paste(ccaa[ca], r), 
+         xlab = "Fecha", ylab = r, data = datos)
+    with(acumula22.last[[ca]][[r]], lines(fecha, observado, lty = 3))
+    
+    if(is.null(changes2[[ca]][[r]])) {
+        cat("\n\nNo hay cambios...\n\n") 
+    } else {
+         points(new ~ fecha, col = "red", data = changes2[[ca]][[r]])
+         cat("\n\n Los puntos rojos muestran el 'nuevo valor' en cambios (tipo 1).\n\n") 
+         points(old ~ fecha, col = "blue", data = filter(changes2[[ca]][[r]], change == 2))
+         cat("\n\n Los puntos azules muestran un cambio (tipo 2) por salto.\n\n") 
+
+    }
+    cat("\n\n Con línea de puntos se muestra la serie actualizada. \n\n") 
+    
+    cat("\n\n Incrementos porcentuales (simétricos) respecto al día anterior (a partir de 2020-04-01): \n\n") 
+
+    plot(sapinc ~ fecha, type = "h", main = paste(ccaa[ca], r), 
+         xlab="Fecha", ylab= "Incremento porcentual (simétrico)", data = filter(datos, fecha >= as.Date("2020-04-01")) )    
+    
+  }
+}
+```
+

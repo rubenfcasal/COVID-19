@@ -10,14 +10,9 @@
 f <- "agregados.csv"
 download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mode="wb")
 
-
-
 # Importar
 # --------
-
-# f <- "serie_historica_acumulados.csv"
-# Cambio en el nombre del archivo el 08/05/2020
-f <- "agregados.csv"
+# f <- "agregados.csv"
 acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 7)))
 # View(acumulados)
 
@@ -152,7 +147,27 @@ acumula22 <- split(acumula22, acumula22$iso)
 acumula22 <- lapply(acumula22, function(d) split(d, d$respuesta))
 save(acumula22, file ="acumula22.RData")
 
-# PENDIENTE: "acumula2_hist.RData"
+
+## =======================
+## acumula2_hist.RData
+## =======================
+fecha.txt <- format(Sys.Date(), format = "%m_%d")
+file.copy("acumula2.RData", paste0("./acumula2_hist/acumula2_",fecha.txt,".RData"), overwrite = TRUE)
+source("acumula2_hist/acumula2_hist.R", chdir = TRUE)
+
+
+## ================
+## Datos MSCBS
+## ================
+
+# Descargar
+# https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm
+
+ifile <-  as.numeric(Sys.Date() - as.Date("2020-01-30"))
+file <- sprintf("Actualizacion_%i_COVID-19.pdf", ifile)
+download.file(paste0("https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/documentos/", 
+              file), file, mode="wb")
+
 
 # ==========================================================================================
 # ==========================================================================================

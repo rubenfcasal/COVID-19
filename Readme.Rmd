@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-05-12" 
+  fecha: "2020-05-13" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -48,10 +48,11 @@ Más adelante se incluyen ***notas importantes*** sobre estos datos y se detalla
 
 
 El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los datos del ISCIII en un formato adecuado para el [llamamiento del Comite Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo.
-<!-- (para la evaluación de los predictores se emplea [acumula2_hist.RData](acumula2_hist.RData), que contiene los valores reportados inicialmente, sin "actualizaciones retrospectivas").  -->
 
 * [Web Investigadores UDC (Aplicación Shiny)](https://covid19.citic.udc.es),
   que contiene las predicciones cooperativas (pestaña Predicción cooperativa: Resultados).
+  
+***Nuevo***: El 2020-05-13 se añadió el directorio *acumula2_hist* que contiene el código necesario para generar el histórico de valores reportados del ISCIII:  [acumula2_hist.RData](acumula2_hist/acumula2_hist.RData), empleado para la evaluación de los predictores. También se genera un informe, [Informe_acumula2_hist.html](acumula2_hist/Informe_acumula2_hist.html), donde se incluyen más detalles (puede servir también para ver algunos de los problemas de los datos reportados por las distintas CCAA en el pasado, pocas se salvan...).
   
 ***NOTAS acumula2.RData***:  
 
