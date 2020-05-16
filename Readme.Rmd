@@ -24,10 +24,15 @@ Pendiente:
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés. 
 
 
-***Nuevo***: El 2020-05-08 se actualizó la web del ISCIII: <https://cnecovid.isciii.es>, ahora tienen una aplicación Shiny <https://cnecovid.isciii.es/covid19> y los datos pueden descargarse de la pestaña *Documentación y Datos*:  <https://cnecovid.isciii.es/covid19/resources/agregados.csv> (le cambiaron el nombre). Aunque en este repositorio se mantendrá el nombre anterior.
+***Importante***: El **2020-05-16** no se actualizó el archivo de datos del ISCIII,
+pese a que en el informe del ministerio ([Actualizacion_107_COVID-19.pdf](Actualizacion_107_COVID-19.pdf)) todas las CCAA reportaron datos.
+Además de que Cataluña, Madrid y Galicia parecen estar haciendo de las suyas. 
+Cataluña reporta cada día un número de casos nuevos y posteriormente lo incrementa. 
+Aparentemente Madrid está haciendo algo parecido.
+No es serio que a estas alturas no sean capaces de mantener una serie de datos tan básica.
 
 
-***Importante***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario). La recomendación sería utilizar en su lugar por ejemplo los datos en: <https://github.com/datadista/datasets/tree/master/COVID%2019>,
+***Nota***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario). La recomendación sería utilizar en su lugar por ejemplo los datos en: <https://github.com/datadista/datasets/tree/master/COVID%2019>,
 o los datos del ISCIII que continuaré procesando (pese a los comentarios descritos más adelante en las notas...). 
 De todos modos continuaré descargándo los informes en pdf.
 
@@ -73,6 +78,8 @@ de Melilla de `"ME"` a `"ML"`. Sin embargo, por compatibilidad con versiones ant
 
 
 ***NOTAS datos ISCIII y MSCBS***:
+
+El 2020-05-08 se actualizó la web del ISCIII: <https://cnecovid.isciii.es>, ahora tienen una aplicación Shiny <https://cnecovid.isciii.es/covid19> y los datos pueden descargarse de la pestaña *Documentación y Datos*:  <https://cnecovid.isciii.es/covid19/resources/agregados.csv> (le cambiaron el nombre). Aunque en este repositorio se mantendrá el nombre anterior.
 
 A partir del **2020-04-29** hay un cambio notable en el archivo del ISCIII en los valores reportados por Galicia de UCI (que ahora son acumulados en lugar de prevalencia), fallecidos y recuperados (ver notas más adelante), también disminuye el valor en hospitalizados.
 
