@@ -133,6 +133,13 @@ save(acumula2, file ="acumula2.RData")
 
 # DT::datatable(acumula2, filter = 'top', options = list(pageLength = 19, autoWidth = TRUE))
 
+# NOTA: El 16/05/2020 el ISCIII no reporta datos 
+# acumula2 <- acumula2 %>% filter(fecha == as.Date("2020-05-14")) %>%
+#     mutate(fecha = fecha + 1) %>%
+#     mutate_at(var, function(x) NA) %>%
+#     bind_rows(acumula2)
+
+
 # acumula22
 # ---------
 library(tidyr)

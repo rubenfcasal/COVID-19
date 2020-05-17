@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-05-15" 
+  fecha: "2020-05-17" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -22,14 +22,6 @@ Pendiente:
 
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés. 
-
-
-***Importante***: El **2020-05-16** no se actualizó el archivo de datos del ISCIII,
-pese a que en el informe del ministerio ([Actualizacion_107_COVID-19.pdf](Actualizacion_107_COVID-19.pdf)) todas las CCAA reportaron datos.
-Además de que Cataluña, Madrid y Galicia parecen estar haciendo de las suyas. 
-Cataluña reporta cada día un número de casos nuevos y posteriormente lo incrementa. 
-Aparentemente Madrid está haciendo algo parecido.
-No es serio que a estas alturas no sean capaces de mantener una serie de datos tan básica.
 
 
 ***Nota***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario). La recomendación sería utilizar en su lugar por ejemplo los datos en: <https://github.com/datadista/datasets/tree/master/COVID%2019>,
@@ -61,6 +53,9 @@ El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los da
   
 ***NOTAS acumula2.RData***:  
 
+* El 2020-05-16 no se actualizó el archivo de datos del ISCIII (se les asignó `NA` en este archivo),
+pese a que en el informe del ministerio ([Actualizacion_107_COVID-19.pdf](Actualizacion_107_COVID-19.pdf)) todas las CCAA reportaron datos.
+
 <!-- * El 2020-05-08 se vuelven a reportar valores en la variable casos del archivo del ISCIII, que coinciden con los valores de `PCR+`. Sin embargo, por lo menos de momento, se sustituye esta variable por la suma de `PCR+` y `TestAC+` para mantener los valores reportandos anteriormente.
 El 2020-05-09 se vuelven a eliminar
 -->
@@ -78,6 +73,12 @@ de Melilla de `"ME"` a `"ML"`. Sin embargo, por compatibilidad con versiones ant
 
 
 ***NOTAS datos ISCIII y MSCBS***:
+
+El **2020-05-17** se actualizó de nuevo el archivo de datos del ISCIII (después de no haberlo hecho el día anterior).
+Pero Cataluña, Madrid, el País Vasco y Galicia parecen estar haciendo de las suyas. 
+Cataluña reporta cada día un número de casos nuevos y posteriormente lo incrementa. 
+El País Vasco y aparentemente también Madrid está haciendo algo parecido.
+No es serio que a estas alturas no sean capaces de mantener una serie de datos tan básica.
 
 El 2020-05-08 se actualizó la web del ISCIII: <https://cnecovid.isciii.es>, ahora tienen una aplicación Shiny <https://cnecovid.isciii.es/covid19> y los datos pueden descargarse de la pestaña *Documentación y Datos*:  <https://cnecovid.isciii.es/covid19/resources/agregados.csv> (le cambiaron el nombre). Aunque en este repositorio se mantendrá el nombre anterior.
 
