@@ -54,7 +54,8 @@ para medir cambios respecto al día anterior (change = 2), si `sapinc > 15`.
 Se considera que hubo un cambio en `España` solo si se detecto en alguna CCAA.
 Adicionalmente se estableció como cambio tipo 2, previamente se le había asignado `NA`, 
 en `confirmados` y `nuevos` el 2020-04-24 y 2020-04-25, por cambios
-en los valores reportados como casos en los datos del ISCIII.
+en los valores reportados como casos en los datos del ISCIII. 
+También se hizo lo mismo con los datos del 2020-05-15 (ese día el ISCIII no reportó datos).
 
 De esta forma, en el cálculo de errores se ignorarán las predicciones a los horizontes 
 donde se detectó un cambio. 

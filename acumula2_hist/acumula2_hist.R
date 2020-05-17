@@ -147,6 +147,12 @@ changes2 <- acumula2 %>% filter(fecha %in% as.Date(c("2020-04-24", "2020-04-25")
 # index <- with(acumula2, fecha %in% as.Date(c("2020-04-24", "2020-04-25")))
 # acumula2[index,  c("confirmados", "nuevos")] <- NA
 
+# Añadir cambios tipo 2 el 2020-05-15 en todas las variables
+changes2 <- acumula2 %>% filter(fecha == as.Date("2020-05-15")) %>%
+      mutate(sapinc = NA) %>%
+      bind_rows(changes2)
+
+
 
 # -------------------------------------------
 # changes
