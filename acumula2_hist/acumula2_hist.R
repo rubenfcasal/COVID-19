@@ -9,8 +9,11 @@ library(dplyr, warn.conflicts = FALSE)
 library(tidyr)
 
 # dput(names(acumula2))
+# Cambio en las variables el 25/04/2020
+# var <- c( "ccaa", "iso", "fecha", "confirmados", "hospitalizados", "uci", 
+#           "fallecidos", "recuperados", "nuevos")
 var <- c( "ccaa", "iso", "fecha", "confirmados", "hospitalizados", "uci", 
-          "fallecidos", "recuperados", "nuevos")
+          "fallecidos", "nuevos")
 # PENDIENTE: Cambiar el orden de las respuestas
 # respuestas <- c("uci", "hospitalizados", "fallecidos", "nuevos", "confirmados")
 respuestas <- c("confirmados", "hospitalizados", "uci", "fallecidos", "nuevos")
@@ -29,7 +32,9 @@ respuestas <- c("confirmados", "hospitalizados", "uci", "fallecidos", "nuevos")
 files <- dir(pattern = paste0('^acumula2_\\d{2}_\\d{2}\\.RData'))
 
 load(files[1])
-acumula2 <- acumula2 %>% select(-ccaa, -recuperados) %>%
+# Cambio en las variables el 25/04/2020
+# acumula2 <- acumula2 %>% select(-ccaa, -recuperados) %>%
+acumula2 <- acumula2 %>% select(all_of(var[-1])) %>%
     pivot_longer(all_of(respuestas), names_to = "respuesta", values_to = "observado",
                  names_ptypes = list(respuesta = factor(levels = respuestas)))
 fecha.last <- max(acumula2$fecha)
@@ -50,15 +55,25 @@ fcambio <- function(old, new, tol = 1) {
 # Se considera cambio tipo 1 en nuevos solo si lo hay en confirmados
 
 for (f in files[-1]) { # f <- files[2]
-# for (f in files[2:13]) { # f <- files[14]
+# for (f in files[2:45]) { # f <- files[46]
   new.data <- new.env()
   load(f, envir = new.data)
-  if (any(names(new.data$acumula2) != var)) stop('Cambios en los nombres de las variables')
-  new.acumula2 <- new.data$acumula2 %>% select(-ccaa, -recuperados) %>%
+  if (!all(var %in% names(new.data$acumula2))) stop('Cambios en los nombres de las variables')
+  # Cambio en las variables el 25/04/2020
+  # new.acumula2 <- new.data$acumula2 %>% select(-ccaa, -recuperados) %>%
+  new.acumula2 <- new.data$acumula2 %>% select(all_of(var[-1])) %>%
       pivot_longer(all_of(respuestas), names_to = "respuesta", values_to = "observado",
                  names_ptypes = list(respuesta = factor(levels = respuestas))) %>%
       filter(fecha >= fecha.last)%>%
       arrange(fecha, iso, respuesta)
+  # Verificar si hubo un salto en la fecha
+  if (max(new.acumula2$fecha) > fecha.last + 1) {
+    acumula2 <- bind_rows(acumula2, filter(new.acumula2, fecha > fecha.last))  
+    fecha.last <- max(new.acumula2$fecha)
+    last <- new.acumula2 %>% filter(fecha == fecha.last) %>%
+          arrange(iso, respuesta)
+    next
+  }
   new.acumula2 <- split(new.acumula2, new.acumula2$fecha)
   # Comparar old y new
   new.last <- new.acumula2[[1]] %>% select(-fecha) %>% 

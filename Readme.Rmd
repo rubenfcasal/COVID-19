@@ -1,7 +1,7 @@
 ---
 output: github_document
 params: 
-  fecha: "2020-05-17" 
+  fecha: "2020-05-21" 
 ---
 
 # Datos oficiales de COVID-19 en España
@@ -23,6 +23,7 @@ Pendiente:
 -->
 El objetivo principal de [este repositorio](https://github.com/rubenfcasal/COVID-19) es facilitar el acceso a los datos del COVID-19 en España a los que pueden estar interesados en analizarlos empleando R. Además se incluye una pequeña recopilación de enlaces a recursos que pueden ser de interés. 
 
+***Nuevo***: El 2020-05-21 se actualizó de nuevo el archivo de datos del ISCIII, después de varios días sin hacerlo, pero no se actualizaron los valores reportados por Cataluña y se eliminó la variable `recuperados`.
 
 ***Nota***: Como no paran de cambiar el contenido y el formato de las tablas del informe del *Ministerio de Sanidad, Consumo y Bienestar Social* (MSCBS), no voy a continuar con las actualizaciones de esos datos en este repositorio (no dispongo del tiempo necesario). La recomendación sería utilizar en su lugar por ejemplo los datos en: <https://github.com/datadista/datasets/tree/master/COVID%2019>,
 o los datos del ISCIII que continuaré procesando (pese a los comentarios descritos más adelante en las notas...). 
@@ -52,6 +53,8 @@ El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los da
 ***Nuevo***: El 2020-05-13 se añadió el directorio *acumula2_hist* que contiene el código necesario para generar el histórico de valores reportados del ISCIII:  [acumula2_hist.RData](acumula2_hist/acumula2_hist.RData), empleado para la evaluación de los predictores. También se genera un informe, [Informe_acumula2_hist.html](acumula2_hist/Informe_acumula2_hist.html), donde se incluyen más detalles (puede servir también para ver algunos de los problemas de los datos reportados por las distintas CCAA en el pasado, pocas se salvan...).
   
 ***NOTAS acumula2.RData***:  
+
+* El 2020-05-21 se actualizó de nuevo el archivo de datos del ISCIII, después de varios días sin hacerlo, pero no se actualizaron los valores reportados por Cataluña y se eliminó la variable `recuperados`. En este archivo, se les asignó `NA` a los valores del 2020-05-20 de Cataluña y España. 
 
 * El 2020-05-16 no se actualizó el archivo de datos del ISCIII (se les asignó `NA` en este archivo),
 pese a que en el informe del ministerio ([Actualizacion_107_COVID-19.pdf](Actualizacion_107_COVID-19.pdf)) todas las CCAA reportaron datos.

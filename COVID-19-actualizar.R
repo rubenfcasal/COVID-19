@@ -13,7 +13,9 @@ download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mod
 # Importar
 # --------
 # f <- "agregados.csv"
-acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 7)))
+# Cambio en el archivo el 21/05/2020
+# acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 7)))
+acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer", 6)))
 # View(acumulados)
 
 # Verificar variables y seleccionar
@@ -22,7 +24,10 @@ acumulados <- read.csv(f, colClasses = c("character", "character", rep("integer"
 # dput(names(acumulados))
 # var.isciii <- c("CCAA", "FECHA", "CASOS", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
 # Cambio en las variables el 25/04/2020
-var.isciii <- c("CCAA", "FECHA", "CASOS", "PCR.", "TestAc.", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+# var.isciii <- c("CCAA", "FECHA", "CASOS", "PCR.", "TestAc.", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+# Cambio en las variables el 21/05/2020
+var.isciii <- c("CCAA", "FECHA", "CASOS", "PCR.", "TestAc.", "Hospitalizados", "UCI", "Fallecidos")
+
 if (any(names(acumulados) != var.isciii)) stop('Cambios en las variables')
 # Seleccionamos los casos que tienen algo en FECHA
 inotas <- which(!nzchar(acumulados$FECHA))[1]:nrow(acumulados)
@@ -32,7 +37,9 @@ nota.texto <- paste(apply(acumulados[inotas, 1:2], 1, paste, collapse =""), coll
 nota.texto <- gsub("\\*", "\\\\*", nota.texto)
 nota.texto
 acumulados <- acumulados[-inotas, var.isciii]
-names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "PCR", "TestAc", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+# names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "PCR", "TestAc", "Hospitalizados", "UCI", "Fallecidos", "Recuperados")
+# Cambio en las variables el 25/04/2020
+names(acumulados) <- c("CCAA.ISO", "Fecha", "Casos", "PCR", "TestAc", "Hospitalizados", "UCI", "Fallecidos")
 
 # Verificar niveles factor
 # write.csv2(unique(acumulados$CCAA.ISO), file = "levels.csv")
@@ -88,7 +95,8 @@ acumula2 <- acumulados
 # Renombrar variables
 names(acumula2) <- tolower(names(acumula2)) 
 names(acumula2)[2] <- "iso"
-names(acumula2)[4] <- "confirmados"
+# Cambio en las variables el 25/04/2020
+# names(acumula2)[4] <- "confirmados"
 # ----
 # El 08/05/2020 vuelven a reportar valores en la variable casos,
 # y el 09/05/2020 los vuelven a eliminar
@@ -102,11 +110,13 @@ acumula2$confirmados <- with(acumula2, pcr + testac)
 acumula2$confirmados <- with(acumula2, ifelse(is.na(confirmados), pcr, confirmados))
 
 # Nuevos
-acumula2 <- acumula2 %>% select(-pcr, -testac) %>% group_by(iso) %>% 
+acumula2 <- acumula2 %>% select(-casos, -pcr, -testac) %>% group_by(iso) %>% 
   mutate(nuevos = confirmados - lag(confirmados)) %>% ungroup()
 # acumula2$nuevos[is.na(acumula2$nuevos)] <- 0
 
-var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "nuevos")
+# Cambio en las variables el 25/04/2020
+# var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "nuevos")
+var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "nuevos")
 
 # # NOTA: 17/04/2020 La serie histórica de CT se ha eliminado porque 
 # # está en revisión por dicha comunidad autónoma.Solo se muestra la de casos.
@@ -117,6 +127,10 @@ var <- c("confirmados", "hospitalizados", "uci", "fallecidos", "recuperados", "n
 #   select(-all_of(var[2:5])) %>% 
 #   left_join(select(old.CT, -ccaa, -iso), by = "fecha")
 # acumula2 <- bind_rows(filter(acumula2, iso != "CT"), new.CT)
+
+# El 21/05/2020 Cataluña no reporta información
+# index <- with(acumula2, fecha == as.Date("2020-05-20") & iso == "CT")
+# acumula2[index, var] <- NA
 
 # Total España
 # res <- acumula2 %>% group_by(fecha) %>% summarise_at(var, sum, na.rm = TRUE) %>%
@@ -145,7 +159,9 @@ save(acumula2, file ="acumula2.RData")
 library(tidyr)
 respuestas <- c("confirmados", "hospitalizados", "uci", 
           "fallecidos", "nuevos")
-acumula22 <- acumula2 %>% select(-ccaa, -recuperados) %>%
+# Cambio en las variables el 25/04/2020
+# acumula22 <- acumula2 %>% select(-ccaa, -recuperados) %>%
+acumula22 <- acumula2 %>% select(-ccaa) %>%
     pivot_longer(all_of(respuestas), names_to = "respuesta", values_to = "observado",
                  names_ptypes = list(respuesta = factor(levels = respuestas)))
 
@@ -158,7 +174,8 @@ save(acumula22, file ="acumula22.RData")
 ## =======================
 ## acumula2_hist.RData
 ## =======================
-fecha.txt <- format(Sys.Date(), format = "%m_%d")
+# fecha.txt <- format(Sys.Date(), format = "%m_%d")
+fecha.txt <- format(max(acumula2$fecha) + 1, format = "%m_%d")
 file.copy("acumula2.RData", paste0("./acumula2_hist/acumula2_",fecha.txt,".RData"), overwrite = TRUE)
 source("acumula2_hist/acumula2_hist.R", chdir = TRUE)
 

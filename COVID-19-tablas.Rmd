@@ -1,6 +1,6 @@
 ---
 title: "Tablas COVID-19"
-date: "`r Sys.Date()`"
+date: "`r Sys.Date() - 1`"
 
 output:
   html_document:
