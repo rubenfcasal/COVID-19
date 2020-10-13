@@ -1,0 +1,134 @@
+---
+title: "Predicciones COVID-19 por CCAA"
+author: "Predicción cooperativa COVID-19"
+params: 
+  fecha_txt: "27_04" # <<<<< IMPORTANTE: ESTABLECER LA FECHA DE ARCHIVOS (ACUMULA2.RDATA ACTUALIZADO?)<<<<<
+date: "Predicciones con datos del `r params$fecha_txt`"
+
+output:
+  html_document:
+     code_folding: hide
+     toc: true
+     toc_float: true
+     fig_width: 12
+     fig_height: 6  
+     out_width: "100%"    
+  pdf_document: 
+     toc: true
+---
+
+
+```{r spin, include=FALSE}
+# ===========================================
+# IMPORTANTE: Establecer fecha en la cabecera
+# ===========================================
+#
+# Este documento permite crear un informe empleando Markdown y `R`.
+# Markdown permite la creación de páginas web a partir de documentos de texto de forma muy sencilla 
+# (tiene unas reglas sintácticas muy simples) y rápida.
+#
+# R-Markdown es recomendable para difundir análisis realizados con `R` en distintos formatos.
+# Para más detalles ver <http://rmarkdown.rstudio.com> o 
+# <https://rubenfcasal.github.io/bookdown_intro/rmarkdown.html>.
+#
+# Este informe puede ser creado con el siguiente comando:
+# browseURL(url = rmarkdown::render("Informe_cp.Rmd",
+#                               encoding = "UTF-8"))
+#
+# En RStudio es suficiente con pulsar el botón 'Knit' de la barra de herramientas).
+
+```
+```{r echo=FALSE, message=FALSE}
+library(dplyr)
+library(tidyr)
+fecha.txt <- params$fecha_txt
+# fecha.txt <- "23_04"
+fpred <- as.Date(paste0(fecha.txt, "_2020"), format = "%d_%m_%Y")
+fecha.horiz1 <- fpred + 1
+
+load('predicciones_cp2_new.RData') 
+# load(paste0('predicciones_cp2_', fecha.txt, '.RData')) 
+# predicciones_cp2[[respuesta]][[ccaa]]
+# View(predicciones_cp2[['nuevos']][['AR']])
+# str(predicciones_cp2[['nuevos']][['AR']])
+
+respuestas <- names(predicciones_cp2)
+
+# CCAA
+iso.ccaa <- read.csv2("iso.ccaa.csv", colClasses = "character")
+iso <- iso.ccaa$iso
+ccaa <- iso.ccaa$ccaa
+names(ccaa) <- iso
+
+# Acumulados ISCII modificado (nuevos, España) troceado
+load("acumula22.RData")
+```
+
+```{r results = "asis"}
+knitr::kable(CP.labels, col.names = "Predictores cooperativos")
+
+for (ca in iso) { # ca <- "AR"
+  cat("\n\n# ", ccaa[ca], "\n\n")
+
+  for (r in respuestas) { # r <- "uci"
+    if (is.null(predicciones_cp2[[r]][[ca]])) next
+    cat("\n\n## ", r, "\n\n")
+    # Predicciones
+    # pivot_wider(names_from = key, values_from = value)
+    pred <- predicciones_cp2[[r]][[ca]] %>%
+        pivot_wider(names_from = predictor, values_from = prediccion)
+    print(knitr::kable( pred %>% select("horizonte", "fecha.horiz", 
+              starts_with("CP"), npre, nphis, ndhis) ))
+    # Gráfico
+    cat("\n\n")
+    hist <- acumula22[[ca]][[r]] 
+    pred <- pred %>% select(fecha = fecha.horiz, starts_with("CP"))  
+    old.par <- par(mfrow=c(1,2))
+    plot(hist$fecha, hist$observado, type = "l", main = paste(ccaa[ca], r), 
+         xlab="Fecha", ylab=r,
+         xlim = c(min(hist$fecha, na.rm = TRUE), max(hist$fecha+7, na.rm = TRUE)),
+         ylim = c(0, max(pred[-1], hist$observado, na.rm = TRUE)))
+    cols <- c(rep("darkgray", 4), 2:4 )
+    ltys <- c(rep(3, 4), 2, 1, 1)
+    matlines(pred[[1]], pred[-1], col = cols, lty = ltys)
+    abline(v = pred[[1]][1], lty = 2, col = "magenta")
+    pchs <- c(1:5, NA, NA)
+    legend("topleft", names(CP.labels), col = cols, lty = ltys, pch = pchs,
+           inset = 0.025, cex = 0.9) 
+    # legend("topleft",c("Media", "Media.Trunc", "Mediana", "Media.Win"),
+    #    col=2:5, lty=2:5, pch=1:4, inset =0.025,cex=0.9) 
+        
+    L <- length(hist$fecha)
+    A <- hist$fecha[(L-4):L]
+    B <- hist$observado[(L-4):L]
+    plot(A,B, type = "l", main = paste(ccaa[ca], r), 
+         sub=paste("Núm. predictores:", paste(npredictores[r, ca, ], collapse = ", ")),
+         xlab="Fecha", ylab=r,
+         xlim = c(min(A, na.rm = TRUE), max(A + 7, na.rm = TRUE)),
+         ylim = c( min(pred[-1], B, na.rm = TRUE), max(pred[-1], B, na.rm = TRUE)))
+    matlines(pred[[1]], pred[-1], col = cols, lty = ltys)
+    matpoints(pred[[1]], pred[-1], col = cols, lty = ltys, pch = pchs)
+    abline(v = pred[[1]][1], lty = 2, col = "magenta")
+    par(old.par)   
+    # Predictores
+    cat("\n\n")
+    print(knitr::kable(cbind(names(predictores[[r]][[ca]]), 
+                  sapply(predictores[[r]][[ca]], function(x) paste(x, collapse = ", "))),
+               col.names = c("Horizonte", "Predictores")))
+   }  
+ }
+```
+
+
+# Global
+
+NOTA: La siguiente tabla fué generada con la función `datatable()` del paquete [DT](https://rstudio.github.io/DT).
+Por defecto se muestran las primeras filas, pulsar en el índice de páginas (inferior) para cambiar. Se puede ordenar por una columna pulsando en las flechas al lado derecho de su nombre. Se pueden buscar valores (cuadro de búsqueda, en la parte superior derecha) y filtrar los valores (pulsar en el cuadro de filtro debajo del nombre de cada variable).
+
+```{r }
+load("predicciones_cp_new.RData")
+
+DT::datatable(select(predicciones_cp, iso, respuesta, horizonte, fecha.horiz, predictor, prediccion), 
+      filter = 'top', options = list(pageLength = 7, autoWidth = TRUE))
+```
+

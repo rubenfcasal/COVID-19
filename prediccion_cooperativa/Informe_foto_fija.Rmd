@@ -1,0 +1,103 @@
+---
+title: "Predicciones COVID-19 por CCAA"
+author: "Evaluación predicción cooperativa COVID-19"
+params: 
+  fecha_txt: "27_04" # <<<<< IMPORTANTE: ESTABLECER LA FECHA DE ARCHIVOS (ACUMULA2.RDATA ACTUALIZADO?)<<<<<
+date: "Comparación con valores reales el `r params$fecha_txt`"
+
+output:
+  html_document:
+     code_folding: hide
+     toc: true
+     toc_float: true
+     fig_width: 12
+     fig_height: 6  
+     out_width: "100%"    
+  pdf_document: 
+     toc: true
+---
+
+
+```{r echo=FALSE, message=FALSE}
+library(dplyr, warn.conflicts = FALSE)
+library(DT)
+load("historico.RData")
+load("historico_cp.RData")
+# historico_cp$predictor <- factor(historico_cp$predictor)
+# save(historico_cp, file = "historico_cp.RData")
+fecha.txt <- params$fecha_txt
+# fecha.txt <- "27_04"
+fhoriz <- as.Date(paste0(fecha.txt, "_2020"), format = "%d_%m_%Y")
+iso <- levels(historico$iso)
+respuestas <- levels(historico$respuesta)
+
+historico2 <- historico %>% filter(fecha.horiz == fhoriz) 
+historico2 <- split(historico2, historico2$iso)
+historico2 <- lapply(historico2, function(d) split(d, d$respuesta))
+
+historico_cp2 <- historico_cp %>% filter(fecha.horiz == fhoriz) # %>%
+#                     mutate(ac.pe = ac.pe*100, ac.ape = ac.ape*100)
+historico_cp2 <- split(historico_cp2, historico_cp2$iso)
+historico_cp2 <- lapply(historico_cp2, function(d) split(d, d$respuesta))
+
+cp_names <- levels(historico_cp$predictor)
+cp_col <- c(rep(1, 4), 2:4)
+cp_pch <- 1:7   
+```
+
+
+Se comparan los valores reales (línea discontinua) con las predicciones realizadas
+a distintos retardos (horizonte).
+Los puntos de menor tamaño representan predicciones individuales.
+
+```{r results = "asis"}
+for (ca in iso) { # ca <- "AR"
+  cat("\n\n# ", ca, "\n\n")
+  
+  for (r in respuestas) {  # r = "fallecidos"
+
+    cat("\n\n## ", r, "\n\n")    
+ 
+    pred <- historico2[[ca]][[r]]
+    observado <- pred$observado[1]
+    if(is.na(observado)) {
+        cat("\n\nNo hay valor observado...\n\n") 
+        next
+    }
+    pred_cp <- historico_cp2[[ca]][[r]]
+
+    cat("\n\n### Predicciones\n\n")    
+    
+    ylim <- range(c(pred_cp$prediccion, pred$prediccion, observado), na.rm = TRUE)
+    plot(prediccion ~ horizonte, data = pred, col = "magenta", cex.lab = 1.2, cex = 0.6,
+         xlab = "Horizonte de la predicción", ylab = "Predicciones", ylim = ylim, 
+         main = paste0("Fecha: ", fhoriz))
+    abline(h = observado, lwd = 2, lty = 2)
+    with(pred_cp, points(horizonte, prediccion, cex = 1.5,
+                         pch = cp_pch[predictor], col = cp_col[predictor]) )
+    legend("topleft", c("Valor real", cp_names), pch = c(NA, cp_pch), col = c(1, cp_col), 
+           lty = c(2, rep(NA, 7)), lwd = c(2, rep(NA, 7)), ncol = 1, inset = 0.025, cex = 0.8) 
+
+    cat("\n\n### Errores relativos\n\n")  
+    
+    ylim <- c(0, 1.25 * max(pred_cp$ac.ape, na.rm = TRUE))
+    plot(ac.ape ~ horizonte, data = pred_cp, cex = 1.5, pch = cp_pch[predictor], col = cp_col[predictor],
+         xlab = "Horizonte de la predicción", ylab = "Error porcentual", ylim = ylim, 
+         main = paste0("Fecha: ", fhoriz))
+    legend("topleft", cp_names, pch = cp_pch, col = cp_col, 
+           ncol = 2, inset = 0.025, cex = 0.8) 
+   
+    cat("\n\n### Valores\n\n")  
+
+    # datatable(pred_cp %>% arrange(horizonte, predictor) %>% 
+    #       select(horizonte, fecha.pred, predictor, prediccion, 
+    #           observado, starts_with("ac.")), 
+    #   filter = 'top', options = list(pageLength = 7, autoWidth = TRUE)) %>%
+    # formatRound(c("ac.pe", "ac.ape"), mark = "")
+    print(knitr::kable(pred_cp %>% arrange(horizonte, predictor) %>% 
+          select(horizonte, fecha.pred, predictor, prediccion, 
+              observado, starts_with("ac.")), digits = 2))
+  }
+}
+```
+

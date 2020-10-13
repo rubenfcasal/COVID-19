@@ -1,0 +1,103 @@
+---
+title: "Informe precisión predicciones cooperativas"
+author: "Predicción cooperativa COVID-19"
+params: 
+  fecha_txt: "27_04" # <<<<< IMPORTANTE: ESTABLECER LA FECHA DE ARCHIVOS (ACUMULA2.RDATA ACTUALIZADO?)<<<<<
+date: "Predicciones con datos del `r params$fecha_txt`"
+
+output:
+  html_document:
+     code_folding: hide
+     toc: true
+     toc_float: true
+     fig_width: 12
+     fig_height: 6  
+     out_width: "100%"    
+---
+
+```{r }
+library(dplyr, warn.conflicts = FALSE)
+library(tidyr)
+library(DT)
+load("accuracy_cp_new.RData") # accuracy_cp
+# dput(names(accuracy_cp))
+# c("respuesta", "iso", "horizonte", "predictor", "ac.me", "ac.mpe", 
+# "ac.rmse", "ac.mae", "ac.mape", "ac.wme", "ac.wmpe", "ac.wrmse", 
+# "ac.wmae", "ac.wmape", "nhist")
+ac.vars <- c("ac.me", "ac.mpe", "ac.rmse", "ac.mae", "ac.mape", 
+             "ac.wme", "ac.wmpe", "ac.wrmse", "ac.wmae", "ac.wmape")
+predictores <- levels(accuracy_cp$predictor)
+accuracy_cp$horizonte <- factor(accuracy_cp$horizonte)
+```
+
+
+# Precisión estimadores cooperativos
+
+
+```{r }
+datatable(accuracy_cp, 
+      filter = 'top', options = list(pageLength = 7, autoWidth = TRUE)) %>%
+  formatRound(ac.vars, mark = "")
+```
+
+
+# Top 2 en MAE
+
+Listar los dos mejores con un criterio de error
+
+```{r }
+top2 <- accuracy_cp %>% select(respuesta, iso, horizonte, predictor, error = ac.mae) %>%
+  group_by(respuesta, iso, horizonte) %>% 
+  top_n(-2, error) 
+
+datatable(top2, 
+      filter = 'top', options = list(pageLength = 14, autoWidth = TRUE)) %>%
+  formatRound("error", mark = "")
+```
+
+
+Número de veces en Top 2 (se puede filtar por "Total"):
+
+
+```{r message=FALSE}
+ntop2 <- addmargins(xtabs( ~ horizonte + predictor + respuesta + iso, data = top2), 
+                    c(1, 3, 4), list(Total = sum))
+ntop2 <- as.data.frame(ntop2) %>%
+  pivot_wider(names_from = predictor, values_from = Freq)
+
+datatable(ntop2, 
+      filter = 'top', options = list(pageLength = 8, autoWidth = TRUE))
+```
+
+
+# Ranking según MAE
+
+<!-- Un valor de 1 indicaría que es el mejor predictor -->
+Posición de 1 a 7 según error.
+
+```{r }
+err_rank <- accuracy_cp %>% select(respuesta, iso, horizonte, predictor, error = ac.mae) %>%
+  group_by(respuesta, iso, horizonte) %>% 
+  # mutate(err_rank = percent_rank(desc(error))) %>%
+  mutate(err_rank = min_rank(error)) %>%
+  # pivot_wider(names_from = predictor, values_from = c(error, err_rank))
+  select(-error) %>%
+  pivot_wider(names_from = predictor, values_from = err_rank)
+
+
+datatable(err_rank, 
+      filter = 'top', options = list(pageLength = 7, autoWidth = TRUE)) # %>%
+   # formatRound(predictores, mark = "")
+```
+
+
+Media por respuesta y CCAA
+
+
+```{r }
+datatable(err_rank %>%
+      group_by(respuesta, iso) %>% summarise_at(vars(starts_with("CP")), mean), 
+      filter = 'top', options = list(pageLength = 20, autoWidth = TRUE)) %>%
+   formatRound(predictores, mark = "")
+```
+
