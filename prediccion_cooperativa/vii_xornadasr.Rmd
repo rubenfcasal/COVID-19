@@ -39,7 +39,7 @@ Os participantes proporcionaron predicións de polo menos unha das comunidades a
 Desenvolveuse código en R para automatizar todo o proceso de xestión de datos, cálculo de predicións combinadas e erros de predición e xeración de informes, empregando os paquetes `dplyr` (Wickham et al., 2020) e `rmarkdown` (Allaire et al. , 2020), entre outros. 
 O código é robusto para tratar as diferentes combinacións de predicións e contribucións distribuídas irregularmente ao longo do tempo (nun primeiro momento intentouse empregar ferramentas xa dispoñibles, como o paquete `ForeComb`; Weiss et al., 2018). 
 O código principal está dispoñible en aberto no seguinte enlace:
-https://rubenfcasal.github.io/COVID-19/prediccion_cooperativa
+https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa
 (un compromiso de confidencialidade impide proporcionar as predicións individuais dos grupos participantes, intentaremos que no futuro estean en aberto mantendo o anonimato).
 
 Incluíronse diferentes métodos de combinación, desde métodos sinxelos ata métodos máis sofisticados, con pesos estimados segundo criterios de optimalidade, que requirían dun adestramento (en cada combinación de variable de interese, rexión administrativa e horizonte).
