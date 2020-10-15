@@ -12,9 +12,23 @@ date: "15 de outubro de 2020"
 output: html_document
 ---
 
+***Enlaces***:
+
+* Presentación (resumo): http://bit.ly/prediccion_cooperativa 
+
+* Web do proxecto: https://covid19.citic.udc.es
+
+* Repositorio: https://github.com/rubenfcasal/COVID-19
+
+    (código principal na carpeta [predicción cooperativa](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa))
+
+* Web do repositorio: https://rubenfcasal.github.io/COVID-19
+
+
 ## Resumo
 
 O proxecto “Predición Cooperativa” xurdiu dentro da iniciativa "Matemáticas contra o coronavirus" promovida polo Comité Español de Matemáticas (CEMat). Como resultado desenvolveuse unha web interactiva empregando R (https://covid19.citic.udc.es) para monitorizar e predicir a curto prazo variables relevantes na propagación do Covid-19. Nesta web proporcionáronse “predicións cooperativas” (meta-predicións), a horizontes de 1 a 7 días para cada comunidade autónoma e variable de interese, combinando predicións baseadas en distintos métodos que proporcionaban regularmente un gran número de grupos de investigación de xeito independente.
+
 
 **Palabras e frases chave**: meta-predictores, series de tempo, visualización interactiva.
 
@@ -42,11 +56,6 @@ O código principal está dispoñible en aberto no seguinte enlace:
 https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa
 (un compromiso de confidencialidade impide proporcionar as predicións individuais dos grupos participantes, intentaremos que no futuro estean en aberto mantendo o anonimato).
 
-Incluíronse diferentes métodos de combinación, desde métodos sinxelos ata métodos máis sofisticados, con pesos estimados segundo criterios de optimalidade, que requirían dun adestramento (en cada combinación de variable de interese, rexión administrativa e horizonte).
-Na pestana "Predición cooperativa: Información/Ficha técnica" da [web do proxecto](https://covid19.citic.udc.es) móstranse mais detalles sobre os distintos métodos (ver tamén Vilar-Fernández et al., 2020). 
-As predicións cooperativas, xunto con medidas das súas precisións, podían ser consultadas  na pestana "Predición cooperativa: Resultados". 
-Para cada combinación de variable e CCAA o usuario podía interactuar con gráficos e táboas dinámicas.
-
 Os múltiples cambios e problemas cos datos oficiais proporcionados polo ISCIII dificultaron notablemente a avaliación da precisión das predicións (ademais de ter que refacer o código continuamente e desanimar ós colaboradores a seguir participando). 
 Houbo todo tipo de problemas, incluíndo períodos sen información oficial dispoñible e numerosas rectificacións das series. 
 Isto obrigou a manter un histórico dos valores reportados e crear un filtro para ter en conta todos estes cambios (cando se producía un cambio invalidábanse as predicións a horizontes futuros). 
@@ -55,9 +64,15 @@ https://rubenfcasal.github.io/COVID-19/acumula2_hist/Informe_acumula2_hist.html,
 que pode servir tamén para ver ós problemas dos datos reportados polas distintas CCAA. 
 Entre os distintos problemas houbo períodos sen información dispoñible e numerosas rectificacións dos valores anteriormente reportados.
 
+Incluíronse diferentes métodos de combinación, desde métodos sinxelos ata métodos máis sofisticados, con pesos estimados segundo criterios de optimalidade, que requirían dun adestramento (en cada combinación de variable de interese, rexión administrativa e horizonte).
+Na pestana "Predición cooperativa: Información/Ficha técnica" da [web do proxecto](https://covid19.citic.udc.es) móstranse mais detalles sobre os distintos métodos (ver tamén [Vilar-Fernández et al., 2020](http://www.seio.es/BBEIO/BEIOVol36Num2/files/assets/common/downloads/publication.pdf#page=15)). 
+As predicións cooperativas, xunto con medidas das súas precisións, podían ser consultadas  na pestana "Predición cooperativa: Resultados". 
+Para cada combinación de variable e CCAA o usuario podía interactuar con gráficos e táboas dinámicas.
+
+
 As predicións cooperativas comezaron a calcularse o 2 de abril (dende o 9 de abril as que requirían dun adestramento) de xeito diario, salvo os períodos sen información oficial dispoñible ou cambios nas series de datos. 
 Debido a enorme carga de traballo, dende o 18 de maio as predicións cooperativas pasan a realizarse tres días a semana (luns, mércores e venres). 
-O 26 de maio actualizouse por última vez a serie de datos do ISCIII o que obrigou a  paralizar a iniciativa. 
+O 26 de maio actualizouse por última vez a serie de datos do ISCIII o que obrigou a paralizar a iniciativa (o 10 de xuño vólvense a publicar pero só proporcionan o número de casos). 
 
 Durante a vixencia do proxecto os colaboradores aportaron 299108 predicións individuais e calculáronse 209160 predicións cooperativas. 
 Actualmente estase a desenvolver unha aplicación Shiny que permita examinar e comparar gráfica e analiticamente o comportamento de todos os preditores (combinados e individuais, mantendo o anonimato) no escenario elixido (variable, CCAA, horizonte). 
@@ -89,7 +104,7 @@ Agradecer tamén ó Comité Español de Matemáticas (CEMat) o seu apoio e inter
 
 [1] Allaire, J.J., Xie, Y.,  McPherson, J., Luraschi, J., Ushey, K., Atkins, A., Wickham, H., Cheng, J., Chang, W. y Iannone, R. (2020). rmarkdown: Dynamic Documents for R. R package   version 2.1. https://rmarkdown.rstudio.com.
 
-[2] Armstrong, J.S. (2001). Combining forecasts. En: Principles of Forecasting: A Handbook for Researchers and Practitioners (Cap. 4), 417-439, Kluwer Academic Publishing.
+[2] Armstrong, J.S. (2001). Combining forecasts. En: Principles of Forecasting: A Handbook for Researchers and Practitioners (Cap. 13), 417-439, Kluwer Academic Publishing.
 
 [3] Chang, W., Cheng, J., Allaire, J.J., Xie, Y. y McPherson, J. (2020). shiny: Web Application Framework for R. R package version 1.4.0.2. https://shiny.rstudio.com.
 
@@ -97,9 +112,9 @@ Agradecer tamén ó Comité Español de Matemáticas (CEMat) o seu apoio e inter
 
 [5] Sievert, C. (2020). Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall. https://plotly-r.com.
 
-[6] Vilar-Fernández, J.A., Fernández-Casal, R. y Fernandez-Lozano, C. (2020). Covid-19 projections for Spain using forecast combinations. BEIO, 36 (2), 99-125. http://www.seio.es/BBEIO/BEIOVol36Num2/files/assets/common/downloads/publication.pdf#page=15.
+[6] Vilar-Fernández, J.A., Fernández-Casal, R. y Fernandez-Lozano, C. (2020). [Covid-19 projections for Spain using forecast combinations](http://www.seio.es/BBEIO/BEIOVol36Num2/files/assets/common/downloads/publication.pdf#page=15). BEIO, 36 (2), 99-125. 
 
-[7] Weiss, Ch. E., Raviv, E., y Roetzer, G. (2018). Forecast combinations in R using the ForecastComb package. The R Journal, 10(2), 262-281.
+[7] Weiss, Ch. E., Raviv, E., y Roetzer, G. (2018). [Forecast combinations in R using the ForecastComb package](https://journal.r-project.org/archive/2018/RJ-2018-052/RJ-2018-052.pdf). The R Journal, 10(2), 262-281.
 
 [8] Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag, New York. http://ggplot2.tidyverse.org.
 
