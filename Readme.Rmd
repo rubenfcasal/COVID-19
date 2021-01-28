@@ -24,7 +24,7 @@ La versión anterior dejó de actualizarse el 2020-05-21 por problemas con la fu
 
 En esta versión se emplean los datos oficiales disponibles en la pestaña *Documentación y Datos* de la web [Situación de COVID-19 en España](https://cnecovid.isciii.es/covid19) (aplicación shiny) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es). Se considera únicamente el archivo:
 
-* [casos_hosp_uci_def_sexo_edad_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, provincia de residencia y fecha de diagnóstico (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf).
+* [casos_hosp_uci_def_sexo_edad_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, provincia de residencia y fecha de diagnóstico (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf)).
 	
 Los datos publicados proceden de la declaración individualizada de casos COVID-19 a la Red Nacional de Vigilancia Epidemiológica (RENAVE) a través de la aplicación informática SiViEs y se están actualizando de forma continua.
 Además de que pueden contener errores, hay un retraso al ir añadiendo los nuevos casos en las fechas de diagnóstico.
@@ -37,7 +37,7 @@ Por este motivo los valores correspondientes a las últimas fechas no están con
 
 * [casos_ccaa.RData](casos_ccaa.RData): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por fecha de diagnóstico, CCAA y para el total de España (datos de prevalencia).
 
-* [acumulados.RData](acumulados.RData): Evolución de los valores acumulados por CCAA y para el total de España (formato adecuado para el proyecto [Predicción Cooperativa](#forecoop). 
+* [acumulados.RData](acumulados.RData): Evolución de los valores acumulados por CCAA y para el total de España (formato adecuado para el proyecto [Predicción Cooperativa](#proyecto-de-predicción-cooperativa). 
 
 <!-- 
 En [COVID-19-tablas.html](COVID-19-tablas.html) se pueden consultar tablas con los datos actuales por CCAA (informe generado automáticamente a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)). 
@@ -50,7 +50,7 @@ Por ejemplo se incluye un [informe](acumula2_hist2/acumula22_hist.html) con la e
 Lamentablemente, es muy triste constatar que después de tanto tiempo todavía siguen los problemas...
 
 
-## Proyecto de predicción cooperativa {#forecoop}
+## Proyecto de predicción cooperativa
 
 Otro objetivo de este repositorio es proporcionar datos que puedan servir como base para el [llamamiento del Comité Español de Matemáticas](http://matematicas.uclm.es/cemat/covid19/2020/04/01/llamamiento-para-compartir-aportaciones-y-poder-crear-un-meta-predictor-a-corto-plazo-basado-en-las-mismas) para la creación de un predictor cooperativo.
 
@@ -78,14 +78,21 @@ También incluye un [informe](acumula2_hist/Informe_acumula2_hist.html) con más
 * [Instituto de Salud Carlos III (ISCIII)](https://cnecovid.isciii.es)
 
     - [Situación de COVID-19 en España](https://cnecovid.isciii.es/covid19)
+    
+    - Datos por “fecha imputada” (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_tecnica_ccaa_prov_res.pdf))
 
-    - [agregados.csv](https://cnecovid.isciii.es/covid19/resources/agregados.csv) ***Actualmente no disponible***
+        - [casos_tecnica_ccaa.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_ccaa.csv): Número de casos por técnica diagnóstica y CCAA (de residencia)
+        
+        - [casos_tecnica_provincia.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_provincia.csv): Número de casos por técnica diagnóstica y provincia (de residencia)
+
+    - Datos por “fecha de diagnóstico” (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf))
     
-    - [datos_ccaas.csv](https://cnecovid.isciii.es/covid19/resources/datos_ccaas.csv)
-    
-    - [datos_provincias.csv](https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv)
+        - [casos_diag_ccaadecl.csv](https://cnecovid.isciii.es/covid19/resources/casos_diag_ccaadecl.csv): Número de casos por técnica diagnóstica y CCAA (de declaración)
+        
+        - [casos_hosp_uci_def_sexo_edad_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad y provincia de residencia.        
 
     - [Informes COVID-19 del Centro Nacional de Epidemiología](https://www.isciii.es/QueHacemos/Servicios/VigilanciaSaludPublicaRENAVE/EnfermedadesTransmisibles/Paginas/InformesCOVID-19.aspx)
+    
 
 * Otras fuentes de datos:
 
