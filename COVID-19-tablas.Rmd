@@ -1,0 +1,67 @@
+---
+title: "Tablas COVID-19"
+date: "`r Sys.Date() - 1`"
+
+output:
+  html_document:
+     code_folding: hide
+     toc: true
+     toc_float: true
+  pdf_document: 
+     toc: true
+---
+
+```{r rmd, include=FALSE}
+# Este documento permite crear un informe empleando Markdown y `R`.
+# Markdown permite la creación de páginas web (y muchos otros tipos de documentos) a partir de 
+# archivos de texto de forma muy sencilla (tiene unas reglas sintácticas muy simples) y rápida.
+# R-Markdown es recomendable para difundir análisis realizados con `R` en distintos formatos.
+# Para más detalles ver <http://rmarkdown.rstudio.com> o 
+# <https://rubenfcasal.github.io/bookdown_intro/rmarkdown.html>.
+#
+# Este informe puede ser creado (y mostrado) con el siguiente comando:
+# browseURL(url = rmarkdown::render('COVID-19-tablas.Rmd'))
+# En RStudio es suficiente con pulsar el botón 'Knit' de la barra de herramientas.
+```
+
+Este informe fué generado a partir de  [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd).
+Más detalles en la [web del repositorio](https://rubenfcasal.github.io/COVID-19).
+
+```{r message=FALSE, warning=FALSE}
+library(DT)
+library(dplyr)
+load("casos_ccaa.RData")
+load("acumulados.RData")
+```
+
+Datos actualizados a fecha ***`r format(max(acumulados$fecha) + 1, format = "%Y-%m-%d")`***.
+
+## Tabla con el total de casos por CCAA, edad y sexo {#edadsexo}
+
+<!-- 
+Pendiente 
+Calcular % por sexo, edad, %letalidad...
+-->
+
+```{r }
+casos_ccaa %>% group_by(ccaa, sexo, edad) %>% 
+      summarise(across(casos:fallecidos, sum), .groups = 'drop') %>% 
+      datatable(filter = 'top', 
+                options = list(pageLength = 11, autoWidth = TRUE))
+```
+
+
+## Tabla con la evolución de los valores acumulados por CCAA {#acumulados}
+
+***NOTA***: Los datos publicados proceden de la declaración individualizada de casos COVID-19 a la Red Nacional de Vigilancia Epidemiológica (RENAVE) a través de la aplicación informática SiViEs y se están actualizando de forma continua.
+Además de que pueden contener errores, hay un retraso al ir añadiendo los nuevos casos en las fechas de diagnóstico^[**Casos**: En los casos anteriores al 11 de mayo, se utiliza la fecha de diagnóstico, en su ausencia la fecha de declaración a la comunidad y, en su ausencia, la fecha clave (fecha usada para estadística por las CCAA). En los casos posteriores al 10 de mayo, en ausencia de fecha de diagnóstico se utiliza la fecha clave. **Hospitalizaciones, ingresos en UCI, defunciones**: los casos hospitalizados están representados por fecha de hospitalización (en su defecto, la fecha de diagnóstico, y en su defecto la fecha clave, los casos UCI por fecha de admisión en UCI (en su defecto, la fecha de diagnóstico, y en su defecto la fecha clave) y las defunciones por fecha de defunción (en su defecto, la fecha de diagnóstico, y en su defecto la fecha clave). **Fecha Clave**: se recomendó a las comunidades autónomas definir la fecha Clave como la fecha de inicio de síntomas y en su ausencia la fecha de declaración a la CCAA, hasta 10 de mayo. Desde el 11 de mayo en adelante la fecha Clave es la más precoz de entre las fechas de consulta o de diagnóstico. Ocasionalmente se puede sustituir por la fecha de toma de muestras.].
+Por este motivo los valores correspondientes a las últimas fechas no están consolidados (lamentablemente en el caso de algunas CCAA también ocurre en fechas anteriores; ver [histórico](acumula2_hist2/acumula22_hist.html)).
+
+
+
+```{r }
+datatable(acumulados, filter = 'top', options = list(
+  pageLength = 21, autoWidth = TRUE
+))
+```
+

@@ -13,7 +13,7 @@ estar interesados en analizarlos empleando R. Además se incluye una
 pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
 Esta es la nueva versión del repositorio, con datos actualizados a fecha
-***2021-01-28***. La versión anterior dejó de actualizarse el 2020-05-21
+***2021-01-29***. La versión anterior dejó de actualizarse el 2020-05-21
 por problemas con la fuente de datos, aunque todavía es posible acceder
 a ella a través de este
 [enlace](https://rubenfcasal.github.io/COVID-19/2020/Readme.html) (puede
@@ -38,8 +38,9 @@ forma continua. Además de que pueden contener errores, hay un retraso al
 ir añadiendo los nuevos casos en las fechas de diagnóstico. Por este
 motivo los valores correspondientes a las últimas fechas no están
 consolidados (lamentablemente en el caso de algunas CCAA también ocurre
-en fechas anteriores; ver histórico) y no deberían ser empleados en los
-análisis (salvo que se corrijan).
+en fechas anteriores; ver
+[histórico](acumula2_hist2/acumula22_hist.html)) y no deberían ser
+empleados en los análisis (salvo que se corrijan).
 
 ## Archivos
 
@@ -48,17 +49,18 @@ análisis (salvo que se corrijan).
     residencia y fecha de diagnóstico (datos de prevalencia).
 
   - [casos\_ccaa.RData](casos_ccaa.RData): Número de casos,
-    hospitalizaciones, ingresos en UCI y defunciones por fecha de
-    diagnóstico, CCAA y para el total de España (datos de prevalencia).
+    hospitalizaciones, ingresos en UCI y defunciones por sexo, edad,
+    CCAA y fecha de diagnóstico, incluyendo los totales por sexo, edad y
+    España (datos de prevalencia).
 
   - [acumulados.RData](acumulados.RData): Evolución de los valores
     acumulados por CCAA y para el total de España (formato adecuado para
     el proyecto [Predicción
     Cooperativa](#proyecto-de-predicción-cooperativa).
 
-<!-- 
-En [COVID-19-tablas.html](COVID-19-tablas.html) se pueden consultar tablas con los datos actuales por CCAA (informe generado automáticamente a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)). 
--->
+En [COVID-19-tablas.html](COVID-19-tablas.html) se pueden consultar
+tablas con los datos actuales por CCAA (informe generado automáticamente
+a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)).
 
 El archivo [COVID-19-actualizar.R](COVID-19-actualizar.R) contiene el
 código necesario para descargar e importar los datos a R.
@@ -69,8 +71,9 @@ se están almacenando un histórico de los datos publicados el ISCIII
 (reportados por las CCAA). Puede ser de utilidad para estudiar como se
 van consolidando los datos de la serie. Por ejemplo se incluye un
 [informe](acumula2_hist2/acumula22_hist.html) con la evolución de los
-datos reportados por las distintas CCAA. Lamentablemente, es muy triste
-constatar que después de tanto tiempo todavía siguen los problemas…
+datos reportados por las distintas CCAA. Es muy triste constatar que
+después de tanto tiempo todavía siguen los problemas (algunas CCAA no
+tienen datos consolidados después de más de 6 semanas…).
 
 ## Proyecto de predicción cooperativa
 
@@ -90,8 +93,9 @@ plazo variables relevantes en la propagación de Covid-19. Esta web
 proporcionaba “predicciones cooperativas” (metapredicciones), en
 horizontes de 1 a 7 días por cada comunidad autónoma y variable de
 interés, combinando predicciones basadas en diferentes métodos que
-regularmente proporcionaban un gran número de grupos de investigación de
-forma independiente. Para más detalles ver [Vilar-Fernández et
+regularmente suministraban un gran número de grupos de investigación de
+forma independiente y altruista. Para más detalles ver [Vilar-Fernández
+et
 al. (2020)](http://www.seio.es/BBEIO/BEIOVol36Num2/files/assets/common/downloads/publication.pdf#page=15).
 
 El proyecto estuvo vigente desde el 2 de abril hasta el 26 de mayo de
@@ -187,7 +191,7 @@ reportados por las distintas CCAA en el pasado, pocas se salvan…).
 
 <br>
 
-## Proyecto de predicción cooperativa
+### Predicción cooperativa
 
   - [Acción Matemática contra el
     Coronavirus](http://matematicas.uclm.es/cemat/covid19)

@@ -1,7 +1,5 @@
 ---
 output: github_document
-params: 
-  fecha: "`r Sys.Date()`" 
 ---
 
 ```{r include=FALSE}
@@ -28,26 +26,25 @@ En esta versión se emplean los datos oficiales disponibles en la pestaña *Docu
 	
 Los datos publicados proceden de la declaración individualizada de casos COVID-19 a la Red Nacional de Vigilancia Epidemiológica (RENAVE) a través de la aplicación informática SiViEs y se están actualizando de forma continua.
 Además de que pueden contener errores, hay un retraso al ir añadiendo los nuevos casos en las fechas de diagnóstico.
-Por este motivo los valores correspondientes a las últimas fechas no están consolidados (lamentablemente en el caso de algunas CCAA también ocurre en fechas anteriores; ver histórico) y no deberían ser empleados en los análisis (salvo que se corrijan).
+Por este motivo los valores correspondientes a las últimas fechas no están consolidados (lamentablemente en el caso de algunas CCAA también ocurre en fechas anteriores; ver [histórico](acumula2_hist2/acumula22_hist.html)) y no deberían ser empleados en los análisis (salvo que se corrijan).
 
 
 ## Archivos
 
 * [casos.RData](casos.RData): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, provincia de residencia y fecha de diagnóstico (datos de prevalencia).
 
-* [casos_ccaa.RData](casos_ccaa.RData): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por fecha de diagnóstico, CCAA y para el total de España (datos de prevalencia).
+* [casos_ccaa.RData](casos_ccaa.RData): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, CCAA y fecha de diagnóstico, incluyendo los totales por sexo, edad y España (datos de prevalencia).
 
 * [acumulados.RData](acumulados.RData): Evolución de los valores acumulados por CCAA y para el total de España (formato adecuado para el proyecto [Predicción Cooperativa](#proyecto-de-predicción-cooperativa). 
 
-<!-- 
 En [COVID-19-tablas.html](COVID-19-tablas.html) se pueden consultar tablas con los datos actuales por CCAA (informe generado automáticamente a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)). 
--->
+
 El archivo [COVID-19-actualizar.R](COVID-19-actualizar.R) contiene el código necesario para descargar e importar los datos a R.
 
 En el directorio [acumula2_hist2](https://github.com/rubenfcasal/COVID-19/tree/master/acumula2_hist2) se están almacenando un histórico de los datos publicados el ISCIII (reportados por las CCAA). 
 Puede ser de utilidad para estudiar como se van consolidando los datos de la serie.
 Por ejemplo se incluye un [informe](acumula2_hist2/acumula22_hist.html) con la evolución de los datos reportados por las distintas CCAA.
-Lamentablemente, es muy triste constatar que después de tanto tiempo todavía siguen los problemas...
+Es muy triste constatar que después de tanto tiempo todavía siguen los problemas (algunas CCAA no tienen datos consolidados después de más de 6 semanas...).
 
 
 ## Proyecto de predicción cooperativa
@@ -56,7 +53,7 @@ Otro objetivo de este repositorio es proporcionar datos que puedan servir como b
 
 El proyecto "Predicción Cooperativa" surgió dentro de la iniciativa “[Matemáticas contra el coronavirus](http://matematicas.uclm.es/cemat/covid19)” impulsada por el Comité Español de Matemáticas ([CEMat](http://matematicas.uclm.es/cemat/es/)). 
 Como resultado, se desarrolló un sitio web interactivo utilizando R (https://covid19.citic.udc.es) para monitorear y predecir en el corto plazo variables relevantes en la propagación de Covid-19. 
-Esta web proporcionaba “predicciones cooperativas” (metapredicciones), en horizontes de 1 a 7 días por cada comunidad autónoma y variable de interés, combinando predicciones basadas en diferentes métodos que regularmente proporcionaban un gran número de grupos de investigación de forma independiente. 
+Esta web proporcionaba “predicciones cooperativas” (metapredicciones), en horizontes de 1 a 7 días por cada comunidad autónoma y variable de interés, combinando predicciones basadas en diferentes métodos que regularmente suministraban un gran número de grupos de investigación de forma independiente y altruista. 
 Para más detalles ver [Vilar-Fernández et al. (2020)](http://www.seio.es/BBEIO/BEIOVol36Num2/files/assets/common/downloads/publication.pdf#page=15).
 
 El proyecto estuvo vigente desde el 2 de abril hasta el 26 de mayo de 2020, ya que la falta de datos oficiales obligó a su paralización. Actualmente se está intentando volver a ponerlo en marcha... 
@@ -114,7 +111,7 @@ También incluye un [informe](acumula2_hist/Informe_acumula2_hist.html) con más
     
 <br>
 
-## Proyecto de predicción cooperativa
+### Predicción cooperativa
 
 * [Acción Matemática contra el Coronavirus](http://matematicas.uclm.es/cemat/covid19)
 
