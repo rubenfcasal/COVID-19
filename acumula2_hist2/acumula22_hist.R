@@ -1,7 +1,6 @@
 #' ---
 #' title: "Datos ISCIII COVID-19 por CCAA"
 #' author: "Evolución de los valores reportados"
-#' date: "Hasta 2021-01-27"
 #' 
 #' output:
 #'   html_document:
@@ -31,7 +30,7 @@ fechas.txt <- substr(files, 11, 18)
 fechas <- as.Date(fechas.txt, format = "%y_%m_%d") 
 last <- length(files)
 semanas <- 6
-fecha.ini <- fechas[last] - 7*semanas
+fecha.ini <- fechas[last] - 7*semanas - 1
 colors <- gray((last - seq_along(files))/last)
 
 
@@ -48,7 +47,10 @@ iso <- names(datos[[1]]) # names(ccaas)
 respuestas <- c("confirmados", "hospitalizados", "uci", "fallecidos") # names(datos[[1]][[1]])
 
 #' 
-#' Se genera un gráfico con toda la serie y otro desde ***`r semanas` semanas atrás (desde `r fecha.ini`)***.
+#' Se genera un gráfico con toda la serie ***hasta `r fechas[last] - 1`*** 
+#' y otro de las últimas ***`r semanas` semanas (desde `r fecha.ini`)***.
+#' 
+#' La legenda (color de las líneas) indica la fecha en la que se reportaron los datos.
 #' 
 
 #+ results = "asis"

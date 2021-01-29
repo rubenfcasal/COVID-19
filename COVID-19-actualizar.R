@@ -9,7 +9,7 @@ r <- HEAD(paste0("https://cnecovid.isciii.es/covid19/resources/", f))
 # r$headers$`content-length`
 unlist(r$headers[c("last-modified", "content-length")])
 #                  last-modified                  content-length 
-# "Wed, 27 Jan 2021 09:31:23 GMT"                      "18388064" 
+# "Fri, 29 Jan 2021 08:42:07 GMT"                      "18483354" 
 
 
 # Descargar 
@@ -64,33 +64,56 @@ levels(casos$sexo) <- c("Hombres", "Mujeres", "NA")
 attr(casos, "url") <- "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv.csv"
 
 save(casos, file = "casos.RData")
-
+# dput(names(casos))
+# c("provincia_iso", "sexo", "grupo_edad", "fecha", "num_casos", 
+# "num_hosp", "num_uci", "num_def", "provincia", "iso", "ccaa")
 
 # Casos por CCAA
 # -------------------
 # Pendiente: mantener factores sexo y edad
 # Pendiente: agregar incidencia acumulada a 14 días y a 7 días
 
-casos_ccaa <- casos %>% group_by(fecha, iso, ccaa) %>% 
+casos_ccaa <- casos %>% rename(edad = grupo_edad) %>%
+  group_by(fecha, iso, ccaa, sexo, edad) %>% 
   summarise(casos=sum(num_casos), hospitalizados=sum(num_hosp), uci=sum(num_uci), 
-            fallecidos=sum(num_def), .groups = 'drop') # %>% relocate(fecha)
+            fallecidos=sum(num_def), .groups = 'drop')
 
-# Se crean las variables para el total de España
-var <- c("casos", "hospitalizados", "uci", "fallecidos")
-
-res <- casos_ccaa %>% group_by(fecha) %>% summarise(across(all_of(var), sum), .groups = 'drop') %>%
-  mutate(ccaa = "España", iso = "ES") 
-res <- suppressWarnings(bind_rows(casos_ccaa, res))
-res$iso <- factor(res$iso, levels = c("ES", levels(provincias$iso)))
-res$ccaa <- factor(res$ccaa, levels = c("España", levels(provincias$ccaa)))
+# Se añaden totales para España
+# https://stackoverflow.com/questions/46126610/appeding-summary-row-of-each-factor-level-using-dplyr-in-r
+casos_ccaa <- casos_ccaa %>% bind_rows( 
+      group_by(., fecha, sexo, edad) %>% 
+      summarise(iso = "ES", ccaa = "España",
+                across(casos:fallecidos, sum), .groups = 'drop') 
+  , .) # Añade anterior al final       
+casos_ccaa$iso <- factor(casos_ccaa$iso, levels = c("ES", levels(provincias$iso)))
+casos_ccaa$ccaa <- factor(casos_ccaa$ccaa, levels = c("España", levels(provincias$ccaa)))
 
 # # Guardar niveles CCAA
-# ccaas <- levels(res$ccaa)
-# names(ccaas) <- levels(res$iso)
+# ccaas <- levels(casos_ccaa$ccaa)
+# names(ccaas) <- levels(casos_ccaa$iso)
 # save(ccaas, file = "ccaas.RData")
 
+# Se añade total de sexo
+levels.sexo <- c("Total", levels(casos_ccaa$sexo))
+casos_ccaa <- casos_ccaa %>% bind_rows( 
+      group_by(., fecha, iso, ccaa, edad) %>% 
+      summarise(sexo = "Total", 
+                across(casos:fallecidos, sum), .groups = 'drop') 
+  , .) # Añade anterior al final     
+casos_ccaa$sexo <- factor(casos_ccaa$sexo, levels = levels.sexo)
+
+# Se añade total de edad
+levels.edad <- c("Total", levels(casos_ccaa$edad))
+casos_ccaa <- casos_ccaa %>% bind_rows( 
+      group_by(., fecha, iso, ccaa, sexo) %>% 
+      summarise(edad = "Total", 
+                across(casos:fallecidos, sum), .groups = 'drop') 
+  , .) # Añade anterior al final     
+casos_ccaa$edad <- factor(casos_ccaa$edad, levels = levels.edad)
+
+
 # Ordenar y guardar
-casos_ccaa <- res %>% arrange(fecha, iso)
+casos_ccaa <- casos_ccaa %>% arrange(fecha, iso, sexo, edad)
 # View(casos_ccaa)
 save(casos_ccaa, file ="casos_ccaa.RData")
 
@@ -103,9 +126,9 @@ save(casos_ccaa, file ="casos_ccaa.RData")
 # Emplear casos en lugar de confirmados?
 
 # Calcular acumulados
-acumulados <- casos_ccaa %>% group_by(iso) %>% 
-  mutate(casos = cumsum(casos), hospitalizados = cumsum(hospitalizados), 
-         uci = cumsum(uci), fallecidos = cumsum(fallecidos)) %>%
+acumulados <- casos_ccaa %>% filter(sexo == "Total", edad == "Total") %>% 
+  select(-sexo, -edad) %>% group_by(iso) %>% 
+  mutate(across(casos:fallecidos, cumsum)) %>%
   ungroup() %>% rename(confirmados = casos)
 # View(acumulados)
 
