@@ -35,28 +35,28 @@ Los datos publicados proceden de la declaración individualizada de casos
 COVID-19 a la Red Nacional de Vigilancia Epidemiológica (RENAVE) a
 través de la aplicación informática SiViEs y se están actualizando de
 forma continua. Además de que pueden contener errores, hay un retraso al
-ir añadiendo los nuevos casos en las fechas de diagnóstico. Por este
-motivo los valores correspondientes a las últimas fechas no están
-consolidados (lamentablemente en el caso de algunas CCAA también ocurre
-en fechas anteriores; ver
-[histórico](acumula2_hist2/acumula22_hist.html)) y no deberían ser
-empleados en los análisis (salvo que se corrijan).
+ir añadiendo los nuevos casos en las fechas de
+diagnóstico<sup>[1](#fdiag)</sup>. Por este motivo los valores
+correspondientes a las últimas fechas no están consolidados
+(lamentablemente en el caso de algunas CCAA también ocurre en fechas
+anteriores; ver [histórico](acumula2_hist2/acumula22_hist.html)) y no
+deberían ser empleados en los análisis (salvo que se corrijan).
 
 ## Archivos
 
   - [casos.RData](casos.RData): Número de casos, hospitalizaciones,
     ingresos en UCI y defunciones por sexo, edad, provincia de
-    residencia y fecha de diagnóstico (datos de prevalencia).
+    residencia y fecha de diagnóstico (nuevos casos).
 
   - [casos\_ccaa.RData](casos_ccaa.RData): Número de casos,
     hospitalizaciones, ingresos en UCI y defunciones por sexo, edad,
-    CCAA y fecha de diagnóstico, incluyendo los totales por sexo, edad y
-    España (datos de prevalencia).
+    CCAA y fecha de diagnóstico (nuevos casos), incluyendo los totales
+    por sexo, edad y CCAA (España).
 
   - [acumulados.RData](acumulados.RData): Evolución de los valores
     acumulados por CCAA y para el total de España (formato adecuado para
     el proyecto [Predicción
-    Cooperativa](#proyecto-de-predicción-cooperativa).
+    Cooperativa](#proyecto-de-predicción-cooperativa)).
 
 En [COVID-19-tablas.html](COVID-19-tablas.html) se pueden consultar
 tablas con los datos actuales por CCAA (informe generado automáticamente
@@ -72,8 +72,8 @@ se están almacenando un histórico de los datos publicados el ISCIII
 van consolidando los datos de la serie. Por ejemplo se incluye un
 [informe](acumula2_hist2/acumula22_hist.html) con la evolución de los
 datos reportados por las distintas CCAA. Es muy triste constatar que
-después de tanto tiempo todavía siguen los problemas (algunas CCAA no
-tienen datos consolidados después de más de 6 semanas…).
+después de tanto tiempo todavía siguen los problemas (algunas CCAA están
+tardando más de 6 semanas en consolidar los datos…).
 
 ## Proyecto de predicción cooperativa
 
@@ -88,8 +88,8 @@ coronavirus](http://matematicas.uclm.es/cemat/covid19)” impulsada por el
 Comité Español de Matemáticas
 ([CEMat](http://matematicas.uclm.es/cemat/es/)). Como resultado, se
 desarrolló un sitio web interactivo utilizando R
-(<https://covid19.citic.udc.es>) para monitorear y predecir en el corto
-plazo variables relevantes en la propagación de Covid-19. Esta web
+(<https://covid19.citic.udc.es>) para monitorear y predecir a corto
+plazo variables relevantes en la propagación del Covid-19. Esta web
 proporcionaba “predicciones cooperativas” (metapredicciones), en
 horizontes de 1 a 7 días por cada comunidad autónoma y variable de
 interés, combinando predicciones basadas en diferentes métodos que
@@ -189,8 +189,6 @@ reportados por las distintas CCAA en el pasado, pocas se salvan…).
       - Pruebas PCR por CCAA:
         <https://datos.civio.es/dataset/pcr-coronavirus-covid19-espana-comunidades-autonomas>
 
-<br>
-
 ### Predicción cooperativa
 
   - [Acción Matemática contra el
@@ -271,3 +269,26 @@ Se puede realizar una búsqueda en <https://rseek.org>…
 
 Si quieres puedes ayudar a través de GitHub o enviando un correo a
 <rubenfcasal@gmail.com>.
+
+-----
+
+<a name="fdiag">1</a>: **Casos**: En los casos anteriores al 11 de mayo,
+se utiliza la fecha de diagnóstico, en su ausencia la fecha de
+declaración a la comunidad y, en su ausencia, la fecha clave (fecha
+usada para estadísticas por las CCAA). En los casos posteriores al 10 de
+mayo, en ausencia de fecha de diagnóstico se utiliza la fecha clave.
+
+**Hospitalizaciones, ingresos en UCI, defunciones**: los casos
+hospitalizados están representados por fecha de hospitalización (en su
+defecto, la fecha de diagnóstico, y en su defecto la fecha clave, los
+casos UCI por fecha de admisión en UCI (en su defecto, la fecha de
+diagnóstico, y en su defecto la fecha clave) y las defunciones por
+fecha de defunción (en su defecto, la fecha de diagnóstico, y en su
+defecto la fecha clave).
+
+**Fecha Clave**: se recomendó a las comunidades autónomas definir la
+fecha Clave como la fecha de inicio de síntomas y en su ausencia la
+fecha de declaración a la CCAA, hasta 10 de mayo. Desde el 11 de mayo en
+adelante la fecha Clave es la más precoz de entre las fechas de consulta
+o de diagnóstico. Ocasionalmente se puede sustituir por la fecha de toma
+de muestras.
