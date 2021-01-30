@@ -60,7 +60,7 @@ Por este motivo los valores correspondientes a las últimas fechas no están con
 
 
 ```{r }
-datatable(acumulados, filter = 'top', options = list(
+datatable(select(acumulados, -iso), filter = 'top', options = list(
   pageLength = 21, autoWidth = TRUE
 ))
 ```
