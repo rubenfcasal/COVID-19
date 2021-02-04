@@ -21,7 +21,7 @@ La versión anterior dejó de actualizarse el 2020-05-21 por problemas con la fu
 
 En esta versión se emplean los datos oficiales disponibles en la pestaña *Documentación y Datos* de la web [Situación de COVID-19 en España](https://cnecovid.isciii.es/covid19) (aplicación shiny) del [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es). Se considera únicamente el archivo:
 
-* [casos_hosp_uci_def_sexo_edad_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, provincia de residencia y fecha de diagnóstico (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf)).
+* [casos_hosp_uci_def_sexo_edad_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, provincia de residencia y fecha de diagnóstico<sup>[1](#fdiag)</sup> (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf)).
 	
 Los datos publicados proceden de la declaración individualizada de casos COVID-19 a la Red Nacional de Vigilancia Epidemiológica (RENAVE) a través de la aplicación informática SiViEs y se están actualizando de forma continua.
 Además de que pueden contener errores, hay un retraso al ir añadiendo los nuevos casos en las fechas de diagnóstico<sup>[1](#fdiag)</sup>.
@@ -61,8 +61,7 @@ Para más detalles ver [Vilar-Fernández et al. (2020)](http://www.seio.es/BBEIO
 El proyecto estuvo vigente desde el 2 de abril hasta el 26 de mayo de 2020, ya que la falta de datos oficiales obligó a su paralización. Actualmente se está intentando volver a ponerlo en marcha... 
 
 El código principal, empleado durante el primer periodo del proyecto para el cálculo de las predicciones cooperativas y la generación de informes, está disponible en el directorio [prediccion_cooperativa](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa).
-
-El archivo [historico_cp.RData](prediccion_cooperativa/historico_cp.RData) en la carpeta [prediccion\_cooperativa](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa) contiene las predicciones cooperativas obtenidas durante el primer periodo del proyecto (un compromiso de confidencialidad impide proporcionar las predicciones individuales de los grupos participantes).
+El archivo [historico_cp.RData](prediccion_cooperativa/historico_cp.RData) en esta carpeta contiene las predicciones cooperativas obtenidas durante el primer periodo del proyecto (un compromiso de confidencialidad impide proporcionar las predicciones individuales de los grupos participantes).
 
 El directorio [acumula2_hist](https://github.com/rubenfcasal/COVID-19/tree/master/acumula2_hist) contiene el código necesario para generar el histórico de valores reportados del ISCIII durante el primer periodo del proyecto:  [acumula2_hist.RData](acumula2_hist/acumula2_hist.RData), empleado para la evaluación de los predictores. 
 También incluye un [informe](acumula2_hist/Informe_acumula2_hist.html) con más detalles (puede servir también para ver algunos de los problemas de los datos reportados por las distintas CCAA en el pasado, pocas se salvan...).
@@ -78,13 +77,13 @@ También incluye un [informe](acumula2_hist/Informe_acumula2_hist.html) con más
 
     - [Situación de COVID-19 en España](https://cnecovid.isciii.es/covid19)
     
-    - Datos por “fecha imputada” (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_tecnica_ccaa_prov_res.pdf))
+    - Datos por *fecha imputada* (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_tecnica_ccaa_prov_res.pdf))
 
         - [casos_tecnica_ccaa.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_ccaa.csv): Número de casos por técnica diagnóstica y CCAA (de residencia)
         
         - [casos_tecnica_provincia.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_provincia.csv): Número de casos por técnica diagnóstica y provincia (de residencia)
 
-    - Datos por “fecha de diagnóstico” (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf))
+    - Datos por *fecha de diagnóstico*<sup>[1](#fdiag)</sup> (ver [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf))
     
         - [casos_diag_ccaadecl.csv](https://cnecovid.isciii.es/covid19/resources/casos_diag_ccaadecl.csv): Número de casos por técnica diagnóstica y CCAA (de declaración)
         

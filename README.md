@@ -13,7 +13,7 @@ estar interesados en analizarlos empleando R. Además se incluye una
 pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
 Esta es la nueva versión del repositorio, con datos actualizados a fecha
-***2021-01-29***. La versión anterior dejó de actualizarse el 2020-05-21
+***2021-02-04***. La versión anterior dejó de actualizarse el 2020-05-21
 por problemas con la fuente de datos, aunque todavía es posible acceder
 a ella a través de este
 [enlace](https://rubenfcasal.github.io/COVID-19/2020/Readme.html) (puede
@@ -28,7 +28,8 @@ considera únicamente el archivo:
 
   - [casos\_hosp\_uci\_def\_sexo\_edad\_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv):
     Número de casos, hospitalizaciones, ingresos en UCI y defunciones
-    por sexo, edad, provincia de residencia y fecha de diagnóstico (ver
+    por sexo, edad, provincia de residencia y fecha de
+    diagnóstico<sup>[1](#fdiag)</sup> (ver
     [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf)).
 
 Los datos publicados proceden de la declaración individualizada de casos
@@ -106,13 +107,10 @@ El código principal, empleado durante el primer periodo del proyecto
 para el cálculo de las predicciones cooperativas y la generación de
 informes, está disponible en el directorio
 [prediccion\_cooperativa](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa).
-
 El archivo
-[historico\_cp.RData](prediccion_cooperativa/historico_cp.RData) en la
-carpeta
-[prediccion\_cooperativa](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa)
-contiene las predicciones cooperativas obtenidas durante el primer
-periodo del proyecto (un compromiso de confidencialidad impide
+[historico\_cp.RData](prediccion_cooperativa/historico_cp.RData) en esta
+carpeta contiene las predicciones cooperativas obtenidas durante el
+primer periodo del proyecto (un compromiso de confidencialidad impide
 proporcionar las predicciones individuales de los grupos participantes).
 
 El directorio
@@ -138,7 +136,7 @@ reportados por las distintas CCAA en el pasado, pocas se salvan…).
       - [Situación de COVID-19 en
         España](https://cnecovid.isciii.es/covid19)
     
-      - Datos por “fecha imputada” (ver
+      - Datos por *fecha imputada* (ver
         [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_tecnica_ccaa_prov_res.pdf))
         
           - [casos\_tecnica\_ccaa.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_ccaa.csv):
@@ -149,7 +147,7 @@ reportados por las distintas CCAA en el pasado, pocas se salvan…).
             Número de casos por técnica diagnóstica y provincia (de
             residencia)
     
-      - Datos por “fecha de diagnóstico” (ver
+      - Datos por *fecha de diagnóstico*<sup>[1](#fdiag)</sup> (ver
         [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf))
         
           - [casos\_diag\_ccaadecl.csv](https://cnecovid.isciii.es/covid19/resources/casos_diag_ccaadecl.csv):
