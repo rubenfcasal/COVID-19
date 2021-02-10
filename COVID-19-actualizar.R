@@ -9,7 +9,7 @@ r <- HEAD(paste0("https://cnecovid.isciii.es/covid19/resources/", f))
 # r$headers$`content-length`
 unlist(r$headers[c("last-modified", "content-length")])
 #                  last-modified                  content-length 
-# "Thu, 04 Feb 2021 09:02:07 GMT"                      "18767934" 
+# "Fri, 05 Feb 2021 10:03:56 GMT"                      "18815387"
 
 
 # Descargar 
@@ -156,10 +156,21 @@ acumula22 <- split(acumula22, acumula22$iso)
 acumula22 <- lapply(acumula22, function(d) split(d, d$respuesta))
 save(acumula22, file ="acumula22.RData")
 
+# Readme
+# -------------------
+# Actualizar Readme.md
+# Si no se emplea RStudio:
+# Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/RStudio/bin/pandoc")
+rmarkdown::render("Readme.Rmd", encoding = "UTF-8")
+
+# Tablas
+# -------------------
+# Generar listado de tablas automáticamente y mostrar
+browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
+
 
 # Histórico
 # -------------------
-
 # Se guardan los ficheros por "fecha de descarga" en ./acumula2_hist2
 
 # Fecha descarga
@@ -167,4 +178,5 @@ fecha.txt <- format(max(acumulados$fecha) + 1, format = "%y_%m_%d")
 file.copy("acumulados.RData", paste0("./acumula2_hist2/acumula2_",fecha.txt,".RData"), overwrite = TRUE)
 file.copy("acumula22.RData", paste0("./acumula2_hist2/acumula22_",fecha.txt,".RData"), overwrite = TRUE)
 
-# Pendiente: Informe acumula2_hist2
+# Informe acumula2_hist2
+browseURL(url = rmarkdown::render("./acumula2_hist2/acumula22_hist.Rmd", encoding = "UTF-8"))
