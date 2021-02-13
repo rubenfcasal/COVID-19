@@ -9,11 +9,12 @@ r <- HEAD(paste0("https://cnecovid.isciii.es/covid19/resources/", f))
 # r$headers$`content-length`
 unlist(r$headers[c("last-modified", "content-length")])
 #                  last-modified                  content-length 
-# "Fri, 05 Feb 2021 10:03:56 GMT"                      "18815387"
+# "Fri, 12 Feb 2021 09:04:33 GMT"                      "19145829"
 
 
 # Descargar 
 # --------------------
+# CUIDADO: Set Working Directory > To Source File Location
 
 f <- "casos_hosp_uci_def_sexo_edad_provres.csv"
 download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mode="wb") 
