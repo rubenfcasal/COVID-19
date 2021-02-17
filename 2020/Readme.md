@@ -113,7 +113,7 @@ para la creación de un predictor cooperativo.
     cooperativas (pestaña *Predicción cooperativa: Resultados*).
 
   - El archivo
-    [historico\_cp.RData](prediccion_cooperativa/historico_cp.RData) en
+    [historico\_cp.RData](/prediccion_cooperativa/historico_cp.RData) en
     la carpeta
     [prediccion\_cooperativa](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa)
     contiene las predicciones cooperativas obtenidas durante la vigencia
@@ -121,10 +121,10 @@ para la creación de un predictor cooperativo.
 
 El 2020-05-13 se añadió el directorio *acumula2\_hist* que contiene el
 código necesario para generar el histórico de valores reportados del
-ISCIII: [acumula2\_hist.RData](acumula2_hist/acumula2_hist.RData),
+ISCIII: [acumula2\_hist.RData](/acumula2_hist/acumula2_hist.RData),
 empleado para la evaluación de los predictores. También se genera un
 informe,
-[Informe\_acumula2\_hist.html](acumula2_hist/Informe_acumula2_hist.html),
+[Informe\_acumula2\_hist.html](/acumula2_hist/Informe_acumula2_hist.html),
 donde se incluyen más detalles (puede servir también para ver algunos de
 los problemas de los datos reportados por las distintas CCAA en el
 pasado, pocas se salvan…).
