@@ -52,8 +52,13 @@ respuestas <- c("confirmados", "hospitalizados", "uci", "fallecidos") # names(da
 Se genera un gráfico con toda la serie ***hasta `r fechas[last] - 1`*** 
 y otro de las últimas ***`r semanas` semanas (desde `r fecha.ini`)***.
 
-La legenda (color de las líneas) indica la fecha en la que se reportaron los datos.
+El color de las líneas se corresponde con la fecha en la que se reportaron los datos (se muestra también el día del mes en el segundo gráfico).
 
+```{r}
+xlim2 <- c(fecha.ini, max(fechas) + 1)
+plot(NULL ,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
+legend("top", rev(names(datos)), lty = 1, col = rev(colors), ncol = 2)
+```
 
 ```{r results = "asis"}
 
@@ -71,16 +76,22 @@ for (r in respuestas) {  # r <- "confirmados"
     lapply(1:(last-1), function(i) 
          lines(observado ~ fecha, data = datos[[i]][[ca]][[r]], 
                col = colors[i]))     
-    legend("topleft", names(datos), lty = 1, col = colors)
+    # legend("topleft", rev(names(datos)), lty = 1, col = rev(colors))
     
 
     plot(observado ~ fecha, data = datos[[last]][[ca]][[r]], 
          type = "l", main = paste(ccaas[ca], r), xlab = "Fecha", ylab = r,
-         col = colors[last], subset = fecha > fecha.ini - 1)
+         lwd = 2, col = colors[last], subset = fecha > fecha.ini - 1,
+         xlim = xlim2)
     lapply(1:(last-1), function(i) 
          lines(observado ~ fecha, data = datos[[i]][[ca]][[r]], 
                col = colors[i], subset = fecha > fecha.ini - 1))
-    # legend("topleft", names(datos), lty = 1, col = colors)
+    # legend("topleft", rev(names(datos)), lty = 1, col = rev(colors))
+    lapply(1:last, function(i) {
+        d <- datos[[i]][[ca]][[r]]
+        text(d[nrow(d), c("fecha", "observado")], 
+             labels = format(fechas[i], "%d"), pos = 4)
+    })
     
     par(old.par)
 
