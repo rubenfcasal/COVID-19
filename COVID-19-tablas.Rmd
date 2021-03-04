@@ -30,11 +30,13 @@ Más detalles en la [web del repositorio](https://rubenfcasal.github.io/COVID-19
 ```{r message=FALSE, warning=FALSE}
 library(DT)
 library(dplyr)
-load("casos_ccaa.RData")
+# load("casos_ccaa.RData")
 load("acumulados.RData")
+load("acumula2.RData")
+fecha.last <- max(acumula2$fecha)
 ```
 
-Datos actualizados a fecha ***`r format(max(acumulados$fecha) + 1, format = "%Y-%m-%d")`***.
+Datos actualizados a fecha ***`r format( fecha.last + 1, format = "%Y-%m-%d")`***.
 
 ## Tabla con el total de casos por CCAA, edad y sexo {#edadsexo}
 
@@ -44,8 +46,7 @@ Calcular % por sexo, edad, %letalidad...
 -->
 
 ```{r }
-casos_ccaa %>% group_by(ccaa, sexo, edad) %>% 
-      summarise(across(casos:fallecidos, sum), .groups = 'drop') %>% 
+acumulados %>% filter(fecha == fecha.last) %>% select(-iso) %>%
       datatable(filter = 'top', 
                 options = list(pageLength = 11, autoWidth = TRUE))
 ```
@@ -60,8 +61,8 @@ Por este motivo los valores correspondientes a las últimas fechas no están con
 
 
 ```{r }
-datatable(select(acumulados, -iso), filter = 'top', options = list(
-  pageLength = 21, autoWidth = TRUE
+datatable(select(acumula2, -iso), filter = 'top', options = list(
+  pageLength = 20, autoWidth = TRUE
 ))
 ```
 

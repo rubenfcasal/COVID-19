@@ -25,16 +25,19 @@ En esta versión se emplean los datos oficiales disponibles en la pestaña *Docu
 	
 Los datos publicados proceden de la declaración individualizada de casos COVID-19 a la Red Nacional de Vigilancia Epidemiológica (RENAVE) a través de la aplicación informática SiViEs y se están actualizando de forma continua.
 Además de que pueden contener errores, hay un retraso al ir añadiendo los nuevos casos en las fechas de diagnóstico<sup>[1](#fdiag)</sup>.
-Por este motivo los valores correspondientes a las últimas fechas no están consolidados (lamentablemente en el caso de algunas CCAA también ocurre en fechas anteriores; ver [histórico](acumula2_hist2/acumula22_hist.html)) y no deberían ser empleados en los análisis (salvo que se corrijan).
+Por este motivo los valores correspondientes a las últimas fechas no están consolidados y no deberían ser empleados en los análisis (salvo que se corrijan).
+Lamentablemente en el caso de algunas CCAA también se están haciendo cambios en los valores reportados en fechas muy anteriores (llaman especialmente la atención los cambios en las series de Madrid y Cataluña; ver [histórico](acumula2_hist2/acumula22_hist.html)).
 
 
 ## Archivos
 
-* [casos.RData](casos.RData): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, provincia de residencia y fecha de diagnóstico (nuevos casos).
+* [casos.RData](casos.RData): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, provincia de residencia y fecha de diagnóstico<sup>[1](#fdiag)</sup> (nuevos casos).
 
 * [casos_ccaa.RData](casos_ccaa.RData): Número de casos, hospitalizaciones, ingresos en UCI y defunciones por sexo, edad, CCAA y fecha de diagnóstico (nuevos casos), incluyendo los totales por sexo, edad y CCAA (España).
 
-* [acumulados.RData](acumulados.RData): Evolución de los valores acumulados por CCAA y para el total de España (formato adecuado para el proyecto [Predicción Cooperativa](#proyecto-de-predicción-cooperativa)). 
+* [acumulados.RData](acumulados.RData): Evolución de los valores acumulados por sexo, edad y CCAA según fecha de diagnóstico, incluyendo los totales por sexo, edad y CCAA (España).  
+
+* [acumula2.RData](acumula2.RData): Evolución de los valores acumulados por CCAA y para el total de España (formato adecuado para el proyecto [Predicción Cooperativa](#proyecto-de-predicción-cooperativa)). 
 
 En [COVID-19-tablas.html](COVID-19-tablas.html) se pueden consultar tablas con los datos actuales por CCAA (informe generado automáticamente a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)). 
 
@@ -43,7 +46,17 @@ El archivo [COVID-19-actualizar.R](COVID-19-actualizar.R) contiene el código ne
 En el directorio [acumula2_hist2](https://github.com/rubenfcasal/COVID-19/tree/master/acumula2_hist2) se están almacenando un histórico de los datos publicados el ISCIII (reportados por las CCAA). 
 Puede ser de utilidad para estudiar como se van consolidando los datos de la serie.
 Por ejemplo se incluye un [informe](acumula2_hist2/acumula22_hist.html) con la evolución de los datos reportados por las distintas CCAA.
-Es muy triste constatar que después de tanto tiempo todavía siguen los problemas (algunas CCAA están tardando más de 6 semanas en consolidar los datos...).
+Es muy triste constatar que después de tanto tiempo todavía siguen los problemas (algunas CCAA están tardando más de 6 semanas en consolidar los datos; otras como Madrid o Cataluña hicieron cambios drásticos en las series reportadas...).
+
+### NOTAS
+
+Cambios a partir del 2021-03-02:
+
+* Se cambió el código de provincia de Melilla de `"ME"` a `"ML"` (coincidiendo con el estándar [ISO_3166-2:ES](https://es.wikipedia.org/wiki/ISO_3166-2:ES#Provincias)).
+
+* En los archivos de datos por CCAA, el nombre de la variable `casos` pasa a ser `confirmados` (como en la versión anterior del repositorio).
+
+* En los archivos de datos por CCAA, se considera el territorio especial de `"Ceuta y Melilla"` con código `"EA"` (ISO 3166-1 alfa-2).
 
 
 ## Proyecto de predicción cooperativa

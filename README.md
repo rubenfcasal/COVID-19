@@ -13,7 +13,7 @@ estar interesados en analizarlos empleando R. Además se incluye una
 pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
 Esta es la nueva versión del repositorio, con datos actualizados a fecha
-***2021-02-26***. La versión anterior dejó de actualizarse el 2020-05-21
+***2021-03-04***. La versión anterior dejó de actualizarse el 2020-05-21
 por problemas con la fuente de datos, aunque todavía es posible acceder
 a ella a través de este
 [enlace](https://rubenfcasal.github.io/COVID-19/2020/Readme.html) (puede
@@ -38,16 +38,19 @@ través de la aplicación informática SiViEs y se están actualizando de
 forma continua. Además de que pueden contener errores, hay un retraso al
 ir añadiendo los nuevos casos en las fechas de
 diagnóstico<sup>[1](#fdiag)</sup>. Por este motivo los valores
-correspondientes a las últimas fechas no están consolidados
-(lamentablemente en el caso de algunas CCAA también ocurre en fechas
-anteriores; ver [histórico](acumula2_hist2/acumula22_hist.html)) y no
+correspondientes a las últimas fechas no están consolidados y no
 deberían ser empleados en los análisis (salvo que se corrijan).
+Lamentablemente en el caso de algunas CCAA también se están haciendo
+cambios en los valores reportados en fechas muy anteriores (llaman
+especialmente la atención los cambios en las series de Madrid y
+Cataluña; ver [histórico](acumula2_hist2/acumula22_hist.html)).
 
 ## Archivos
 
   - [casos.RData](casos.RData): Número de casos, hospitalizaciones,
     ingresos en UCI y defunciones por sexo, edad, provincia de
-    residencia y fecha de diagnóstico (nuevos casos).
+    residencia y fecha de diagnóstico<sup>[1](#fdiag)</sup> (nuevos
+    casos).
 
   - [casos\_ccaa.RData](casos_ccaa.RData): Número de casos,
     hospitalizaciones, ingresos en UCI y defunciones por sexo, edad,
@@ -55,6 +58,10 @@ deberían ser empleados en los análisis (salvo que se corrijan).
     por sexo, edad y CCAA (España).
 
   - [acumulados.RData](acumulados.RData): Evolución de los valores
+    acumulados por sexo, edad y CCAA según fecha de diagnóstico,
+    incluyendo los totales por sexo, edad y CCAA (España).
+
+  - [acumula2.RData](acumula2.RData): Evolución de los valores
     acumulados por CCAA y para el total de España (formato adecuado para
     el proyecto [Predicción
     Cooperativa](#proyecto-de-predicción-cooperativa)).
@@ -74,7 +81,24 @@ van consolidando los datos de la serie. Por ejemplo se incluye un
 [informe](acumula2_hist2/acumula22_hist.html) con la evolución de los
 datos reportados por las distintas CCAA. Es muy triste constatar que
 después de tanto tiempo todavía siguen los problemas (algunas CCAA están
-tardando más de 6 semanas en consolidar los datos…).
+tardando más de 6 semanas en consolidar los datos; otras como Madrid o
+Cataluña hicieron cambios drásticos en las series reportadas…).
+
+### NOTAS
+
+Cambios a partir del 2021-03-02:
+
+  - Se cambió el código de provincia de Melilla de `"ME"` a `"ML"`
+    (coincidiendo con el estándar
+    [ISO\_3166-2:ES](https://es.wikipedia.org/wiki/ISO_3166-2:ES#Provincias)).
+
+  - En los archivos de datos por CCAA, el nombre de la variable `casos`
+    pasa a ser `confirmados` (como en la versión anterior del
+    repositorio).
+
+  - En los archivos de datos por CCAA, se considera el territorio
+    especial de `"Ceuta y Melilla"` con código `"EA"` (ISO 3166-1
+    alfa-2).
 
 ## Proyecto de predicción cooperativa
 

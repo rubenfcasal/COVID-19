@@ -68,21 +68,25 @@ for (r in respuestas) {  # r <- "confirmados"
   for (ca in iso) { # ca <- "ES"
     cat("\n\n## ",  ccaas[ca], "\n\n")
     
+    ymax <- max(sapply(datos, function(d) max(d[[ca]][[r]]$observado)))
+    
     old.par <- par(mfrow = c(1, 2))
 
     plot(observado ~ fecha, data = datos[[last]][[ca]][[r]], 
          type = "l", main = paste(ccaas[ca], r), xlab = "Fecha", ylab = r,
-         col = colors[last])
+         col = colors[last], ylim = c(0, ymax))
     lapply(1:(last-1), function(i) 
          lines(observado ~ fecha, data = datos[[i]][[ca]][[r]], 
                col = colors[i]))     
     # legend("topleft", rev(names(datos)), lty = 1, col = rev(colors))
     
 
-    plot(observado ~ fecha, data = datos[[last]][[ca]][[r]], 
+    d <- filter(datos[[last]][[ca]][[r]], fecha > fecha.ini - 1)
+    ymin <- min(d$observado) * 0.95
+    plot(observado ~ fecha, data = d, 
          type = "l", main = paste(ccaas[ca], r), xlab = "Fecha", ylab = r,
-         lwd = 2, col = colors[last], subset = fecha > fecha.ini - 1,
-         xlim = xlim2)
+         lwd = 2, col = colors[last], 
+         xlim = xlim2, ylim = c(ymin, ymax))
     lapply(1:(last-1), function(i) 
          lines(observado ~ fecha, data = datos[[i]][[ca]][[r]], 
                col = colors[i], subset = fecha > fecha.ini - 1))
