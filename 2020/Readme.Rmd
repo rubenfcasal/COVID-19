@@ -1,5 +1,5 @@
 ---
-title: "COVID-19 (versión antigua)"
+title: "COVID-19 (datos 2021)"
 output: html_document
 # output: github_document
 params: 
