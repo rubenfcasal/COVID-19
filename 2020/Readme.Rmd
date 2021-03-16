@@ -1,5 +1,7 @@
 ---
-output: github_document
+title: "COVID-19 (versión antigua)"
+output: html_document
+# output: github_document
 params: 
   fecha: "2020-10-13" 
 ---
@@ -58,7 +60,7 @@ El fichero [acumula2.RData](acumula2.RData) contiene una modificación de los da
 
 * El archivo [historico_cp.RData](/prediccion_cooperativa/historico_cp.RData) en la carpeta [prediccion\_cooperativa](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa) contiene las predicciones cooperativas obtenidas durante la vigencia del proyecto.
   
-El 2020-05-13 se añadió el directorio *acumula2_hist* que contiene el código necesario para generar el histórico de valores reportados del ISCIII:  [acumula2_hist.RData](/acumula2_hist/acumula2_hist.RData), empleado para la evaluación de los predictores. También se genera un informe, [Informe_acumula2_hist.html](/acumula2_hist/Informe_acumula2_hist.html), donde se incluyen más detalles (puede servir también para ver algunos de los problemas de los datos reportados por las distintas CCAA en el pasado, pocas se salvan...).
+El 2020-05-13 se añadió el directorio *acumula2_hist* que contiene el código necesario para generar el histórico de valores reportados del ISCIII:  [acumula2_hist.RData](../acumula2_hist/acumula2_hist.RData), empleado para la evaluación de los predictores. También se genera un informe, [Informe_acumula2_hist.html](../acumula2_hist/Informe_acumula2_hist.html), donde se incluyen más detalles (puede servir también para ver algunos de los problemas de los datos reportados por las distintas CCAA en el pasado, pocas se salvan...).
   
   
 ***NOTAS acumula2.RData***:  
