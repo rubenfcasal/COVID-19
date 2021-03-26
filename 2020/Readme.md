@@ -1,4 +1,4 @@
-# Datos oficiales de COVID-19 en España (datos 2021)
+# Datos oficiales de COVID-19 en España (datos hasta 2020-05-20)
 
 <!-- 
 Readme.md is generated from Readme.Rmd. 
