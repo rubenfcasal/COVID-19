@@ -11,8 +11,8 @@ HU;Huesca;AR;Aragón
 TE;Teruel;AR;Aragón
 Z;Zaragoza;AR;Aragón
 O;Asturias;AS;Asturias
-GC;Gran Canaria;CN;Canarias
-TF;Santa cruz de Tenerife;CN;Canarias
+GC;Las Palmas;CN;Canarias
+TF;Santa Cruz de Tenerife;CN;Canarias
 S;Cantabria;CB;Cantabria
 AV;Ávila;CL;Castilla y León
 BU;Burgos;CL;Castilla y León
@@ -32,8 +32,7 @@ B;Barcelona;CT;Cataluña
 GI;Girona;CT;Cataluña
 L;Lleida;CT;Cataluña
 T;Tarragona;CT;Cataluña
-CE;Ceuta;EA;Ceuta y Melilla
-ML;Melilla;EA;Ceuta y Melilla
+CE;Ceuta;CE;Ceuta
 A;Alicante;VC;Comunidad Valenciana
 CS;Castellón;VC;Comunidad Valenciana
 V;Valencia;VC;Comunidad Valenciana
@@ -46,6 +45,7 @@ PO;Pontevedra;GA;Galicia
 PM;Islas Baleares;IB;Islas Baleares
 LO;La Rioja;RI;La Rioja
 M;Madrid;MD;Madrid
+ML;Melilla;ML;Melilla
 MU;Murcia;MC;Murcia
 NA;Navarra;NC;Navarra
 VI;Álava;PV;País Vasco

@@ -57,7 +57,7 @@ El color de las líneas se corresponde con la fecha en la que se reportaron los 
 ```{r}
 xlim2 <- c(fecha.ini, max(fechas) + 1)
 plot(NULL ,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
-legend("top", rev(names(datos)), lty = 1, col = rev(colors), ncol = 2)
+legend("top", rev(names(datos)), lty = 1, col = rev(colors), ncol = 3)
 ```
 
 ```{r results = "asis"}

@@ -13,7 +13,7 @@ estar interesados en analizarlos empleando R. Además se incluye una
 pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
 Esta es la nueva versión del repositorio, con datos actualizados a fecha
-***2021-03-31***. La versión anterior dejó de actualizarse el 2020-05-21
+***2021-04-06***. La versión anterior dejó de actualizarse el 2020-05-21
 por problemas con la fuente de datos, aunque todavía es posible acceder
 a ella a través de este
 [enlace](https://rubenfcasal.github.io/COVID-19/2020/Readme.html) (puede
@@ -96,9 +96,12 @@ Cambios a partir del 2021-03-02:
     pasa a ser `confirmados` (como en la versión anterior del
     repositorio).
 
-  - En los archivos de datos por CCAA, se considera el territorio
-    especial de `"Ceuta y Melilla"` con código `"EA"` (ISO 3166-1
-    alfa-2).
+<!-- 
+A partir del 2021-04-06 se vuelve a considerar Ceuta y Melilla como
+CCAA por compatibilidad con los datos del ISCIII 
+(para el reinicio del proyecto de predicción cooperativa)
+* En los archivos de datos por CCAA, se considera el territorio especial de `"Ceuta y Melilla"` con código `"EA"` (ISO 3166-1 alfa-2). 
+-->
 
 ## Proyecto de predicción cooperativa
 

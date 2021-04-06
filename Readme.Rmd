@@ -56,7 +56,12 @@ Cambios a partir del 2021-03-02:
 
 * En los archivos de datos por CCAA, el nombre de la variable `casos` pasa a ser `confirmados` (como en la versión anterior del repositorio).
 
-* En los archivos de datos por CCAA, se considera el territorio especial de `"Ceuta y Melilla"` con código `"EA"` (ISO 3166-1 alfa-2).
+<!-- 
+A partir del 2021-04-06 se vuelve a considerar Ceuta y Melilla como
+CCAA por compatibilidad con los datos del ISCIII 
+(para el reinicio del proyecto de predicción cooperativa)
+* En los archivos de datos por CCAA, se considera el territorio especial de `"Ceuta y Melilla"` con código `"EA"` (ISO 3166-1 alfa-2). 
+-->
 
 
 ## Proyecto de predicción cooperativa
