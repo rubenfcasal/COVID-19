@@ -32,7 +32,8 @@ B;Barcelona;CT;Cataluña
 GI;Girona;CT;Cataluña
 L;Lleida;CT;Cataluña
 T;Tarragona;CT;Cataluña
-CE;Ceuta;CE;Ceuta
+CE;Ceuta;EA;Ceuta y Melilla
+ML;Melilla;EA;Ceuta y Melilla
 A;Alicante;VC;Comunidad Valenciana
 CS;Castellón;VC;Comunidad Valenciana
 V;Valencia;VC;Comunidad Valenciana
@@ -45,7 +46,6 @@ PO;Pontevedra;GA;Galicia
 PM;Islas Baleares;IB;Islas Baleares
 LO;La Rioja;RI;La Rioja
 M;Madrid;MD;Madrid
-ML;Melilla;ML;Melilla
 MU;Murcia;MC;Murcia
 NA;Navarra;NC;Navarra
 VI;Álava;PV;País Vasco
