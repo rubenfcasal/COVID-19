@@ -26,12 +26,15 @@ output:
 library(dplyr, warn.conflicts = FALSE)
 library(tidyr)
 
+
 files <- dir(pattern = paste0('^acumula22_\\d{2}_\\d{2}_\\d{2}\\.RData'))
+# Los nombres de los archivos contienen las fechas de reporte (datos del día anterior)
 fechas.txt <- substr(files, 11, 18)
 fechas <- as.Date(fechas.txt, format = "%y_%m_%d") 
 last <- length(files)
 semanas <- 6
-fecha.ini <- fechas[last] - 7*semanas - 1
+fechas.semanas <- fechas[last] - 7*(semanas:1) - 1
+fecha.ini <- fechas.semanas[1]
 colors <- gray((last - seq_along(files))/last)
 
 
@@ -87,6 +90,7 @@ for (r in respuestas) {  # r <- "confirmados"
          type = "l", main = paste(ccaas[ca], r), xlab = "Fecha", ylab = r,
          lwd = 2, col = colors[last], 
          xlim = xlim2, ylim = c(ymin, ymax))
+    abline(v = fechas.semanas, lty = 3, col = "lightgray")
     lapply(1:(last-1), function(i) 
          lines(observado ~ fecha, data = datos[[i]][[ca]][[r]], 
                col = colors[i], subset = fecha > fecha.ini - 1))

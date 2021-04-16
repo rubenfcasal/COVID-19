@@ -9,7 +9,7 @@ r <- HEAD(paste0("https://cnecovid.isciii.es/covid19/resources/", f))
 # r$headers$`content-length`
 unlist(r$headers[c("last-modified", "content-length")])
 #                  last-modified                  content-length 
-# "Thu, 15 Apr 2021 10:53:59 GMT"                      "22053367"
+# "Fri, 16 Apr 2021 11:29:26 GMT"                      "22100333"
 
 
 # Descargar 
