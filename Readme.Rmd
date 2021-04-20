@@ -26,7 +26,7 @@ En esta versión se emplean los datos oficiales disponibles en la pestaña *Docu
 Los datos publicados proceden de la declaración individualizada de casos COVID-19 a la Red Nacional de Vigilancia Epidemiológica (RENAVE) a través de la aplicación informática SiViEs y se están actualizando de forma continua.
 Además de que pueden contener errores, hay un retraso al ir añadiendo los nuevos casos en las fechas de diagnóstico<sup>[1](#fdiag)</sup>.
 Por este motivo los valores correspondientes a las últimas fechas no están consolidados y no deberían ser empleados en los análisis (salvo que se corrijan).
-Lamentablemente en el caso de algunas CCAA también se están haciendo cambios en los valores reportados en fechas muy anteriores (llaman especialmente la atención los cambios en las series de Madrid y Cataluña; ver [histórico](acumula2_hist2/acumula22_hist.html)).
+Lamentablemente en el caso de algunas CCAA también se están haciendo cambios en los valores reportados en fechas muy anteriores (llaman especialmente la atención los cambios en las series de Madrid y Cataluña; ver [histórico](acumula2_hist2/Informe_acumula22_hist.html)).
 
 
 ## Archivos
@@ -45,7 +45,7 @@ El archivo [COVID-19-actualizar.R](COVID-19-actualizar.R) contiene el código ne
 
 En el directorio [acumula2_hist2](https://github.com/rubenfcasal/COVID-19/tree/master/acumula2_hist2) se están almacenando un histórico de los datos publicados el ISCIII (reportados por las CCAA). 
 Puede ser de utilidad para estudiar como se van consolidando los datos de la serie.
-Por ejemplo se incluye un [informe](acumula2_hist2/acumula22_hist.html) con la evolución de los datos reportados por las distintas CCAA.
+Por ejemplo se incluye un [informe](acumula2_hist2/Informe_acumula22_hist.html) con la evolución de los datos reportados por las distintas CCAA.
 Es muy triste constatar que después de tanto tiempo todavía siguen los problemas (algunas CCAA están tardando más de 6 semanas en consolidar los datos; otras como Madrid o Cataluña hicieron cambios drásticos en las series reportadas...).
 
 ### NOTAS

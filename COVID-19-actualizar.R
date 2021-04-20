@@ -9,7 +9,7 @@ r <- HEAD(paste0("https://cnecovid.isciii.es/covid19/resources/", f))
 # r$headers$`content-length`
 unlist(r$headers[c("last-modified", "content-length")])
 #                  last-modified                  content-length 
-# "Fri, 16 Apr 2021 11:29:26 GMT"                      "22100333"
+# "Tue, 20 Apr 2021 09:01:05 GMT"                      "22288171"
 
 
 # Descargar 
@@ -203,7 +203,7 @@ fecha.txt <- format(max(acumulados$fecha) + 1, format = "%y_%m_%d")
 file.copy("acumula22.RData", paste0("./acumula2_hist2/acumula22_",fecha.txt,".RData"), overwrite = TRUE)
 
 # Informe acumula2_hist2
-browseURL(url = rmarkdown::render("./acumula2_hist2/acumula22_hist.Rmd", encoding = "UTF-8"))
+browseURL(url = rmarkdown::render("./acumula2_hist2/Informe_acumula22_hist.Rmd", encoding = "UTF-8"))
 
 # Guardar .csv en subdirectorio de historico_csv
 destino <- "./historico_csv"
