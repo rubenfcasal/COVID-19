@@ -64,12 +64,11 @@ legend("top", rev(names(datos)), lty = 1, col = rev(colors), ncol = 4)
 ```
 
 ```{r results = "asis"}
+for (ca in iso) { # ca <- "ES"
+  cat("\n\n# ",  ccaas[ca], "\n\n")
 
-for (r in respuestas) {  # r <- "confirmados"
-  cat("\n\n# ", r, "\n\n") 
-  
-  for (ca in iso) { # ca <- "ES"
-    cat("\n\n## ",  ccaas[ca], "\n\n")
+  for (r in respuestas) {  # r <- "confirmados"
+    cat("\n\n## ", r, "\n\n") 
     
     ymax <- max(sapply(datos, function(d) max(d[[ca]][[r]]$observado)))
     
@@ -102,8 +101,8 @@ for (r in respuestas) {  # r <- "confirmados"
     })
     
     par(old.par)
-
-  } # for (ca in iso)
-} # for (r in respuestas)   
+    
+  } # for (r in respuestas)  
+} # for (ca in iso)
 ```
 
