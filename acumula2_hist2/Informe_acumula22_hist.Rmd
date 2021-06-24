@@ -12,7 +12,7 @@ output:
      out_width: "100%"    
 ---
 
-```{r }
+```{r message=FALSE, warning=FALSE}
 # knitr::spin("acumula22_hist.R", knit = FALSE) # Crea .Rmd
 # knitr::purl("acumula22_hist.Rmd", documentation = 2) # Crea .R spin
 
@@ -22,11 +22,12 @@ output:
 #         Añadir ficheros 2:(last - 1) a files[last] y calcular diferencia/error y lag/horizonte
 #   Análisis descriptivo: dispersión/boxplot error|lag
 
-
 library(dplyr, warn.conflicts = FALSE)
 library(tidyr)
+```
 
 
+```{r }
 files <- dir(pattern = paste0('^acumula22_\\d{2}_\\d{2}_\\d{2}\\.RData'))
 # Los nombres de los archivos contienen las fechas de reporte (datos del día anterior)
 fechas.txt <- substr(files, 11, 18)
@@ -60,7 +61,7 @@ El color de las líneas se corresponde con la fecha en la que se reportaron los 
 ```{r}
 xlim2 <- c(fecha.ini, max(fechas) + 1)
 plot(NULL ,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
-legend("top", rev(names(datos)), lty = 1, col = rev(colors), ncol = 4)
+legend("top", rev(names(datos)), lty = 1, col = rev(colors), ncol = 5)
 ```
 
 ```{r results = "asis"}
