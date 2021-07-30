@@ -8,16 +8,16 @@ r <- HEAD(paste0("https://cnecovid.isciii.es/covid19/resources/", f))
 # r$headers$`last-modified`
 # r$headers$`content-length`
 unlist(r$headers[c("last-modified", "content-length")])
-#                  last-modified                  content-length 
-# "Thu, 22 Jul 2021 10:49:01 GMT"                      "26651823" 
+#                  last-modified                  content-length
+# "Fri, 30 Jul 2021 06:50:30 GMT"                      "27030030"
 
 
-# Descargar 
+# Descargar
 # --------------------
 # CUIDADO: Set Working Directory > To Source File Location
 
 f <- "casos_hosp_uci_def_sexo_edad_provres.csv"
-download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mode="wb") 
+download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mode="wb")
 
 # Procesar
 # --------------------
@@ -28,7 +28,7 @@ download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mod
 # Cambios:
 #   El 02/03/2021 se cambió el nivel de Melilla de 'ME' a 'ML' (coincidiendo con el estándar)
 #     Hasta 24/02/2021 se utilizaba ME en lugar de ML
-# Se utiliza el código 'EA' para 'Ceuta y Melilla' código ISO 3166-1 alfa-2 
+# Se utiliza el código 'EA' para 'Ceuta y Melilla' código ISO 3166-1 alfa-2
 # En los archivos de datos por CCAA se renombró la variable `casos` como `confirmados`.
 # Pendiente: añadir población y nuevas variables
 #     Mantener acumula2 y acumula22 en formato predicción cooperativa
@@ -37,19 +37,19 @@ download.file(paste0("https://cnecovid.isciii.es/covid19/resources/", f), f, mod
 library(dplyr)
 
 f <- "casos_hosp_uci_def_sexo_edad_provres.csv"
-casos <- read.csv(f, sep = ",", na.strings = "", 
+casos <- read.csv(f, sep = ",", na.strings = "",
                   colClasses = c(rep("factor", 3), "character", rep("integer", 4)))
-casos$fecha <- as.Date(casos$fecha, format = "%Y-%m-%d") 
+casos$fecha <- as.Date(casos$fecha, format = "%Y-%m-%d")
 range(casos$fecha)
 
 # Verificar nombre de las variables
-var.isciii <- c("provincia_iso", "sexo", "grupo_edad", "fecha", "num_casos", 
+var.isciii <- c("provincia_iso", "sexo", "grupo_edad", "fecha", "num_casos",
                 "num_hosp", "num_uci", "num_def")
 if (any(names(casos) != var.isciii)) stop('Cambios en las variables')
 
-# Listado de provincias y CCAA 
-provincias <- read.csv2(file = "iso_ccaa_provincia.csv", na.strings = "", 
-                        colClasses = "character", header = TRUE) 
+# Listado de provincias y CCAA
+provincias <- read.csv2(file = "iso_ccaa_provincia.csv", na.strings = "",
+                        colClasses = "character", header = TRUE)
 # Convertir a factor manteniendo el orden
 provincias <- provincias %>% mutate(across(.fns =  ~ factor(.x, levels = unique(.x)))) # mutate_if
 
@@ -57,7 +57,7 @@ provincias <- provincias %>% mutate(across(.fns =  ~ factor(.x, levels = unique(
 # Antes del 02/03/2021 se empleaba 'ME' en lugar de 'ML' para Melilla
 levels(casos$provincia_iso) <- gsub("ME", "ML", levels(casos$provincia_iso))
 # Verificar niveles de provincia_iso
-if (!all(levels(casos$provincia_iso) %in% levels(provincias$provincia_iso))) 
+if (!all(levels(casos$provincia_iso) %in% levels(provincias$provincia_iso)))
     stop('Cambios en provincia_iso: ',
          setdiff(levels(casos$provincia_iso), levels(provincias$provincia_iso)))
 
@@ -65,8 +65,8 @@ if (!all(levels(casos$provincia_iso) %in% levels(provincias$provincia_iso)))
 # Añadir "provincia", "iso" (CCAA) y "ccaa"
 casos <- casos %>% left_join(provincias, by="provincia_iso")
 
-# Verificar y cambiar niveles de sexo 
-if (!all(levels(casos$sexo) == c("H", "M", "NC"))) 
+# Verificar y cambiar niveles de sexo
+if (!all(levels(casos$sexo) == c("H", "M", "NC")))
     stop('Cambios en niveles del factor sexo')
 levels(casos$sexo) <- c("Hombres", "Mujeres", "NA")
 
@@ -75,7 +75,7 @@ attr(casos, "url") <- "https://cnecovid.isciii.es/covid19/resources/casos_hosp_u
 
 save(casos, file = "casos.RData")
 # dput(names(casos))
-# c("provincia_iso", "sexo", "grupo_edad", "fecha", "num_casos", 
+# c("provincia_iso", "sexo", "grupo_edad", "fecha", "num_casos",
 # "num_hosp", "num_uci", "num_def", "provincia", "iso", "ccaa")
 
 # Casos por CCAA
@@ -83,17 +83,17 @@ save(casos, file = "casos.RData")
 # Pendiente: agregar incidencia acumulada a 14 días y a 7 días
 
 casos_ccaa <- casos %>% rename(edad = grupo_edad) %>%
-  group_by(fecha, iso, ccaa, sexo, edad) %>% 
-  summarise(confirmados=sum(num_casos), hospitalizados=sum(num_hosp), uci=sum(num_uci), 
+  group_by(fecha, iso, ccaa, sexo, edad) %>%
+  summarise(confirmados=sum(num_casos), hospitalizados=sum(num_hosp), uci=sum(num_uci),
             fallecidos=sum(num_def), .groups = 'drop')
 
 # Se añaden totales para España
 # https://stackoverflow.com/questions/46126610/appeding-summary-row-of-each-factor-level-using-dplyr-in-r
-casos_ccaa <- casos_ccaa %>% bind_rows( 
-      group_by(., fecha, sexo, edad) %>% 
+casos_ccaa <- casos_ccaa %>% bind_rows(
+      group_by(., fecha, sexo, edad) %>%
       summarise(iso = "ES", ccaa = "España",
-                across(confirmados:fallecidos, sum), .groups = 'drop') 
-  , .) # Añade anterior al final       
+                across(confirmados:fallecidos, sum), .groups = 'drop')
+  , .) # Añade anterior al final
 casos_ccaa$iso <- factor(casos_ccaa$iso, levels = c("ES", levels(provincias$iso)))
 casos_ccaa$ccaa <- factor(casos_ccaa$ccaa, levels = c("España", levels(provincias$ccaa)))
 
@@ -104,20 +104,20 @@ casos_ccaa$ccaa <- factor(casos_ccaa$ccaa, levels = c("España", levels(provinci
 
 # Se añade total de sexo
 levels.sexo <- c("Total", levels(casos_ccaa$sexo))
-casos_ccaa <- casos_ccaa %>% bind_rows( 
-      group_by(., fecha, iso, ccaa, edad) %>% 
-      summarise(sexo = "Total", 
-                across(confirmados:fallecidos, sum), .groups = 'drop') 
-  , .) # Añade anterior al final     
+casos_ccaa <- casos_ccaa %>% bind_rows(
+      group_by(., fecha, iso, ccaa, edad) %>%
+      summarise(sexo = "Total",
+                across(confirmados:fallecidos, sum), .groups = 'drop')
+  , .) # Añade anterior al final
 casos_ccaa$sexo <- factor(casos_ccaa$sexo, levels = levels.sexo)
 
 # Se añade total de edad
 levels.edad <- c("Total", levels(casos_ccaa$edad))
-casos_ccaa <- casos_ccaa %>% bind_rows( 
-      group_by(., fecha, iso, ccaa, sexo) %>% 
-      summarise(edad = "Total", 
-                across(confirmados:fallecidos, sum), .groups = 'drop') 
-  , .) # Añade anterior al final     
+casos_ccaa <- casos_ccaa %>% bind_rows(
+      group_by(., fecha, iso, ccaa, sexo) %>%
+      summarise(edad = "Total",
+                across(confirmados:fallecidos, sum), .groups = 'drop')
+  , .) # Añade anterior al final
 casos_ccaa$edad <- factor(casos_ccaa$edad, levels = levels.edad)
 
 
@@ -128,14 +128,14 @@ save(casos_ccaa, file ="casos_ccaa.RData")
 
 # Acumulados por CCAA
 # -------------------
-# NOTAS: 
+# NOTAS:
 # Se supone que casos_ccaa está ordenado por fecha
 
 # Calcular acumulados
-acumulados <- casos_ccaa %>%  
-  group_by(iso, sexo, edad) %>% 
+acumulados <- casos_ccaa %>%
+  group_by(iso, sexo, edad) %>%
   mutate(across(confirmados:fallecidos, cumsum)) %>%
-  ungroup() 
+  ungroup()
 # View(acumulados)
 
 # Guardar
@@ -145,9 +145,9 @@ save(acumulados, file ="acumulados.RData")
 # ---------
 # Mantenemos acumula2 compatible con la versión anterior
 #   Sin sexo y edad
-# Se elimina la variable nuevos 
-acumula2 <- acumulados %>% filter(sexo == "Total", edad == "Total") %>% 
-  select(-sexo, -edad) 
+# Se elimina la variable nuevos
+acumula2 <- acumulados %>% filter(sexo == "Total", edad == "Total") %>%
+  select(-sexo, -edad)
 # View(acumula2)
 
 # Guardar
@@ -194,21 +194,21 @@ browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
 
 # Histórico
 # -------------------
-# Se guardan los ficheros por "fecha de descarga" en ./acumula2_hist2
-#   Actualmente solo "acumula22.RData"
-
-# Fecha descarga
+# Fecha de descarga
 fecha.txt <- format(max(acumulados$fecha) + 1, format = "%y_%m_%d")
-# file.copy("acumula2.RData", paste0("./acumula2_hist2/acumula2_",fecha.txt,".RData"), overwrite = TRUE)
-file.copy("acumula22.RData", paste0("./acumula2_hist2/acumula22_",fecha.txt,".RData"), overwrite = TRUE)
-
-# Informe acumula2_hist2
-browseURL(url = rmarkdown::render("./acumula2_hist2/Informe_acumula22_hist.Rmd", encoding = "UTF-8"))
 
 # Guardar .csv en subdirectorio de historico_csv
 destino <- "./historico_csv"
 dir.create(file.path(destino, fecha.txt)) # recursive = TRUE
 file.copy(f, file.path(destino, fecha.txt, f), overwrite = TRUE)
+
+# Se guardan los ficheros por "fecha de descarga" en ./acumula2_hist2
+#   Actualmente solo "acumula22.RData"
+# file.copy("acumula2.RData", paste0("./acumula2_hist2/acumula2_",fecha.txt,".RData"), overwrite = TRUE)
+file.copy("acumula22.RData", paste0("./acumula2_hist2/acumula22_",fecha.txt,".RData"), overwrite = TRUE)
+
+# Informe acumula2_hist2
+browseURL(url = rmarkdown::render("./acumula2_hist2/Informe_acumula22_hist.Rmd", encoding = "UTF-8"))
 
 
 
