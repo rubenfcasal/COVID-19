@@ -148,7 +148,7 @@ acumula2 <- acumulados %>% filter(sexo == "Total", edad == "Total") %>%
 # View(acumula2)
 
 # Guardar
-# save(acumula2, file ="acumula2.RData")
+save(acumula2, file ="acumula2.RData")
 
 
 # acumula22

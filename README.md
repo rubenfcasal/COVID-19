@@ -13,7 +13,7 @@ estar interesados en analizarlos empleando R. Además se incluye una
 pequeña recopilación de enlaces a recursos que pueden ser de interés.
 
 Esta es la nueva versión del repositorio, con datos actualizados a fecha
-***2021-09-02***. La versión anterior dejó de actualizarse el 2020-05-21
+***2021-09-30***. La versión anterior dejó de actualizarse el 2020-05-21
 por problemas con la fuente de datos, aunque todavía es posible acceder
 a ella a través de este
 [enlace](https://rubenfcasal.github.io/COVID-19/2020/Readme.html) (puede
@@ -26,7 +26,7 @@ España](https://cnecovid.isciii.es/covid19) (aplicación shiny) del
 [Instituto de Salud Carlos III (ISCIII)](https://www.isciii.es). Se
 considera únicamente el archivo:
 
-  - [casos\_hosp\_uci\_def\_sexo\_edad\_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv):
+-   [casos\_hosp\_uci\_def\_sexo\_edad\_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv):
     Número de casos, hospitalizaciones, ingresos en UCI y defunciones
     por sexo, edad, provincia de residencia y fecha de
     diagnóstico<sup>[1](#fdiag)</sup> (ver
@@ -47,21 +47,21 @@ Cataluña; ver [histórico](acumula2_hist2/Informe_acumula22_hist.html)).
 
 ## Archivos
 
-  - [casos.RData](casos.RData): Número de casos, hospitalizaciones,
+-   [casos.RData](casos.RData): Número de casos, hospitalizaciones,
     ingresos en UCI y defunciones por sexo, edad, provincia de
     residencia y fecha de diagnóstico<sup>[1](#fdiag)</sup> (nuevos
     casos).
 
-  - [casos\_ccaa.RData](casos_ccaa.RData): Número de casos,
+-   [casos\_ccaa.RData](casos_ccaa.RData): Número de casos,
     hospitalizaciones, ingresos en UCI y defunciones por sexo, edad,
     CCAA y fecha de diagnóstico (nuevos casos), incluyendo los totales
     por sexo, edad y CCAA (España).
 
-  - [acumulados.RData](acumulados.RData): Evolución de los valores
+-   [acumulados.RData](acumulados.RData): Evolución de los valores
     acumulados por sexo, edad y CCAA según fecha de diagnóstico,
     incluyendo los totales por sexo, edad y CCAA (España).
 
-  - [acumula2.RData](acumula2.RData): Evolución de los valores
+-   [acumula2.RData](acumula2.RData): Evolución de los valores
     acumulados por CCAA y para el total de España (formato adecuado para
     el proyecto [Predicción
     Cooperativa](#proyecto-de-predicción-cooperativa)).
@@ -88,15 +88,15 @@ Madrid o Cataluña hicieron cambios drásticos en las series reportadas…).
 
 Cambios a partir del 2021-03-02:
 
-  - Se cambió el código de provincia de Melilla de `"ME"` a `"ML"`
+-   Se cambió el código de provincia de Melilla de `"ME"` a `"ML"`
     (coincidiendo con el estándar
     [ISO\_3166-2:ES](https://es.wikipedia.org/wiki/ISO_3166-2:ES#Provincias)).
 
-  - En los archivos de datos por CCAA, el nombre de la variable `casos`
+-   En los archivos de datos por CCAA, el nombre de la variable `casos`
     pasa a ser `confirmados` (como en la versión anterior del
     repositorio).
 
-  - En los archivos de datos por CCAA, se considera el territorio
+-   En los archivos de datos por CCAA, se considera el territorio
     especial de `"Ceuta y Melilla"` con código `"EA"` (ISO 3166-1
     alfa-2).
 
@@ -151,138 +151,138 @@ reportados por las distintas CCAA en el pasado, pocas se salvan…).
 
 ### Datos
 
-  - Web del *Ministerio de Sanidad, Consumo y Bienestar Social* (se
+-   Web del *Ministerio de Sanidad, Consumo y Bienestar Social* (se
     puede descargar un pdf con la situación actual):
     <https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm>
 
-  - [Instituto de Salud Carlos III (ISCIII)](https://cnecovid.isciii.es)
-    
-      - [Situación de COVID-19 en
+-   [Instituto de Salud Carlos III (ISCIII)](https://cnecovid.isciii.es)
+
+    -   [Situación de COVID-19 en
         España](https://cnecovid.isciii.es/covid19)
-    
-      - Datos por *fecha imputada* (ver
+
+    -   Datos por *fecha imputada* (ver
         [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_tecnica_ccaa_prov_res.pdf))
-        
-          - [casos\_tecnica\_ccaa.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_ccaa.csv):
+
+        -   [casos\_tecnica\_ccaa.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_ccaa.csv):
             Número de casos por técnica diagnóstica y CCAA (de
             residencia)
-        
-          - [casos\_tecnica\_provincia.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_provincia.csv):
+
+        -   [casos\_tecnica\_provincia.csv](https://cnecovid.isciii.es/covid19/resources/casos_tecnica_provincia.csv):
             Número de casos por técnica diagnóstica y provincia (de
             residencia)
-    
-      - Datos por *fecha de diagnóstico*<sup>[1](#fdiag)</sup> (ver
+
+    -   Datos por *fecha de diagnóstico*<sup>[1](#fdiag)</sup> (ver
         [metadata](https://cnecovid.isciii.es/covid19/resources/metadata_diag_ccaa_decl_prov_edad_sexo.pdf))
-        
-          - [casos\_diag\_ccaadecl.csv](https://cnecovid.isciii.es/covid19/resources/casos_diag_ccaadecl.csv):
+
+        -   [casos\_diag\_ccaadecl.csv](https://cnecovid.isciii.es/covid19/resources/casos_diag_ccaadecl.csv):
             Número de casos por técnica diagnóstica y CCAA (de
             declaración)
-        
-          - [casos\_hosp\_uci\_def\_sexo\_edad\_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv):
+
+        -   [casos\_hosp\_uci\_def\_sexo\_edad\_provres.csv](https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv):
             Número de casos, hospitalizaciones, ingresos en UCI y
             defunciones por sexo, edad y provincia de residencia.
-    
-      - [Informes COVID-19 del Centro Nacional de
+
+    -   [Informes COVID-19 del Centro Nacional de
         Epidemiología](https://www.isciii.es/QueHacemos/Servicios/VigilanciaSaludPublicaRENAVE/EnfermedadesTransmisibles/Paginas/InformesCOVID-19.aspx)
 
-  - Otras fuentes de datos:
-    
-      - Escovid19data: <https://lab.montera34.com/covid19>
-    
-      - Galicia: <https://galiciancovid19.info>
-    
-      - Castilla y León:
+-   Otras fuentes de datos:
+
+    -   Escovid19data: <https://lab.montera34.com/covid19>
+
+    -   Galicia: <https://galiciancovid19.info>
+
+    -   Castilla y León:
         <https://analisis.datosabiertos.jcyl.es/pages/coronavirus/descarga-de-datasets#situacin-actual>
-    
-      - País Vasco:
+
+    -   País Vasco:
         <https://opendata.euskadi.eus/catalogo/-/evolucion-del-coronavirus-covid-19-en-euskadi>
-    
-      - Andalucía:
+
+    -   Andalucía:
         <https://www.juntadeandalucia.es/institutodeestadisticaycartografia/salud/index.htm>,
         <https://pakillo.github.io/COVID19-Andalucia/evolucion-coronavirus-andalucia.html>,
         <https://github.com/Pakillo/COVID19-Andalucia>
-    
-      - Aragón:
+
+    -   Aragón:
         <https://opendata.aragon.es/datos/catalogo/dataset/publicaciones-y-anuncios-relacionados-con-el-coronavirus-en-aragon>
-    
-      - Comunidad Valenciana:
+
+    -   Comunidad Valenciana:
         <https://dadesobertes.gva.es/va/dataset?q=&sort=views_recent+desc>
-    
-      - Pruebas PCR por CCAA:
+
+    -   Pruebas PCR por CCAA:
         <https://datos.civio.es/dataset/pcr-coronavirus-covid19-espana-comunidades-autonomas>
 
 ### Predicción cooperativa
 
-  - [Acción Matemática contra el
+-   [Acción Matemática contra el
     Coronavirus](http://matematicas.uclm.es/cemat/covid19)
 
-  - [Web Investigadores UDC (Aplicación
+-   [Web Investigadores UDC (Aplicación
     Shiny)](https://covid19.citic.udc.es), que contiene las predicciones
     cooperativas (pestaña Predicción cooperativa: Resultados).
 
-  - [Código para el cálculo de las predicciones cooperativas y la
+-   [Código para el cálculo de las predicciones cooperativas y la
     generación de
     informes](https://github.com/rubenfcasal/COVID-19/tree/master/prediccion_cooperativa).
 
-  - Vilar-Fernández, J.A., Fernández-Casal, R. y Fernandez-Lozano, C.
+-   Vilar-Fernández, J.A., Fernández-Casal, R. y Fernandez-Lozano, C.
     (2020). [Covid-19 projections for Spain using forecast
     combinations](http://www.seio.es/BBEIO/BEIOVol36Num2/files/assets/common/downloads/publication.pdf#page=15).
     BEIO, 36 (2), 99-125.
 
-  - [Presentación VII Xornada de Usuarios de R en
+-   [Presentación VII Xornada de Usuarios de R en
     Galicia](https://rubenfcasal.github.io/COVID-19/prediccion_cooperativa/vii_xornadasr.html)
 
 ### COVID-19 y R
 
-  - [Top 25 R resources on COVID-19
+-   [Top 25 R resources on COVID-19
     Coronavirus](https://www.statsandr.com/blog/top-r-resources-on-covid-19-coronavirus)
 
-  - [Covid-19 interactive map (using R with shiny, leaflet and
+-   [Covid-19 interactive map (using R with shiny, leaflet and
     dplyr)](http://r-posts.com/covid-19-interactive-map-using-r-with-shiny-leaflet-and-dplyr)
 
-  - [COVID-19 epidemiology with
+-   [COVID-19 epidemiology with
     R](https://rviews.rstudio.com/2020/03/05/covid-19-epidemiology-with-r)
 
 ### Epidemiología (y áreas relacionadas) con R
 
-  - <https://www.repidemicsconsortium.org>
+-   <https://www.repidemicsconsortium.org>
 
-  - [Model-based Geostatistics: Methods and Applications in Global
+-   [Model-based Geostatistics: Methods and Applications in Global
     Public Health
     (book)](https://www.crcpress.com/Model-based-Geostatistics-for-Global-Public-Health-Methods-and-Applications/Diggle-Giorgi/p/book/9781138732353)
     by P.J. Diggle and E. Giorgi (2019), [código
     R](https://sites.google.com/view/mbgglobalhealth/r-scripts?authuser=0)
 
-  - [Spatio-Temporal Statistics with R
+-   [Spatio-Temporal Statistics with R
     (book)](https://spacetimewithr.org) by C.K. Wikle, A. Zammit-Mangion
     and N. Cressie (2019), [código R](https://spacetimewithr.org/code)
     (por si alguien se anima con modelos Bayesianos…)
 
-  - [Forecasting: Principles and Practice
+-   [Forecasting: Principles and Practice
     (book)](https://otexts.com/fpp2), 2ª ed., by R.J. Hyndman and G.
     Athanasopoulos (2018).
 
-  - [Epicalc\_Book](https://cran.r-project.org/doc/contrib/Epicalc_Book.pdf)
+-   [Epicalc\_Book](https://cran.r-project.org/doc/contrib/Epicalc_Book.pdf)
 
 ### Paquetes de R
 
 Paquetes y otras herramientas…
 
-  - [COVID19](https://github.com/emanuele-guidotti/COVID19),
+-   [COVID19](https://github.com/emanuele-guidotti/COVID19),
     [CRAN](https://cran.r-project.org/package=COVID19): Coronavirus
     COVID-19 (2019-nCoV) Epidemic Datasets
 
-  - [cdccovidview](https://cinc.rud.is/web/packages/cdccovidview/):
+-   [cdccovidview](https://cinc.rud.is/web/packages/cdccovidview/):
     Weekly Surveillance Summary of U.S. COVID-19 Activity
 
-  - [coronavirus](https://github.com/RamiKrispin/coronavirus),
+-   [coronavirus](https://github.com/RamiKrispin/coronavirus),
     [CRAN](https://cran.r-project.org/package=coronavirus) : The 2019
     Novel Coronavirus COVID-19 (2019-nCoV) Dataset
 
-  - [nCov2019](https://github.com/GuangchuangYu/nCov2019): An R package
+-   [nCov2019](https://github.com/GuangchuangYu/nCov2019): An R package
     with real-time data, historical data and Shiny app
 
-  - [forecast](https://pkg.robjhyndman.com/forecast): Forecasting
+-   [forecast](https://pkg.robjhyndman.com/forecast): Forecasting
     Functions for Time Series and Linear Models
 
 Se puede realizar una búsqueda en <https://rseek.org>…
@@ -292,7 +292,7 @@ Se puede realizar una búsqueda en <https://rseek.org>…
 Si quieres puedes ayudar a través de GitHub o enviando un correo a
 <rubenfcasal@gmail.com>.
 
------
+------------------------------------------------------------------------
 
 <a name="fdiag">1</a>: **Casos**: En los casos anteriores al 11 de mayo,
 se utiliza la fecha de diagnóstico, en su ausencia la fecha de
@@ -304,9 +304,9 @@ mayo, en ausencia de fecha de diagnóstico se utiliza la fecha clave.
 hospitalizados están representados por fecha de hospitalización (en su
 defecto, la fecha de diagnóstico, y en su defecto la fecha clave, los
 casos UCI por fecha de admisión en UCI (en su defecto, la fecha de
-diagnóstico, y en su defecto la fecha clave) y las defunciones por
-fecha de defunción (en su defecto, la fecha de diagnóstico, y en su
-defecto la fecha clave).
+diagnóstico, y en su defecto la fecha clave) y las defunciones por fecha
+de defunción (en su defecto, la fecha de diagnóstico, y en su defecto la
+fecha clave).
 
 **Fecha Clave**: se recomendó a las comunidades autónomas definir la
 fecha Clave como la fecha de inicio de síntomas y en su ausencia la
