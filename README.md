@@ -68,7 +68,9 @@ Cataluña; ver [histórico](acumula2_hist2/Informe_acumula22_hist.html)).
 
 En [COVID-19-tablas.html](COVID-19-tablas.html) se pueden consultar
 tablas con los datos actuales por CCAA (informe generado automáticamente
-a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)).
+a partir de [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd)). Además, en la
+pestaña *Gráficos* de la web <https://covid19.citic.udc.es/> se pueden
+consultar gráficos dinámicos y tablas adicionales.
 
 El archivo [COVID-19-actualizar.R](COVID-19-actualizar.R) contiene el
 código necesario para descargar e importar los datos a R.
@@ -79,10 +81,13 @@ se están almacenando un histórico de los datos publicados el ISCIII
 (reportados por las CCAA). Puede ser de utilidad para estudiar como se
 van consolidando los datos de la serie. Por ejemplo se incluye un
 [informe](acumula2_hist2/Informe_acumula22_hist.html) con la evolución
-de los datos reportados por las distintas CCAA. Es muy triste constatar
-que después de tanto tiempo todavía siguen los problemas (algunas CCAA
-están tardando más de 6 semanas en consolidar los datos; otras como
-Madrid o Cataluña hicieron cambios drásticos en las series reportadas…).
+de los datos reportados por las distintas CCAA (en la web
+<https://covid19.citic.udc.es/> se pueden consultar gráficos dinámicos
+seleccionando *Cambios en los valores reportados:2021* en la pestaña
+*Predicción cooperativa: Información*). Es muy triste constatar que
+después de tanto tiempo todavía siguen los problemas (algunas CCAA están
+tardando más de 6 semanas en consolidar los datos; otras como Madrid o
+Cataluña hicieron cambios drásticos en las series reportadas…).
 
 ### NOTAS
 

@@ -27,6 +27,8 @@ output:
 Este informe fué generado a partir de  [COVID-19-tablas.Rmd](COVID-19-tablas.Rmd).
 Más detalles en la [web del repositorio](https://rubenfcasal.github.io/COVID-19).
 
+NOTA: En la pestaña *Gráficos* de la web <https://covid19.citic.udc.es/> se pueden consultar gráficos dinámicos y tablas adicionales.
+
 ```{r message=FALSE, warning=FALSE}
 library(DT)
 library(dplyr)
