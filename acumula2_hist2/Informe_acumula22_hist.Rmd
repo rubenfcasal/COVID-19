@@ -58,10 +58,10 @@ y otro de las ***últimas `r semanas` semanas (desde `r fecha.ini`)***.
 
 El color de las líneas se corresponde con la fecha en la que se reportaron los datos (se muestra también el día del mes en el segundo gráfico).
 
-```{r}
+```{r fig.dim=c(14, 7), out.width="100%"}
 xlim2 <- c(fecha.ini, max(fechas) + 1)
-plot(NULL ,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
-legend("top", rev(names(datos)), lty = 1, col = rev(colors), ncol = 7)
+plot(NULL ,xaxt='n', yaxt='n', bty='n', ylab='', xlab='', xlim=0:1, ylim=0:1)
+legend("top", rev(substr(names(datos),3, 10)), lty = 1, lwd = 5, col = rev(colors), ncol = 8)
 ```
 
 ```{r results = "asis"}
