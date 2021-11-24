@@ -128,9 +128,14 @@ forma independiente y altruista. Para más detalles ver [Vilar-Fernández
 et
 al. (2020)](http://www.seio.es/BBEIO/BEIOVol36Num2/files/assets/common/downloads/publication.pdf#page=15).
 
-El proyecto estuvo vigente desde el 2 de abril hasta el 26 de mayo de
-2020, ya que la falta de datos oficiales obligó a su paralización.
-Actualmente se está intentando volver a ponerlo en marcha…
+El proyecto inicial estuvo vigente desde el 2 de abril hasta el 26 de
+mayo de 2020, ya que la falta de datos oficiales obligó a su
+paralización. En enero de 2021 volvieron a publicarse los datos y poco
+después el proyecto *Cooperative Forecasting* (ForeCoop) logró
+financiación del Fondo Supera COVID-19 para continuar el desarrollo de
+la web <https://covid19.citic.udc.es> y continuar proporcionando
+predicciones cooperativas (desde el 8 de abril hasta el 7 de octubre de
+2021).
 
 El código principal, empleado durante el primer periodo del proyecto
 para el cálculo de las predicciones cooperativas y la generación de
