@@ -48,7 +48,7 @@ Calcular % por sexo, edad, %letalidad...
 -->
 
 ```{r }
-acumulados %>% filter(fecha == fecha.last) %>% select(-iso) %>%
+acumulados %>% filter(fecha == fecha.last) %>% select(-iso, -fecha) %>%
       datatable(filter = 'top', 
                 options = list(pageLength = 11, autoWidth = TRUE))
 ```

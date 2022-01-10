@@ -9,7 +9,7 @@ r <- HEAD(paste0("https://cnecovid.isciii.es/covid19/resources/", f))
 # r$headers$`content-length`
 unlist(r$headers[c("last-modified", "content-length")])
 #                  last-modified                  content-length
-# "Wed, 24 Nov 2021 10:07:34 GMT"                      "32514805" 
+# "Fri, 07 Jan 2022 16:21:54 GMT"                      "34647557" 
 
 
 # Descargar
@@ -197,10 +197,10 @@ browseURL(url = rmarkdown::render("COVID-19-tablas.Rmd", encoding = "UTF-8"))
 # Fecha de descarga
 fecha.txt <- format(max(acumulados$fecha) + 1, format = "%y_%m_%d")
 
-# Guardar .csv en subdirectorio de historico_csv
-destino <- "./historico_csv"
-dir.create(file.path(destino, fecha.txt)) # recursive = TRUE
-file.copy(f, file.path(destino, fecha.txt, f), overwrite = TRUE)
+# # Guardar .csv en subdirectorio de historico_csv
+# destino <- "./historico_csv"
+# dir.create(file.path(destino, fecha.txt)) # recursive = TRUE
+# file.copy(f, file.path(destino, fecha.txt, f), overwrite = TRUE)
 
 # Se guardan los ficheros por "fecha de descarga" en ./acumula2_hist2
 #   Actualmente solo "acumula22.RData"

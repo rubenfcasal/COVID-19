@@ -52,13 +52,13 @@ iso <- names(datos[[1]]) # names(ccaas)
 respuestas <- c("confirmados", "hospitalizados", "uci", "fallecidos") # names(datos[[1]][[1]])
 ```
 
+En la web <https://covid19.citic.udc.es/> se pueden consultar gráficos dinámicos seleccionando *Cambios en los valores reportados:2021* en la pestaña *Predicción cooperativa: Información*.
 
-Se genera un gráfico con ***toda la serie hasta `r fechas[last] - 1`*** 
-y otro de las ***últimas `r semanas` semanas (desde `r fecha.ini`)***.
+A continuación se muestra un gráfico, para cada combinación de CCAA y variable, con ***toda la serie hasta `r fechas[last] - 1`*** y otro de las ***últimas `r semanas` semanas (desde `r fecha.ini`)***.
 
 El color de las líneas se corresponde con la fecha en la que se reportaron los datos (se muestra también el día del mes en el segundo gráfico).
 
-```{r fig.dim=c(14, 7), out.width="100%"}
+```{r fig.dim=c(14,7), out.width="100%"}
 xlim2 <- c(fecha.ini, max(fechas) + 1)
 plot(NULL ,xaxt='n', yaxt='n', bty='n', ylab='', xlab='', xlim=0:1, ylim=0:1)
 legend("top", rev(substr(names(datos),3, 10)), lty = 1, lwd = 5, col = rev(colors), ncol = 8)
